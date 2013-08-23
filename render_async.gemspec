@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["kawsper@gmail.com"]
   spec.description   = %q{RenderAsync lets you include pages asynchronously with AJAX}
   spec.summary       = %q{RenderAsync lets you include pages asynchronously with AJAX}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/kaspergrubbe/render_async"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
