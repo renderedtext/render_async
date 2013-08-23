@@ -1,0 +1,15 @@
+<div id="<%= container_name %>"></div>
+
+<% content_for :footer do %>
+  <script type="text/javascript">
+    (function($){
+      div_elem = $("#<%= container_name %>");
+      $.ajax({
+        url: "<%= path %>",
+        success: function(response, status) {
+          div_elem.html(response);
+        }
+      });
+    }(jQuery));
+  </script>
+<% end %>
