@@ -1,5 +1,3 @@
 require "render_async/version"
 
-module RenderAsync
-  # Your code goes here...
-end
+ActiveSupport.on_load(:action_view) { include RenderAsync::ViewHelper }
