@@ -1,4 +1,4 @@
-![Build Status](https://semaphoreci.com/api/v1/renderedtext/render_async/branches/nd-green-build/badge.svg)](https://semaphoreci.com/renderedtext/render_async)
+[![Build Status](https://semaphoreci.com/api/v1/renderedtext/render_async/branches/master/badge.svg)](https://semaphoreci.com/renderedtext/render_async)
 
 # RenderAsync
 
