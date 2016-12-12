@@ -1,2 +1,2 @@
 require "render_async/version"
-require "render_async/view_helper" if defined? ActiveSupport
+require "render_async/view_helper"

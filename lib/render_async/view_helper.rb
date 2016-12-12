@@ -13,4 +13,6 @@ module RenderAsync
   end
 end
 
-ActiveSupport.on_load(:action_view) { include RenderAsync::ViewHelper }
+ActiveSupport.on_load(:action_view) do
+  include RenderAsync::ViewHelper
+end if defined? ActiveSupport
