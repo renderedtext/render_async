@@ -1,3 +1,5 @@
+require 'securerandom'
+
 module RenderAsync
   module ViewHelper
 
@@ -10,3 +12,5 @@ module RenderAsync
 
   end
 end
+
+ActiveSupport.on_load(:action_view) { include RenderAsync::ViewHelper }
