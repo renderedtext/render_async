@@ -12,3 +12,5 @@ module RenderAsync
 
   end
 end
+
+ActionView::Base.send :include, RenderAsync::ViewHelper if defined? ActionView::Base
