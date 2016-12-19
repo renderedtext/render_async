@@ -2,11 +2,12 @@
 
 # RenderAsync
 
-Renders partials to your views asynchronously. This is done through adding
+Renders partials to your views **asynchronously**. This is done through adding
 Javascript code that does AJAX request to your controller which then renders
 your partial.
 
 Workflow:
+
 1. user visits a page => 
 2. AJAX request on the controller action => 
 3. controller renders a partial => 
