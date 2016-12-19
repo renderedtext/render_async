@@ -12,4 +12,3 @@ module RenderAsync
 
   end
 end
-
