@@ -6,6 +6,12 @@ Renders partials to your views asynchronously. This is done through adding
 Javascript code that does AJAX request to your controller which then renders
 your partial.
 
+Workflow:
+1. user visits a page => 
+2. AJAX request on the controller action => 
+3. controller renders a partial => 
+4. partials renders in the place where you put `render_async` helper
+
 Javascript is injected into `<%= content_for :render_async %>` so you choose
 where to put it.
 
@@ -25,45 +31,45 @@ And then execute:
 
 1. Include `render_async` view helper somewhere in your views:
 
-```ruby
-# app/views/comments/show.html.erb
+    ```ruby
+    # app/views/comments/show.html.erb
 
-<%= render_async comment_stats_path %>
-```
+    <%= render_async comment_stats_path %>
+    ```
 
 2. Then create a route that will `config/routes.rb`
-```ruby
-# config/routes.rb
+    ```ruby
+    # config/routes.rb
 
-get :comment_stats, :controller => :comments
-```
+    get :comment_stats, :controller => :comments
+    ```
 
 3. Fill in the logic in your controller
-```ruby
-# app/controllers/comments_controller.rb
+    ```ruby
+    # app/controllers/comments_controller.rb
 
-def comment_stats
-  @stats = Comment.get_stats
+    def comment_stats
+      @stats = Comment.get_stats
 
-  render :patial => "comment_stats"
-end
-```
+      render :patial => "comment_stats"
+    end
+    ```
 
 4. Create a partial that will render
-```ruby
-# app/views/comments/_comment_stats.html.erb
+    ```ruby
+    # app/views/comments/_comment_stats.html.erb
 
-<div class="col-md-6">
-  <%= @stats %>
-</div>
-```
+    <div class="col-md-6">
+      <%= @stats %>
+    </div>
+    ```
 
 5. Add `content_for` in your base view file
-```ruby
-# application.html.erb
+    ```ruby
+    # application.html.erb
 
-<%= content_for :render_async %>
-```
+    <%= content_for :render_async %>
+    ```
 
 ## Development
 
