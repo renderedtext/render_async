@@ -1,0 +1,4 @@
+[submodule "spec/fixtures/restaurant-reservations"]
+	path = spec/fixtures/restaurant-reservations
+	url = git@github.com:nikolalsvk/restaurant-reservations.git
+	branch = nd/render-async
