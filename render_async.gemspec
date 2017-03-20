@@ -6,10 +6,10 @@ require 'render_async/version'
 Gem::Specification.new do |spec|
   spec.name          = "render_async"
   spec.version       = RenderAsync::VERSION
-  spec.authors       = ["nikolalsvk"]
+  spec.authors       = ["Kasper Grubbe", "nikolalsvk"]
   spec.email         = ["nikolaseap@gmail.com"]
 
-  spec.summary       = "Render parts of the page asynchronously"
+  spec.summary       = "Render parts of the page asynchronously with AJAX"
   spec.description   = "Load parts of your page through simple Javascript and Rails pipeline"
   spec.homepage      = "https://github.com/renderedtext/render_async"
   spec.license       = "MIT"
