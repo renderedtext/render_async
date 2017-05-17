@@ -8,9 +8,9 @@ your partial.
 
 Workflow:
 
-1. user visits a page => 
-2. AJAX request on the controller action => 
-3. controller renders a partial => 
+1. user visits a page =>
+2. AJAX request on the controller action =>
+3. controller renders a partial =>
 4. partials renders in the place where you put `render_async` helper
 
 Javascript is injected into `<%= content_for :render_async %>` so you choose
@@ -21,12 +21,12 @@ where to put it.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'render_async', :source => "https://gem.fury.io/renderedtext/"
+gem 'render_async'
 ```
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 ## Usage
 
