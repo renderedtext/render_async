@@ -52,7 +52,7 @@ And then execute:
     def comment_stats
       @stats = Comment.get_stats
 
-      render :patial => "comment_stats"
+      render :partial => "comment_stats"
     end
     ```
 
