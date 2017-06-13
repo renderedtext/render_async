@@ -1,6 +1,7 @@
-[![Build Status](https://semaphoreci.com/api/v1/renderedtext/render_async/branches/master/badge.svg)](https://semaphoreci.com/renderedtext/render_async)
+[![Build Status](https://semaphoreci.com/api/v1/renderedtext/render_async/branches/master/shields_badge.svg)](https://semaphoreci.com/renderedtext/render_async)
+[![Gem Version](https://badge.fury.io/rb/render_async.svg)](https://badge.fury.io/rb/render_async)
 
-# RenderAsync
+# render_async
 
 Renders partials to your views **asynchronously**. This is done through adding
 Javascript code that does AJAX request to your controller which then renders
@@ -32,7 +33,7 @@ And then execute:
 
 1. Include `render_async` view helper somewhere in your views:
 
-    ```ruby
+    ```erb
     # app/views/comments/show.html.erb
 
     <%= render_async comment_stats_path %>
@@ -57,7 +58,7 @@ And then execute:
     ```
 
 4. Create a partial that will render
-    ```ruby
+    ```erb
     # app/views/comments/_comment_stats.html.erb
 
     <div class="col-md-6">
@@ -66,7 +67,7 @@ And then execute:
     ```
 
 5. Add `content_for` in your base view file
-    ```ruby
+    ```erb
     # application.html.erb
 
     <%= content_for :render_async %>
