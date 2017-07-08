@@ -83,42 +83,40 @@ And then execute:
 * `html_options` is an optional hash that gets passed to a rails `javascript_tag`, to drop html tags into the `script` element.
 
 Example utilizing `html_options` with a `nonce`:
-
-    ```ruby
-    <%= render_async users_path, nonce: 'lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=' %>
-    ```
+```erb
+<%= render_async users_path, nonce: 'lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=' %>
+```
 
 Rendered code in the view:
+```html
+<div id="render_async_18b8a6cd161499117471">
+  <div id="render_async_18b8a6cd161499117471_spinner" class="sk-spinner sk-spinner-double-bounce">
+    <div class="sk-double-bounce1"></div>
+    <div class="sk-double-bounce2"></div>
+  </div>
+</div>
 
-    ```html
-    <div id="render_async_18b8a6cd161499117471">
-      <div id="render_async_18b8a6cd161499117471_spinner" class="sk-spinner sk-spinner-double-bounce">
-        <div class="sk-double-bounce1"></div>
-        <div class="sk-double-bounce2"></div>
-      </div>
-    </div>
+<script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
+//<![CDATA[
 
-    <script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
-    //<![CDATA[
+    (function($){
+      $.ajax({
+          url: "/users",
+        })
+        .done(function(response, status) {
+          $("#render_async_18b8a6cd161499117471").html(response);
+        })
+        .fail(function(response, status) {
+          $("#render_async_18b8a6cd161499117471").html(response);
+        })
+        .always(function(response, status) {
+          $("#render_async_18b8a6cd161499117471_spinner").hide();
+        });
+    }(jQuery));
 
-        (function($){
-          $.ajax({
-              url: "/users",
-            })
-            .done(function(response, status) {
-              $("#render_async_18b8a6cd161499117471").html(response);
-            })
-            .fail(function(response, status) {
-              $("#render_async_18b8a6cd161499117471").html(response);
-            })
-            .always(function(response, status) {
-              $("#render_async_18b8a6cd161499117471_spinner").hide();
-            });
-        }(jQuery));
-
-    //]]>
-    </script>
-    ```
+//]]>
+</script>
+```
 
 ## Development
 
