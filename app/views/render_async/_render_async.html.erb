@@ -6,7 +6,7 @@
 </div>
 
 <% content_for :render_async do %>
-  <script type="text/javascript">
+  <%= javascript_tag html_options do %>
     (function($){
       $.ajax({
           url: "<%= path %>",
@@ -21,5 +21,5 @@
           $("#<%= container_name %>_spinner").hide();
         });
     }(jQuery));
-  </script>
+  <% end %>
 <% end %>
