@@ -27,7 +27,8 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/3866868?v=4",
       "profile": "http://www.colinxfleming.com",
       "contributions": [
-        "code"
+        "code",
+        "doc"
       ]
     },
     {
@@ -37,6 +38,15 @@
       "profile": "http://kaspergrubbe.com",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "sairam",
+      "name": "Sai Ram Kunala",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/163584?v=4",
+      "profile": "https://sairam.xyz/",
+      "contributions": [
+        "doc"
       ]
     }
   ]
