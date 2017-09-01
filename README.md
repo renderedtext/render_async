@@ -119,6 +119,31 @@ Rendered code in the view:
 </script>
 ```
 
+## Caching
+
+`render_async` can utilize view fragment caching to avoid extra ajax calls on repeat page views.
+
+In your views:
+  ```erb
+  # app/views/comments/show.html.erb
+
+  # note 'render_async_cache' instead of standard 'render_async'
+  <%= render_async_cache comment_stats_path %>
+  ```
+
+  ```erb
+  # app/views/comments/_comment_stats.html.erb
+
+  <% cache render_async_cache_key(path) do %>
+    <div class="col-md-6">
+      <%= @stats %>
+    </div>
+  <% end %>
+  ```
+
+* The first time the page renders, it will make the ajax call.
+* Any other times (until the cache expires), it will render from cache instantly, without needing the page to load and make the ajax call.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
