@@ -1,0 +1,53 @@
+{
+  "projectName": "render_async",
+  "projectOwner": "renderedtext",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "nikolalsvk",
+      "name": "Nikola Đuza",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3028124?v=4",
+      "profile": "http://nikoladjuza.me/",
+      "contributions": [
+        "question",
+        "bug",
+        "code",
+        "doc",
+        "example",
+        "review"
+      ]
+    },
+    {
+      "login": "colinxfleming",
+      "name": "Colin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/3866868?v=4",
+      "profile": "http://www.colinxfleming.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "kaspergrubbe",
+      "name": "Kasper Grubbe",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/334273?v=4",
+      "profile": "http://kaspergrubbe.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sairam",
+      "name": "Sai Ram Kunala",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/163584?v=4",
+      "profile": "https://sairam.xyz/",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ]
+}
