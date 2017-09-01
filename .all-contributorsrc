@@ -6,5 +6,20 @@
   ],
   "imageSize": 100,
   "commit": true,
-  "contributors": []
+  "contributors": [
+    {
+      "login": "nikolalsvk",
+      "name": "Nikola Đuza",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3028124?v=4",
+      "profile": "http://nikoladjuza.me/",
+      "contributions": [
+        "question",
+        "bug",
+        "code",
+        "doc",
+        "example",
+        "review"
+      ]
+    }
+  ]
 }
