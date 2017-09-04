@@ -48,6 +48,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "nightsurge",
+      "name": "Josh Arnold",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3065882?v=4",
+      "profile": "https://github.com/nightsurge",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ]
 }
