@@ -134,7 +134,7 @@ In your views:
   ```erb
   # app/views/comments/_comment_stats.html.erb
 
-  <% cache render_async_cache_key(path) do %>
+  <% cache render_async_cache_key(request.path), skip_digest: true do %>
     <div class="col-md-6">
       <%= @stats %>
     </div>
