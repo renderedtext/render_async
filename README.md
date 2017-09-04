@@ -35,7 +35,6 @@ And then execute:
 ## Usage
 
 1. Include `render_async` view helper somewhere in your views:
-
     ```erb
     # app/views/comments/show.html.erb
 
@@ -121,28 +120,31 @@ Rendered code in the view:
 
 ## Caching
 
-`render_async` can utilize view fragment caching to avoid extra ajax calls on repeat page views.
+`render_async` can utilize view fragment caching to avoid extra AJAX calls.
 
 In your views:
-  ```erb
-  # app/views/comments/show.html.erb
+```erb
+# app/views/comments/show.html.erb
 
-  # note 'render_async_cache' instead of standard 'render_async'
-  <%= render_async_cache comment_stats_path %>
-  ```
+# note 'render_async_cache' instead of standard 'render_async'
+<%= render_async_cache comment_stats_path %>
+```
 
-  ```erb
-  # app/views/comments/_comment_stats.html.erb
+```erb
+# app/views/comments/_comment_stats.html.erb
 
-  <% cache render_async_cache_key(request.path), skip_digest: true do %>
-    <div class="col-md-6">
-      <%= @stats %>
-    </div>
-  <% end %>
-  ```
+<% cache render_async_cache_key(request.path), :skip_digest => true do %>
+  <div class="col-md-6">
+    <%= @stats %>
+  </div>
+<% end %>
+```
 
-* The first time the page renders, it will make the ajax call.
-* Any other times (until the cache expires), it will render from cache instantly, without needing the page to load and make the ajax call.
+* The first time the page renders, it will make the AJAX call.
+* Any other times (until the cache expires), it will render from cache
+  instantly, without making the AJAX call.
+* You can expire cache simply by passing `:expires_in` in your view where
+  you cache the partial
 
 ## Development
 
