@@ -9,7 +9,7 @@
   <%= javascript_tag html_options do %>
     (function($){
       $.ajax({ url: "<%= path %>"}).always(function(response) {
-        $("#<%= container_name %>_spinner").replaceWith(response);
+        $("#<%= container_name %>").replaceWith(response);
       });
     }(jQuery));
   <% end %>
