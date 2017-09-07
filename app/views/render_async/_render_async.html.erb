@@ -8,18 +8,9 @@
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
     (function($){
-      $.ajax({
-          url: "<%= path %>",
-        })
-        .done(function(response, status) {
-          $("#<%= container_name %>").html(response);
-        })
-        .fail(function(response, status) {
-          $("#<%= container_name %>").html(response);
-        })
-        .always(function(response, status) {
-          $("#<%= container_name %>_spinner").hide();
-        });
+      $.ajax({ url: "<%= path %>"}).always(function(response) {
+        $("#<%= container_name %>_spinner").replaceWith(response);
+      });
     }(jQuery));
   <% end %>
 <% end %>
