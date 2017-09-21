@@ -58,6 +58,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "SaladFork",
+      "name": "Elad Shahar",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/107798?v=4",
+      "profile": "https://eladshahar.com",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
