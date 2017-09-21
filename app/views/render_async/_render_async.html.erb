@@ -1,15 +1,12 @@
-<div id="<%= container_name %>">
-  <div id="<%= container_name %>_spinner" class="sk-spinner sk-spinner-double-bounce">
-    <div class="sk-double-bounce1"></div>
-    <div class="sk-double-bounce2"></div>
-  </div>
+<div id="<%= container_id %>">
+  <%= block %>
 </div>
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
     (function($){
-      $.ajax({ url: "<%= path %>"}).always(function(response) {
-        $("#<%= container_name %>").replaceWith(response);
+      $.ajax({ url: "<%= path %>" }).always(function(response) {
+        $("#<%= container_id %>").replaceWith(response);
       });
     }(jQuery));
   <% end %>
