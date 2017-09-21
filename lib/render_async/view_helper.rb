@@ -18,11 +18,12 @@ module RenderAsync
 
     def render_async(path, html_options = {}, &placeholder)
       container_id = "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
+      placeholder = capture(&placeholder) if block_given?
 
       render 'render_async/render_async', container_id: container_id,
                                           path: path,
                                           html_options: html_options,
-                                          placeholder: capture(&placeholder)
+                                          placeholder: placeholder
     end
 
   end
