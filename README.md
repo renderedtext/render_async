@@ -12,9 +12,9 @@ your partial.
 
 Workflow:
 
-1. user visits a page =>
-2. AJAX request on the controller action =>
-3. controller renders a partial =>
+1. user visits a page
+2. AJAX request on the controller action
+3. controller renders a partial
 4. partials renders in the place where you put `render_async` helper
 
 Javascript is injected into `<%= content_for :render_async %>` so you choose
@@ -77,12 +77,16 @@ And then execute:
 
 ## Advanced usage
 
+### Passing in HTML options
+
 `render_async` takes two arguments, `path` and `html_options`.
 
-* `path` is the ajax-capable controller action you're looking to call via `get`. e.g. `comments_stats_path`, `posts_path`, etc.
-* `html_options` is an optional hash that gets passed to a rails `javascript_tag`, to drop html tags into the `script` element.
+* `path` is the AJAX-capable controller action you're looking to call via
+  `GET`. e.g. `comments_stats_path`, `posts_path`, etc.
+* `html_options` is an optional hash that gets passed to a rails
+  `javascript_tag`, to drop html tags into the `script` element.
 
-Example utilizing `html_options` with a `nonce`:
+Example of utilizing `html_options` with a `nonce`:
 ```erb
 <%= render_async users_path, nonce: 'lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=' %>
 ```
@@ -90,33 +94,55 @@ Example utilizing `html_options` with a `nonce`:
 Rendered code in the view:
 ```html
 <div id="render_async_18b8a6cd161499117471">
-  <div id="render_async_18b8a6cd161499117471_spinner" class="sk-spinner sk-spinner-double-bounce">
-    <div class="sk-double-bounce1"></div>
-    <div class="sk-double-bounce2"></div>
-  </div>
 </div>
 
 <script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
 //<![CDATA[
 
     (function($){
-      $.ajax({
-          url: "/users",
-        })
-        .done(function(response, status) {
-          $("#render_async_18b8a6cd161499117471").html(response);
-        })
-        .fail(function(response, status) {
-          $("#render_async_18b8a6cd161499117471").html(response);
-        })
-        .always(function(response, status) {
-          $("#render_async_18b8a6cd161499117471_spinner").hide();
-        });
+      $.ajax({ url: "/users" }).always(function(response) {
+        $("#render_async_18b8a6cd161499117471").replaceWith(response);
+      });
     }(jQuery));
 
 //]]>
 </script>
 ```
+
+### Passing in a placeholder
+
+`render_async` can be called with a block that will act as a placeholder before
+your AJAX call finishes.
+
+Example of passing in a block:
+
+```erb
+<%= render_async users_path do %>
+  <h1>Users are loading...</h1>
+<% end %>
+```
+
+Rendered code in the view:
+```html
+<div id="render_async_14d7ac165d1505993721">
+  <h1>Users are loading...</h1>
+</div>
+
+<script>
+//<![CDATA[
+
+    (function($){
+      $.ajax({ url: "/users" }).always(function(response) {
+        $("#render_async_14d7ac165d1505993721").replaceWith(response);
+      });
+    }(jQuery));
+
+//]]>
+</script>
+```
+
+After AJAX is finished, placeholder will be replaced with the request's
+response.
 
 ## Caching
 
