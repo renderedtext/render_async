@@ -16,13 +16,13 @@ module RenderAsync
       end
     end
 
-    def render_async(path, html_options = {}, &block)
+    def render_async(path, html_options = {}, &placeholder)
       container_id = "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
 
       render 'render_async/render_async', container_id: container_id,
                                           path: path,
                                           html_options: html_options,
-                                          block: capture(&block)
+                                          placeholder: capture(&placeholder)
     end
 
   end
