@@ -6,13 +6,15 @@
 
 # render_async
 
-Renders partials to your views **asynchronously**. This is done through adding
-Javascript code that does AJAX request to your controller which then renders
-your partial.
+Speed up rendering Rails pages with this gem.
+
+`render_async` renders partials to your views **asynchronously**. This is done
+through adding Javascript code that does AJAX request to your controller which
+then renders your partial into a Rails view.
 
 Workflow:
 
-1. user visits a page
+1. user visits a Rails page
 2. AJAX request on the controller action
 3. controller renders a partial
 4. partials renders in the place where you put `render_async` helper
