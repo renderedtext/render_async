@@ -9,7 +9,52 @@ describe RenderAsync::ViewHelper do
     end
   end
 
-  describe "render_async" do
+  describe "#render_async_cache" do
+    let(:cached_view) { double("CachedView",
+                               :html_safe => "<h1>I'm cache</h1>",
+                               :present? => true) }
+    before do
+      stub_const("Rails", double("Rails"))
+    end
+
+    context "cache is present" do
+      before do
+        allow(Rails).to receive_message_chain(:cache, :read).and_return(cached_view)
+      end
+
+      it "renders cached HTML" do
+        expect(helper).to receive(:render).with(
+          :html => "<h1>I'm cache</h1>"
+        )
+
+        helper.render_async_cache("users")
+      end
+    end
+
+    context "cache is not present" do
+      let(:empty_cache) { double("EmtpyCache", :present? => false) }
+
+      before do
+        allow(Rails).to receive_message_chain(:cache, :read).and_return(empty_cache)
+      end
+
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            :container_id => /render_async_/,
+            :path => "users",
+            :html_options => {},
+            :placeholder => nil
+          }
+        )
+
+        helper.render_async_cache("users")
+      end
+    end
+  end
+
+  describe "#render_async" do
     before do
       allow(helper).to receive(:render)
     end
