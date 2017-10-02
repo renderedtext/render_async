@@ -15,6 +15,10 @@
       request.onload = function() {
         if (request.status >= SUCCESS && request.status < ERROR) {
           document.getElementById("<%= container_id %>").outerHTML = request.responseText;
+
+          <% if event_name.present? %>
+            document.dispatchEvent(new Event("<%= event_name %>", response));
+          <% end %>
         }
       };
 
