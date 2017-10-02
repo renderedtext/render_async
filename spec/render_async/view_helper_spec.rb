@@ -109,9 +109,7 @@ describe RenderAsync::ViewHelper do
           }
         )
 
-        helper.render_async("users") do
-          placeholder
-        end
+        helper.render_async("users") { placeholder }
       end
     end
   end
