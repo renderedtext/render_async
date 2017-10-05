@@ -103,11 +103,22 @@ Rendered code in the view:
 <script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
 //<![CDATA[
 
-    (function($){
-      $.ajax({ url: "/users" }).always(function(response) {
-        $("#render_async_18b8a6cd161499117471").replaceWith(response);
-      });
-    }(jQuery));
+    var request = new XMLHttpRequest();
+    request.open("GET", "/users", true);
+
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        document.getElementById("render_async_18b41794481507226109").outerHTML = request.responseText;
+      } else {
+        console.log("We reached our target server, but it returned an error");
+      }
+    };
+
+    request.onerror = function() {
+      console.log("There was a connection error of some sort");
+    };
+
+    request.send();
 
 //]]>
 </script>
@@ -135,11 +146,22 @@ Rendered code in the view:
 <script>
 //<![CDATA[
 
-    (function($){
-      $.ajax({ url: "/users" }).always(function(response) {
-        $("#render_async_14d7ac165d1505993721").replaceWith(response);
-      });
-    }(jQuery));
+    var request = new XMLHttpRequest();
+    request.open("GET", "/users", true);
+
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        document.getElementById("render_async_18b41794481507226109").outerHTML = request.responseText;
+      } else {
+        console.log("We reached our target server, but it returned an error");
+      }
+    };
+
+    request.onerror = function() {
+      console.log("There was a connection error of some sort");
+    };
+
+    request.send();
 
 //]]>
 </script>
