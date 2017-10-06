@@ -102,7 +102,7 @@ Rendered code in the view:
 
 <script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
 //<![CDATA[
-
+  (function(){
     var request = new XMLHttpRequest();
     request.open("GET", "/users", true);
 
@@ -119,7 +119,7 @@ Rendered code in the view:
     };
 
     request.send();
-
+  })();
 //]]>
 </script>
 ```
@@ -145,7 +145,7 @@ Rendered code in the view:
 
 <script>
 //<![CDATA[
-
+  (function(){
     var request = new XMLHttpRequest();
     request.open("GET", "/users", true);
 
@@ -162,7 +162,7 @@ Rendered code in the view:
     };
 
     request.send();
-
+  })();
 //]]>
 </script>
 ```

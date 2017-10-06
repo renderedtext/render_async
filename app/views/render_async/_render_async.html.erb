@@ -4,21 +4,23 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    var request = new XMLHttpRequest();
-    request.open("GET", "<%= path %>", true);
+    (function(){
+      var request = new XMLHttpRequest();
+      request.open("GET", "<%= path %>", true);
 
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        document.getElementById("<%= container_id %>").outerHTML = request.responseText;
-      } else {
-        console.log("We reached our target server, but it returned an error");
-      }
-    };
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          document.getElementById("<%= container_id %>").outerHTML = request.responseText;
+        } else {
+          console.log("We reached our target server, but it returned an error");
+        }
+      };
 
-    request.onerror = function() {
-      console.log("There was a connection error of some sort");
-    };
+      request.onerror = function() {
+        console.log("There was a connection error of some sort");
+      };
 
-    request.send();
+      request.send();
+    })();
   <% end %>
 <% end %>
