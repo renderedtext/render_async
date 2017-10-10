@@ -176,6 +176,18 @@ In your views:
 * You can expire cache simply by passing `:expires_in` in your view where
   you cache the partial
 
+## Using with Turbolinks
+
+On Turbolinks applications, you may experience caching issues when navigating
+away from, and then back to, a page with a `render_async` call on it. This will
+likely show up as an empty div.
+
+To resolve, tell turbolinks to reload your `render_async` call as follows:
+
+```erb
+  <%= render_async events_path, 'data-turbolinks-track': 'reload' %>
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
