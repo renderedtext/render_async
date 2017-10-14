@@ -67,6 +67,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "sasharevzin",
+      "name": "Sasha",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/232392?v=4",
+      "profile": "http://www.revzin.co.il",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ]
 }
