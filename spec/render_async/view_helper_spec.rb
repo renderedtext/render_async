@@ -45,6 +45,7 @@ describe RenderAsync::ViewHelper do
             :container_id => /render_async_/,
             :path => "users",
             :html_options => {},
+            :event_name => nil,
             :placeholder => nil
           }
         )
@@ -66,7 +67,7 @@ describe RenderAsync::ViewHelper do
           {
             :container_id => /render_async_/,
             :path => "users",
-            :html_options => nil,
+            :html_options => {},
             :event_name => nil,
             :placeholder => nil
           }
@@ -89,7 +90,7 @@ describe RenderAsync::ViewHelper do
           }
         )
 
-        helper.render_async("users", :html => { :nonce => "jkg1935safd" })
+        helper.render_async("users", :nonce => "jkg1935safd")
       end
     end
 
@@ -100,7 +101,7 @@ describe RenderAsync::ViewHelper do
           {
             :container_id => /render_async_/,
             :path => "users",
-            :html_options => nil,
+            :html_options => {},
             :event_name => "render_async_done",
             :placeholder => nil
           }
@@ -123,7 +124,7 @@ describe RenderAsync::ViewHelper do
           {
             :container_id => /render_async_/,
             :path => "users",
-            :html_options => nil,
+            :html_options => {},
             :event_name => nil,
             :placeholder => placeholder
           }

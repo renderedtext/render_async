@@ -19,12 +19,13 @@ module RenderAsync
 
     def render_async(path, options = {}, &placeholder)
       container_id = "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
+      event_name = options.delete(:event_name)
       placeholder = capture(&placeholder) if block_given?
 
       render 'render_async/render_async', container_id: container_id,
                                           path: path,
-                                          html_options: options[:html],
-                                          event_name: options[:event_name],
+                                          html_options: options,
+                                          event_name: event_name,
                                           placeholder: placeholder
     end
 
