@@ -164,6 +164,54 @@ Rendered code in the view:
 After AJAX is finished, placeholder will be replaced with the request's
 response.
 
+### Passing in an event name
+
+`render_async` can receive `:event_name` option which will emit Javascript
+event after it's done with fetching and rendering request content to HTML.
+
+This can be useful to have if you want to add some Javascript functionality
+after your partial is loaded through `render_async`.
+
+Example of passing it to `render_async`:
+```erb
+<%= render_async users_path, "users-loaded" %>
+```
+
+Rendered code in view:
+```html
+<div id="render_async_04229e7abe1507987376">
+</div>
+
+<script>
+//<![CDATA[
+  (function() {
+    var request = new XMLHttpRequest();
+    var asyncRequest = true;
+    var SUCCESS = 200;
+    var ERROR = 400;
+    request.open("GET", "/users", asyncRequest);
+
+    request.onload = function() {
+      if (request.status >= SUCCESS && request.status < ERROR) {
+        document.getElementById("render_async_04229e7abe1507987376").outerHTML = request.responseText;
+
+        document.dispatchEvent(new Event("users-loaded"));
+      }
+    };
+
+    request.send();
+  })();
+//]]>
+</script>
+```
+
+Then, in your JS, you could do something like this:
+```javascript
+document.addEventListener("users-loaded", function() {
+  console.log("Users have loaded!");
+});
+```
+
 ## Caching
 
 `render_async` can utilize view fragment caching to avoid extra AJAX calls.
@@ -209,12 +257,6 @@ To resolve, tell turbolinks to reload your `render_async` call as follows:
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
 `rake spec` to run the tests. You can also run `bin/console` for an interactive
 prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
 
 ## Contributing
 
