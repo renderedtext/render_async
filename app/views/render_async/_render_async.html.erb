@@ -4,12 +4,16 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    (function(){
+    (function() {
       var request = new XMLHttpRequest();
-      request.open("GET", "<%= path %>", true);
+      var asyncRequest = true;
+      var SUCCESS = 200;
+      var ERROR = 400;
+
+      request.open("GET", "<%= path %>", asyncRequest);
 
       request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
+        if (request.status >= SUCCESS && request.status < ERROR) {
           document.getElementById("<%= container_id %>").outerHTML = request.responseText;
         }
       };

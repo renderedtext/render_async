@@ -102,12 +102,15 @@ Rendered code in the view:
 
 <script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
 //<![CDATA[
-  (function(){
+  (function() {
     var request = new XMLHttpRequest();
-    request.open("GET", "/users", true);
+    var asyncRequest = true;
+    var SUCCESS = 200;
+    var ERROR = 400;
+    request.open("GET", "/users", asyncRequest);
 
     request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
+      if (request.status >= SUCCESS && request.status < ERROR) {
         document.getElementById("render_async_18b41794481507226109").outerHTML = request.responseText;
       }
     };
@@ -139,13 +142,16 @@ Rendered code in the view:
 
 <script>
 //<![CDATA[
-  (function(){
+  (function() {
     var request = new XMLHttpRequest();
-    request.open("GET", "/users", true);
+    var asyncRequest = true;
+    var SUCCESS = 200;
+    var ERROR = 400;
+    request.open("GET", "/users", asyncRequest);
 
     request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        document.getElementById("render_async_18b41794481507226109").outerHTML = request.responseText;
+      if (request.status >= SUCCESS && request.status < ERROR) {
+        document.getElementById("render_async_14d7ac165d1505993721").outerHTML = request.responseText;
       }
     };
 
