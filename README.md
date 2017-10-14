@@ -174,7 +174,7 @@ after your partial is loaded through `render_async`.
 
 Example of passing it to `render_async`:
 ```erb
-<%= render_async users_path, "users-loaded" %>
+<%= render_async users_path, :event_name => "users-loaded" %>
 ```
 
 Rendered code in view:
