@@ -4,10 +4,17 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    (function($){
-      $.ajax({ url: "<%= path %>" }).always(function(response) {
-        $("#<%= container_id %>").replaceWith(response);
-      });
-    }(jQuery));
+    (function(){
+      var request = new XMLHttpRequest();
+      request.open("GET", "<%= path %>", true);
+
+      request.onload = function() {
+        if (request.status >= 200 && request.status < 400) {
+          document.getElementById("<%= container_id %>").outerHTML = request.responseText;
+        }
+      };
+
+      request.send();
+    })();
   <% end %>
 <% end %>
