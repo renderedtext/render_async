@@ -102,21 +102,7 @@ Rendered code in the view:
 
 <script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
 //<![CDATA[
-  (function() {
-    var request = new XMLHttpRequest();
-    var asyncRequest = true;
-    var SUCCESS = 200;
-    var ERROR = 400;
-    request.open("GET", "/users", asyncRequest);
-
-    request.onload = function() {
-      if (request.status >= SUCCESS && request.status < ERROR) {
-        document.getElementById("render_async_18b41794481507226109").outerHTML = request.responseText;
-      }
-    };
-
-    request.send();
-  })();
+  ...
 //]]>
 </script>
 ```
@@ -142,21 +128,7 @@ Rendered code in the view:
 
 <script>
 //<![CDATA[
-  (function() {
-    var request = new XMLHttpRequest();
-    var asyncRequest = true;
-    var SUCCESS = 200;
-    var ERROR = 400;
-    request.open("GET", "/users", asyncRequest);
-
-    request.onload = function() {
-      if (request.status >= SUCCESS && request.status < ERROR) {
-        document.getElementById("render_async_14d7ac165d1505993721").outerHTML = request.responseText;
-      }
-    };
-
-    request.send();
-  })();
+  ...
 //]]>
 </script>
 ```
@@ -184,23 +156,9 @@ Rendered code in view:
 
 <script>
 //<![CDATA[
-  (function() {
-    var request = new XMLHttpRequest();
-    var asyncRequest = true;
-    var SUCCESS = 200;
-    var ERROR = 400;
-    request.open("GET", "/users", asyncRequest);
-
-    request.onload = function() {
-      if (request.status >= SUCCESS && request.status < ERROR) {
-        document.getElementById("render_async_04229e7abe1507987376").outerHTML = request.responseText;
-
-        document.dispatchEvent(new Event("users-loaded"));
-      }
-    };
-
-    request.send();
-  })();
+  ...
+    document.dispatchEvent(new Event("users-loaded"));
+  ...
 //]]>
 </script>
 ```
