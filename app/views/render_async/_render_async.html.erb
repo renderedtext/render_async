@@ -6,7 +6,7 @@
   <%= javascript_tag html_options do %>
     if (jQuery) {
       (function($){
-        $.ajax({ url: "<%= path %>" }).always(function(response) {
+        $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
           $("#<%= container_id %>").replaceWith(response);
 
           <% if event_name.present? %>
@@ -21,7 +21,7 @@
         var SUCCESS = 200;
         var ERROR = 400;
 
-        request.open("GET", "<%= path %>", asyncRequest);
+        request.open("GET", "<%= path.html_safe %>", asyncRequest);
 
         request.onload = function() {
           if (request.status >= SUCCESS && request.status < ERROR) {
