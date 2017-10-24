@@ -7,13 +7,13 @@ module RenderAsync
       "render_async_#{path}"
     end
 
-    def render_async_cache(path, options = {})
+    def render_async_cache(path, options = {}, &placeholder)
       cached_view = Rails.cache.read("views/#{render_async_cache_key(path)}")
 
       if cached_view.present?
         render :html => cached_view.html_safe
       else
-        render_async(path, options)
+        render_async(path, options, &placeholder)
       end
     end
 
