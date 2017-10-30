@@ -26,6 +26,7 @@
         request.onload = function() {
           if (request.status >= SUCCESS && request.status < ERROR) {
             var container = document.getElementById("<%= container_id %>");
+            container.parentNode.innerHTML = request.response;
 
             <% if event_name.present? %>
               document.dispatchEvent(new Event("<%= event_name %>"));
