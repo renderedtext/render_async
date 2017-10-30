@@ -4,7 +4,7 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    if (jQuery) {
+    if (window.jQuery) {
       (function($){
         $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
           $("#<%= container_id %>").replaceWith(response);
