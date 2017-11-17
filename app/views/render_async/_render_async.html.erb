@@ -4,7 +4,7 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    if (jQuery) {
+    if (window.jQuery) {
       (function($){
         $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
           $("#<%= container_id %>").replaceWith(response);
@@ -26,6 +26,7 @@
         request.onload = function() {
           if (request.status >= SUCCESS && request.status < ERROR) {
             var container = document.getElementById("<%= container_id %>");
+            container.parentNode.innerHTML = request.response;
 
             <% if event_name.present? %>
               document.dispatchEvent(new Event("<%= event_name %>"));
