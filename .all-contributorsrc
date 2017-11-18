@@ -77,6 +77,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "elsurudo",
+      "name": "Ernest Surudo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/50223?v=4",
+      "profile": "http://elsurudo.com",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
