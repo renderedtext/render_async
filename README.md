@@ -40,7 +40,7 @@ And then execute:
 
 1. Include `render_async` view helper somewhere in your views:
     ```erb
-    # app/views/comments/show.html.erb
+    <%# app/views/comments/show.html.erb %>
 
     <%= render_async comment_stats_path %>
     ```
@@ -65,7 +65,7 @@ And then execute:
 
 4. Create a partial that will render
     ```erb
-    # app/views/comments/_comment_stats.html.erb
+    <%# app/views/comments/_comment_stats.html.erb %>
 
     <div class="col-md-6">
       <%= @stats %>
@@ -74,7 +74,7 @@ And then execute:
 
 5. Add `content_for` in your base view file
     ```erb
-    # application.html.erb
+    <%# application.html.erb %>
 
     <%= content_for :render_async %>
     ```
@@ -176,14 +176,14 @@ document.addEventListener("users-loaded", function() {
 
 In your views:
 ```erb
-# app/views/comments/show.html.erb
+<%# app/views/comments/show.html.erb %>
 
 # note 'render_async_cache' instead of standard 'render_async'
 <%= render_async_cache comment_stats_path %>
 ```
 
 ```erb
-# app/views/comments/_comment_stats.html.erb
+<%# app/views/comments/_comment_stats.html.erb %>
 
 <% cache render_async_cache_key(request.path), :skip_digest => true do %>
   <div class="col-md-6">
