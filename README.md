@@ -38,24 +38,18 @@ And then execute:
 
 ## Usage
 
-1. Include `render_async` view helper somewhere in your views:
+1. Include `render_async` view helper somewhere in your views (e.g. `app/views/comments/show.html.erb`):
     ```erb
-    # app/views/comments/show.html.erb
-
     <%= render_async comment_stats_path %>
     ```
 
-2. Then create a route that will `config/routes.rb`
+2. Then create a route that will `config/routes.rb`:
     ```ruby
-    # config/routes.rb
-
     get :comment_stats, :controller => :comments
     ```
 
-3. Fill in the logic in your controller
+3. Fill in the logic in your controller (e.g. `app/controllers/comments_controller.rb`):
     ```ruby
-    # app/controllers/comments_controller.rb
-
     def comment_stats
       @stats = Comment.get_stats
 
@@ -63,19 +57,15 @@ And then execute:
     end
     ```
 
-4. Create a partial that will render
+4. Create a partial that will render (e.g. `app/views/comments/_comment_stats.html.erb`):
     ```erb
-    # app/views/comments/_comment_stats.html.erb
-
     <div class="col-md-6">
       <%= @stats %>
     </div>
     ```
 
-5. Add `content_for` in your base view file
+5. Add `content_for` in your base view file (e.g. `app/views/layouts/application.html.erb`):
     ```erb
-    # application.html.erb
-
     <%= content_for :render_async %>
     ```
 
@@ -174,17 +164,14 @@ document.addEventListener("users-loaded", function() {
 
 `render_async` can utilize view fragment caching to avoid extra AJAX calls.
 
-In your views:
+In your views (e.g. `app/views/comments/show.html.erb`):
 ```erb
-# app/views/comments/show.html.erb
-
 # note 'render_async_cache' instead of standard 'render_async'
 <%= render_async_cache comment_stats_path %>
 ```
 
+Then, in the partial (e.g. `app/views/comments/_comment_stats.html.erb`):
 ```erb
-# app/views/comments/_comment_stats.html.erb
-
 <% cache render_async_cache_key(request.path), :skip_digest => true do %>
   <div class="col-md-6">
     <%= @stats %>
@@ -207,7 +194,7 @@ likely show up as an empty div.
 To resolve, tell turbolinks to reload your `render_async` call as follows:
 
 ```erb
-  <%= render_async events_path, 'data-turbolinks-track': 'reload' %>
+<%= render_async events_path, 'data-turbolinks-track': 'reload' %>
 ```
 
 ## Development
