@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/render_async.svg)](https://badge.fury.io/rb/render_async)
 [![Code Climate](https://codeclimate.com/github/renderedtext/render_async/badges/gpa.svg)](https://codeclimate.com/github/renderedtext/render_async)
 [![Test Coverage](https://codeclimate.com/github/renderedtext/render_async/badges/coverage.svg)](https://codeclimate.com/github/renderedtext/render_async/coverage)
+[![Help Contribute to Open Source](https://www.codetriage.com/renderedtext/render_async/badges/users.svg)](https://www.codetriage.com/renderedtext/render_async)
 
 ![render_async](https://semaphoreci.com/blog/assets/images/2017-06-08/speed-up-rendering-rails-pages-with-render-async-6c40eb39.png)
 
