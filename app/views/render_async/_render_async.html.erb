@@ -6,12 +6,14 @@
   <%= javascript_tag html_options do %>
     if (window.jQuery) {
       (function($){
-        $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
-          $("#<%= container_id %>").replaceWith(response);
+        $(document).ready(function onDOMReady () {
+          $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
+            $("#<%= container_id %>").replaceWith(response);
 
-          <% if event_name.present? %>
-            document.dispatchEvent(new Event("<%= event_name %>"));
-          <% end %>
+            <% if event_name.present? %>
+              document.dispatchEvent(new Event("<%= event_name %>"));
+            <% end %>
+          });
         });
       }(jQuery));
     } else {
