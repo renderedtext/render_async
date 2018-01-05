@@ -77,9 +77,9 @@ Advanced usage includes information on different options, such as:
   - [Passing in HTML options](#passing-in-html-options)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
-  - [Nested Async Renders](#nested-async-renders)
   - [Caching](#caching)
   - [Using with Turbolinks](#using-with-turbolinks)
+  - [Nested Async Renders](#nested-async-renders)
 
 ### Passing in HTML options
 
@@ -170,33 +170,6 @@ document.addEventListener("users-loaded", function() {
 });
 ```
 
-### Nested Async Renders
-
-It is possible to nest async templates within other async templates. When doing
-so, another `content_for` is required to ensure the JavaScript to trigger async
-loading is included.
-
-For example:
-```erb
-<%# app/views/comments/show.html.erb %>
-
-<%= render_async comment_stats_path %>
-```
-
-```erb
-<%# app/views/comments/_comment_stats.html.erb %>
-
-<div class="col-md-6">
-  <%= @stats %>
-</div>
-
-<div class="col-md-6">
-  <%= render_async comment_advanced_stats_path %>
-</div>
-
-<%= content_for :render_async %>
-```
-
 ## Caching
 
 `render_async` can utilize view fragment caching to avoid extra AJAX calls.
@@ -232,6 +205,33 @@ To resolve, tell turbolinks to reload your `render_async` call as follows:
 
 ```erb
 <%= render_async events_path, 'data-turbolinks-track': 'reload' %>
+```
+
+### Nested Async Renders
+
+It is possible to nest async templates within other async templates. When doing
+so, another `content_for` is required to ensure the JavaScript needed to load
+nested templates is included.
+
+For example:
+```erb
+<%# app/views/comments/show.html.erb %>
+
+<%= render_async comment_stats_path %>
+```
+
+```erb
+<%# app/views/comments/_comment_stats.html.erb %>
+
+<div class="col-md-6">
+  <%= @stats %>
+</div>
+
+<div class="col-md-6">
+  <%= render_async comment_advanced_stats_path %>
+</div>
+
+<%= content_for :render_async %>
 ```
 
 ## Development
