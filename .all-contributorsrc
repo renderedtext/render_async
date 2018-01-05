@@ -95,6 +95,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "schneems",
+      "name": "Richard Schneeman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/59744?v=4",
+      "profile": "https://www.schneems.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
