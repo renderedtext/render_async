@@ -72,6 +72,15 @@ And then execute:
 
 ## Advanced usage
 
+Advanced usage includes information on different options, such as:
+
+  - [Passing in HTML options](#passing-in-html-options)
+  - [Passing in a placeholder](#passing-in-a-placeholder)
+  - [Passing in an event name](#passing-in-an-event-name)
+  - [Nested Async Renders](#nested-async-renders)
+  - [Caching](#caching)
+  - [Using with Turbolinks](#using-with-turbolinks)
+
 ### Passing in HTML options
 
 `render_async` takes two arguments, `path` and `html_options`.
