@@ -170,7 +170,7 @@ document.addEventListener("users-loaded", function() {
 });
 ```
 
-## Caching
+### Caching
 
 `render_async` can utilize view fragment caching to avoid extra AJAX calls.
 
@@ -195,7 +195,7 @@ Then, in the partial (e.g. `app/views/comments/_comment_stats.html.erb`):
 * You can expire cache simply by passing `:expires_in` in your view where
   you cache the partial
 
-## Using with Turbolinks
+### Using with Turbolinks
 
 On Turbolinks applications, you may experience caching issues when navigating
 away from, and then back to, a page with a `render_async` call on it. This will
