@@ -42,6 +42,7 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
+            :html_element_name => "div",
             :container_id => /render_async_/,
             :path => "users",
             :html_options => {},
@@ -65,6 +66,7 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
+            :html_element_name => "div",
             :container_id => /render_async_/,
             :path => "users",
             :html_options => {},
@@ -77,11 +79,30 @@ describe RenderAsync::ViewHelper do
       end
     end
 
+    context "html_element_name is given inside options hash" do
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            :html_element_name => "tr",
+            :container_id => /render_async_/,
+            :path => "users",
+            :html_options => {},
+            :event_name => nil,
+            :placeholder => nil
+          }
+        )
+
+        helper.render_async("users", :html_element_name => "tr")
+      end
+    end
+
     context "called with html hash inside options hash" do
       it "renders render_async partial with proper parameters" do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
+            :html_element_name => "div",
             :container_id => /render_async_/,
             :path => "users",
             :html_options => { :nonce => "jkg1935safd" },
@@ -99,6 +120,7 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
+            :html_element_name => "div",
             :container_id => /render_async_/,
             :path => "users",
             :html_options => {},
@@ -122,6 +144,7 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
+            :html_element_name => "div",
             :container_id => /render_async_/,
             :path => "users",
             :html_options => {},
