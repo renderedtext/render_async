@@ -75,6 +75,7 @@ And then execute:
 Advanced usage includes information on different options, such as:
 
   - [Passing in HTML options](#passing-in-html-options)
+  - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
   - [Caching](#caching)
@@ -105,6 +106,26 @@ Rendered code in the view:
   ...
 //]]>
 </script>
+```
+
+### Passing in an HTML element name
+
+`render_async` can take in an HTML element name, allowing you to control
+what type of container gets rendered. This can be useful when you're using
+[`render_async` inside a table](https://github.com/renderedtext/render_async/issues/12)
+and you need it to render a `tr` element before your request gets loaded, so
+your content doesn't get pushed out of the table.
+
+Example of using HTML element name:
+```erb
+<%= render_async users_path, html_element_name: 'tr' %>
+```
+
+Rendered code in the view:
+```html
+<tr id="render_async_04229e7abe1507987376">
+</tr>
+...
 ```
 
 ### Passing in a placeholder
