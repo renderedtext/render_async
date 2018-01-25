@@ -5,8 +5,8 @@
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
     if (window.jQuery) {
-      (function($){
-        $(document).ready(function onDOMReady () {
+      (function($) {
+        $(document).ready(function() {
           $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
             $("#<%= container_id %>").replaceWith(response);
 
@@ -18,25 +18,27 @@
       }(jQuery));
     } else {
       (function() {
-        var request = new XMLHttpRequest();
-        var asyncRequest = true;
-        var SUCCESS = 200;
-        var ERROR = 400;
+        document.addEventListener("DOMContentLoaded", function() {
+          var request = new XMLHttpRequest();
+          var asyncRequest = true;
+          var SUCCESS = 200;
+          var ERROR = 400;
 
-        request.open("GET", "<%= path.html_safe %>", asyncRequest);
+          request.open("GET", "<%= path.html_safe %>", asyncRequest);
 
-        request.onload = function() {
-          if (request.status >= SUCCESS && request.status < ERROR) {
-            var container = document.getElementById("<%= container_id %>");
-            container.outerHTML = request.response;
+          request.onload = function() {
+            if (request.status >= SUCCESS && request.status < ERROR) {
+              var container = document.getElementById("<%= container_id %>");
+              container.outerHTML = request.response;
 
-            <% if event_name.present? %>
-              document.dispatchEvent(new Event("<%= event_name %>"));
-            <% end %>
-          }
-        };
+              <% if event_name.present? %>
+                document.dispatchEvent(new Event("<%= event_name %>"));
+              <% end %>
+            }
+          };
 
-        request.send();
+          request.send();
+        });
       })();
     }
   <% end %>
