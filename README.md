@@ -228,6 +228,8 @@ To resolve, tell turbolinks to reload your `render_async` call as follows:
 <%= render_async events_path, 'data-turbolinks-track': 'reload' %>
 ```
 
+Make sure the `<%= content_for :render_async %>` call in your base view file is placed in the `head` and not the `body`.
+
 ### Nested Async Renders
 
 It is possible to nest async templates within other async templates. When doing
