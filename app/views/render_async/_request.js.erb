@@ -7,7 +7,7 @@ if (window.jQuery) {
       $.ajax({
         url: '<%= path.html_safe %>',
         method: '<%= method %>',
-        data: '<%= data.to_s.html_safe %>',
+        data: "<%= escape_javascript(data.to_s.html_safe) %>",
         headers: headers
       }).always(function(response) {
         $("#<%= container_id %>").replaceWith(response);
