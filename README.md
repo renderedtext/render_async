@@ -80,7 +80,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in an event name](#passing-in-an-event-name)
   - [Caching](#caching)
   - [Using with Turbolinks](#using-with-turbolinks)
-  - [Using with respond_to and JS format](#using-with-respond-to-and-js-format)
+  - [Using with respond_to and JS format](#using-with-respond_to-and-js-format)
   - [Nested Async Renders](#nested-async-renders)
 
 ### Passing in HTML options
@@ -234,23 +234,27 @@ the `<head>` and not the `<body>`.
 
 ### Using with respond_to and JS format
 
-If you need to restrict the action to only respond to AJAX requests, you'll likely wrap it inside `respond_to`/`format.js` blocks:
+If you need to restrict the action to only respond to AJAX requests, you'll
+likely wrap it inside `respond_to`/`format.js` blocks like this:
 
 ```ruby
 def comment_stats
   respond_to do |format|
     format.js do
       @stats = Comment.get_stats
-      
+
       render :partial => "comment_stats"
     end
   end
 end
 ```
 
-When you do this, Rails sets the response's `Content-Type` header to `text/javascript`. This causes the partial not to be rendered.
+When you do this, Rails will sometime set the response's `Content-Type` header
+to `text/javascript`. This causes the partial not to be rendered in the HTML.
+This usually happens when there's browser caching.
 
-You can get around that by specifying the content type to `text/html` in the render call:
+You can get around it by specifying the content type to `text/html` in the
+render call:
 
 ```ruby
 render :partial => "comment_stats", :content_type => 'text/html'
