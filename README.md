@@ -65,7 +65,7 @@ And then execute:
     </div>
     ```
 
-5. Add `content_for` in your base view file (e.g. `app/views/layouts/application.html.erb`):
+5. Add `content_for` in your base view file in the body part (e.g. `app/views/layouts/application.html.erb`):
     ```erb
     <%= content_for :render_async %>
     ```
