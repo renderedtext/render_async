@@ -1,0 +1,45 @@
+if (window.jQuery) {
+  (function($) {
+    $(document).ready(function() {
+      var headers = <%= headers.to_json.html_safe %>;
+      var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+      if (csrfTokenElement)
+        headers['X-CSRF-Token'] = csrfTokenElement.content
+
+      $.ajax({
+        url: '<%= path.html_safe %>',
+        method: '<%= method %>',
+        data: "<%= escape_javascript(data.to_s.html_safe) %>",
+        headers: headers
+      }).done(function(response) {
+        $("#<%= container_id %>").replaceWith(response);
+
+        <% if event_name.present? %>
+          var event = undefined;
+          if (typeof(Event) === 'function') {
+            event = new Event("<%= event_name %>");
+          } else {
+            event = document.createEvent('Event');
+            event.initEvent('<%= event_name %>', true, true);
+          }
+          document.dispatchEvent(event);
+        <% end %>
+      }).error(function(response) {
+        $("#<%= container_id %>").replaceWith('<%= error_message.try(:html_safe) %>');
+
+        <% if error_event_name.present? %>
+          var event = undefined;
+          if (typeof(Event) === 'function') {
+            event = new Event("<%= error_event_name %>");
+          } else {
+            event = document.createEvent('Event');
+            event.initEvent('<%= error_event_name %>', true, true);
+          }
+          document.dispatchEvent(event);
+        <% end %>
+      });
+    });
+  }(jQuery));
+} else {
+  console.warn("Looks like you've enabled jQuery for render_async, but jQuery is not defined");
+};

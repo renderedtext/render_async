@@ -81,6 +81,7 @@ Advanced usage includes information on different options, such as:
   - [Using with Turbolinks](#using-with-turbolinks)
   - [Using with respond_to and JS format](#using-with-respond_to-and-js-format)
   - [Nested Async Renders](#nested-async-renders)
+  - [Configuration](#configuration)
 
 ### Passing in HTML options
 
@@ -287,6 +288,28 @@ For example:
 </div>
 
 <%= content_for :render_async %>
+```
+
+### Configuration
+
+`render_async` renders Vanilla JS (regular JavaScript, non-jQuery code)
+**by default** in order to fetch the request from the server.
+
+If you want `render_async` to use jQuery code, you need to configure it to do
+so.
+
+You can configure it by doing the following anywhere before you call
+`render_async`:
+```rb
+RenderAsync.configure do |config|
+  jquery = true # This will render jQuery code, and skip Vanilla JS code
+end
+```
+
+Also, you can do it like this:
+```rb
+# This will render jQuery code, and skip Vanilla JS code
+RenderAsync.configuration.jquery = true
 ```
 
 ## Development
