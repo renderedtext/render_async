@@ -19,7 +19,8 @@ module RenderAsync
 
     def render_async(path, options = {}, &placeholder)
       html_element_name = options.delete(:html_element_name) || 'div'
-      container_id = "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
+      container_id = options.delete(:container_id) || generate_container_id
+      container_class = options.delete(:container_class)
       event_name = options.delete(:event_name)
       placeholder = capture(&placeholder) if block_given?
       method = options.delete(:method) || 'GET'
@@ -28,6 +29,7 @@ module RenderAsync
 
       render 'render_async/render_async', html_element_name: html_element_name,
                                           container_id: container_id,
+                                          container_class: container_class,
                                           path: path,
                                           html_options: options,
                                           event_name: event_name,
@@ -37,5 +39,10 @@ module RenderAsync
                                           headers: headers
     end
 
+    private
+
+    def generate_container_id
+      "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
+    end
   end
 end
