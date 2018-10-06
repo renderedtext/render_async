@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["nikolaseap@gmail.com"]
 
   spec.summary       = "Render parts of the page asynchronously with AJAX"
-  spec.description   = "Load parts of your page through simple Javascript and Rails pipeline"
+  spec.description   = "Load parts of your page through simple JavaScript and Rails pipeline"
   spec.homepage      = "https://github.com/renderedtext/render_async"
   spec.license       = "MIT"
 
