@@ -15,7 +15,14 @@ if (window.jQuery) {
         $("#<%= container_id %>").replaceWith(response);
 
         <% if event_name.present? %>
-          document.dispatchEvent(new Event("<%= event_name %>"));
+          var event = undefined;
+          if (typeof(Event) === 'function') {
+            event = new Event("<%= event_name %>")
+          } else {
+            event = document.createEvent('<%= event_name %>_render_async');
+            event.initEvent('<%= event_name %>', true, true);
+          }
+          document.dispatchEvent(event);
         <% end %>
       });
     });
@@ -45,7 +52,14 @@ if (window.jQuery) {
           container.outerHTML = request.response;
 
           <% if event_name.present? %>
-            document.dispatchEvent(new Event("<%= event_name %>"));
+            var event = undefined;
+            if (typeof(Event) === 'function') {
+              event = new Event("<%= event_name %>");
+            } else {
+              event = document.createEvent('<%= event_name %>_render_async');
+              event.initEvent('<%= event_name %>', true, true);
+            }
+            document.dispatchEvent(event);
           <% end %>
         }
       };
