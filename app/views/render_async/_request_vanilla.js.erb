@@ -1,0 +1,56 @@
+(function() {
+  document.addEventListener("DOMContentLoaded", function() {
+    var request = new XMLHttpRequest();
+    var asyncRequest = true;
+    var SUCCESS = 200;
+    var ERROR = 400;
+
+    request.open('<%= method %>', '<%= path.html_safe %>', asyncRequest);
+
+    var headers = <%= headers.to_json.html_safe %>;
+    var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+    if (csrfTokenElement)
+      headers['X-CSRF-Token'] = csrfTokenElement.content
+
+    Object.keys(headers).map(function(key) {
+      request.setRequestHeader(key, headers[key]);
+    });
+
+    request.onreadystatechange = function() {
+      if (request.readyState === 4) {
+        if (request.status >= SUCCESS && request.status < ERROR) {
+          var container = document.getElementById('<%= container_id %>');
+          container.outerHTML = request.response;
+
+          <% if event_name.present? %>
+            var event = undefined;
+            if (typeof(Event) === 'function') {
+              event = new Event("<%= event_name %>");
+            } else {
+              event = document.createEvent('Event');
+              event.initEvent('<%= event_name %>', true, true);
+            }
+            document.dispatchEvent(event);
+          <% end %>
+        } else {
+          var container = document.getElementById('<%= container_id %>');
+          container.outerHTML = '<%= error_message.try(:html_safe) %>';
+
+          <% if error_event_name.present? %>
+            var event = undefined;
+            if (typeof(Event) === 'function') {
+              event = new Event("<%= error_event_name %>");
+            } else {
+              event = document.createEvent('Event');
+              event.initEvent('<%= error_event_name %>', true, true);
+            }
+            document.dispatchEvent(event);
+          <% end %>
+        }
+      }
+    };
+
+    var body = "<%= escape_javascript(data.to_s.html_safe) %>";
+    request.send(body);
+  });
+})();

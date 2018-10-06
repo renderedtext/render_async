@@ -7,15 +7,28 @@
 
 <% content_for :render_async do %>
   <%= javascript_tag html_options do %>
-    <%= render partial: 'render_async/request',
-               formats: [:js],
-               locals:  { container_id: container_id,
-                          path: path,
-                          method: method,
-                          data: data,
-                          event_name: event_name,
-                          headers: headers,
-                          error_message: error_message,
-                          error_event_name: error_event_name } %>
+    <% if RenderAsync.configuration.jquery %>
+      <%= render partial: 'render_async/request_jquery',
+                 formats: [:js],
+                 locals:  { container_id: container_id,
+                            path: path,
+                            method: method,
+                            data: data,
+                            event_name: event_name,
+                            headers: headers,
+                            error_message: error_message,
+                            error_event_name: error_event_name } %>
+    <% else %>
+      <%= render partial: 'render_async/request_vanilla',
+                 formats: [:js],
+                 locals:  { container_id: container_id,
+                            path: path,
+                            method: method,
+                            data: data,
+                            event_name: event_name,
+                            headers: headers,
+                            error_message: error_message,
+                            error_event_name: error_event_name } %>
+    <% end %>
   <% end %>
 <% end %>
