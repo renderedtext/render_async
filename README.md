@@ -45,7 +45,7 @@ And then execute:
 
 2. Then create a route that will `config/routes.rb`:
     ```ruby
-    get :comment_stats, :controller => :comments
+    get :comment_stats, controller: :comments
     ```
 
 3. Fill in the logic in your controller (e.g. `app/controllers/comments_controller.rb`):
@@ -53,7 +53,7 @@ And then execute:
     def comment_stats
       @stats = Comment.get_stats
 
-      render :partial => "comment_stats"
+      render partial: "comment_stats"
     end
     ```
 
@@ -167,7 +167,7 @@ after your partial is loaded through `render_async`.
 
 Example of passing it to `render_async`:
 ```erb
-<%= render_async users_path, :event_name => "users-loaded" %>
+<%= render_async users_path, event_name: "users-loaded" %>
 ```
 
 Rendered code in view:
@@ -191,6 +191,9 @@ document.addEventListener("users-loaded", function() {
 });
 ```
 
+NOTE: Dispatching events is also supported for older browsers that don't
+support Event constructor.
+
 ### Caching
 
 `render_async` can utilize view fragment caching to avoid extra AJAX calls.
@@ -203,7 +206,7 @@ In your views (e.g. `app/views/comments/show.html.erb`):
 
 Then, in the partial (e.g. `app/views/comments/_comment_stats.html.erb`):
 ```erb
-<% cache render_async_cache_key(request.path), :skip_digest => true do %>
+<% cache render_async_cache_key(request.path), skip_digest: true do %>
   <div class="col-md-6">
     <%= @stats %>
   </div>
@@ -242,7 +245,7 @@ def comment_stats
     format.js do
       @stats = Comment.get_stats
 
-      render :partial => "comment_stats"
+      render partial: "comment_stats"
     end
   end
 end
@@ -256,7 +259,7 @@ You can get around it by specifying the content type to `text/html` in the
 render call:
 
 ```ruby
-render :partial => "comment_stats", :content_type => 'text/html'
+render partial: "comment_stats", content_type: 'text/html'
 ```
 
 ### Nested Async Renders
