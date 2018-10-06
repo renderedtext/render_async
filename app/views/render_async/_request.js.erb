@@ -17,9 +17,9 @@ if (window.jQuery) {
         <% if event_name.present? %>
           var event = undefined;
           if (typeof(Event) === 'function') {
-            event = new Event("<%= event_name %>")
+            event = new Event("<%= event_name %>");
           } else {
-            event = document.createEvent('<%= event_name %>_render_async');
+            event = document.createEvent('Event');
             event.initEvent('<%= event_name %>', true, true);
           }
           document.dispatchEvent(event);
@@ -56,7 +56,7 @@ if (window.jQuery) {
             if (typeof(Event) === 'function') {
               event = new Event("<%= event_name %>");
             } else {
-              event = document.createEvent('<%= event_name %>_render_async');
+              event = document.createEvent('Event');
               event.initEvent('<%= event_name %>', true, true);
             }
             document.dispatchEvent(event);
