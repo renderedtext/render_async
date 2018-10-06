@@ -26,6 +26,8 @@ module RenderAsync
       method = options.delete(:method) || 'GET'
       data = options.delete(:data)
       headers = options.delete(:headers) || {}
+      error_message = options.delete(:error_message)
+      error_event_name = options.delete(:error_event_name)
 
       render 'render_async/render_async', html_element_name: html_element_name,
                                           container_id: container_id,
@@ -36,7 +38,9 @@ module RenderAsync
                                           placeholder: placeholder,
                                           method: method,
                                           data: data,
-                                          headers: headers
+                                          headers: headers,
+                                          error_message: error_message,
+                                          error_event_name: error_event_name
     end
 
     private
