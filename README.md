@@ -26,11 +26,10 @@ JavaScript is injected into `<%= content_for :render_async %>` so you choose
 where to put it.
 
 ## Installation
-S
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'Sender_async'
+gem 'render_async'
 ```
 
 And then execute:
