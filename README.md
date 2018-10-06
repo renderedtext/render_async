@@ -73,24 +73,62 @@ And then execute:
 
 Advanced usage includes information on different options, such as:
 
+  - [Passing in a container ID](#passing-in-a-container-id)
+  - [Passing in a container class name](#passing-in-a-container-class-name)
   - [Passing in HTML options](#passing-in-html-options)
   - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
+  - [Handling errors](#handling-errors)
   - [Caching](#caching)
+  - [Doing non-GET requests](#doing-non-get-requests)
   - [Using with Turbolinks](#using-with-turbolinks)
   - [Using with respond_to and JS format](#using-with-respond_to-and-js-format)
   - [Nested Async Renders](#nested-async-renders)
   - [Configuration](#configuration)
 
+### Passing in a container ID
+
+`render_async` renders an element that gets replaced with the content
+of your request response. In order to have more control over the element
+that renders first (before the request), you can set the ID of that element.
+
+To set ID of the container element, you can do the following:
+```erb
+<%= render_async users_path, container_id: 'users-container' %>
+```
+
+Rendered code in the view:
+```html
+<div id="users-container">
+</div>
+
+...
+```
+
+### Passing in a container class name
+
+`render_async` renders an element that gets replaced with the content of your
+request response. If you want to style that element, you can set the class name
+on it.
+
+```erb
+<%= render_async users_path, container_class: 'users-container-class' %>
+```
+
+Rendered code in the view:
+```html
+<div id="render_async_18b8a6cd161499117471" class="users-container-class">
+</div>
+
+...
+```
+
 ### Passing in HTML options
 
-`render_async` takes two arguments, `path` and `html_options`.
-
-* `path` is the AJAX-capable controller action you're looking to call via
-  `GET`. e.g. `comments_stats_path`, `posts_path`, etc.
-* `html_options` is an optional hash that gets passed to a rails
-  `javascript_tag`, to drop html tags into the `script` element.
+`render_async` can accept `html_options` argument.
+`html_options` is an optional hash that gets passed to a Rails'
+`javascript_tag`, to drop HTML tags into the `script` element.
 
 Example of utilizing `html_options` with a `nonce`:
 ```erb
@@ -195,6 +233,35 @@ document.addEventListener("users-loaded", function() {
 NOTE: Dispatching events is also supported for older browsers that don't
 support Event constructor.
 
+### Handling errors
+
+`render_async` let's you handle errors by allowing you to pass in `error_message`
+and `error_event_name`.
+
+- `error_message`
+
+  passing an `error_message` will render a message if the AJAX requests fails for
+  some reason
+  ```erb
+  <%= render_async users_path,
+                   error_message: '<p>Sorry, users loading went wrong :(</p>' %>
+  ```
+
+- `error_event_name`
+
+  calling `render_async` with `error_event_name` will dispatch event in the case
+  of an error with your AJAX call.
+  ```erb
+  <%= render_asyc users_path, error_event_name: 'users-error-event' %>
+  ```
+
+  You can then catch the event in your code with:
+  ```js
+  document.addEventListener('users-error-event', function() {
+    // I'm on it
+  })
+  ```
+
 ### Caching
 
 `render_async` can utilize view fragment caching to avoid extra AJAX calls.
@@ -219,6 +286,25 @@ Then, in the partial (e.g. `app/views/comments/_comment_stats.html.erb`):
   instantly, without making the AJAX call.
 * You can expire cache simply by passing `:expires_in` in your view where
   you cache the partial
+
+### Doing non-GET requests
+
+By default, `render_async` creates AJAX GET requests for the path you provide.
+If you want to change this behaviour, you can pass in a `method` argument to
+`render_async` view helper.
+
+```erb
+<%= render_async users_path, method: 'POST' %>
+```
+
+You can also set `body` and `headers` of the request if you need them.
+
+```erb
+<%= render_async users_path,
+                 method: 'POST',
+                 data: { fresh: 'AF' },
+                 headers: { 'Content-Type': 'text' } %>
+```
 
 ### Using with Turbolinks
 
