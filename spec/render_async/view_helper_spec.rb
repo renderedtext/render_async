@@ -47,7 +47,10 @@ describe RenderAsync::ViewHelper do
             :path => "users",
             :html_options => {},
             :event_name => nil,
-            :placeholder => nil
+            :placeholder => nil,
+            :method => 'GET',
+            :data => nil,
+            :headers => {}
           }
         )
 
@@ -71,7 +74,10 @@ describe RenderAsync::ViewHelper do
             :path => "users",
             :html_options => {},
             :event_name => nil,
-            :placeholder => nil
+            :placeholder => nil,
+            :method => 'GET',
+            :data => nil,
+            :headers => {}
           }
         )
 
@@ -89,7 +95,10 @@ describe RenderAsync::ViewHelper do
             :path => "users",
             :html_options => {},
             :event_name => nil,
-            :placeholder => nil
+            :placeholder => nil,
+            :method => 'GET',
+            :data => nil,
+            :headers => {}
           }
         )
 
@@ -107,7 +116,10 @@ describe RenderAsync::ViewHelper do
             :path => "users",
             :html_options => { :nonce => "jkg1935safd" },
             :event_name => nil,
-            :placeholder => nil
+            :placeholder => nil,
+            :method => 'GET',
+            :data => nil,
+            :headers => {}
           }
         )
 
@@ -125,7 +137,10 @@ describe RenderAsync::ViewHelper do
             :path => "users",
             :html_options => {},
             :event_name => "render_async_done",
-            :placeholder => nil
+            :placeholder => nil,
+            :method => 'GET',
+            :data => nil,
+            :headers => {}
           }
         )
 
@@ -149,11 +164,40 @@ describe RenderAsync::ViewHelper do
             :path => "users",
             :html_options => {},
             :event_name => nil,
-            :placeholder => placeholder
+            :placeholder => placeholder,
+            :method => 'GET',
+            :data => nil,
+            :headers => {}
           }
         )
 
         helper.render_async("users") { placeholder }
+      end
+    end
+
+    context "json post request" do
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            :html_element_name => "div",
+            :container_id => /render_async_/,
+            :path => "users",
+            :html_options => {},
+            :event_name => nil,
+            :placeholder => nil,
+            :method => 'POST',
+            :data => { 'foor' => 'bar' }.to_json,
+            :headers => { 'Content-Type' => 'application/json' }
+          }
+        )
+
+        helper.render_async(
+          "users",
+          :method => 'POST',
+          :data => { 'foor' => 'bar' }.to_json,
+          :headers => { 'Content-Type' => 'application/json' }
+        )
       end
     end
   end

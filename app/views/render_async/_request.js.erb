@@ -1,7 +1,15 @@
 if (window.jQuery) {
   (function($) {
     $(document).ready(function() {
-      $.ajax({ url: "<%= path.html_safe %>" }).always(function(response) {
+      var headers = <%= headers.to_json.html_safe %>;
+      headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').content;
+
+      $.ajax({
+        url: '<%= path.html_safe %>',
+        method: '<%= method %>',
+        data: "<%= escape_javascript(data.to_s.html_safe) %>",
+        headers: headers
+      }).always(function(response) {
         $("#<%= container_id %>").replaceWith(response);
 
         <% if event_name.present? %>
