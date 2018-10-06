@@ -2,7 +2,9 @@ if (window.jQuery) {
   (function($) {
     $(document).ready(function() {
       var headers = <%= headers.to_json.html_safe %>;
-      headers['X-CSRF-Token'] = document.querySelector('meta[name="csrf-token"]').content;
+      var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+      if (csrfTokenElement)
+        headers['X-CSRF-Token'] = csrfTokenElement.content
 
       $.ajax({
         url: '<%= path.html_safe %>',
@@ -26,11 +28,20 @@ if (window.jQuery) {
       var SUCCESS = 200;
       var ERROR = 400;
 
-      request.open("GET", "<%= path.html_safe %>", asyncRequest);
+      request.open('<%= method %>', '<%= path.html_safe %>', asyncRequest);
+
+      var headers = <%= headers.to_json.html_safe %>;
+      var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+      if (csrfTokenElement)
+        headers['X-CSRF-Token'] = csrfTokenElement.content
+
+      Object.keys(headers).map(function(key) {
+        request.setRequestHeader(key, headers[key]);
+      });
 
       request.onload = function() {
         if (request.status >= SUCCESS && request.status < ERROR) {
-          var container = document.getElementById("<%= container_id %>");
+          var container = document.getElementById('<%= container_id %>');
           container.outerHTML = request.response;
 
           <% if event_name.present? %>
@@ -39,7 +50,8 @@ if (window.jQuery) {
         }
       };
 
-      request.send();
+      var body = "<%= escape_javascript(data.to_s.html_safe) %>";
+      request.send(body);
     });
   })();
 }
