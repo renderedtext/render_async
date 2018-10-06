@@ -11,8 +11,8 @@ describe RenderAsync::ViewHelper do
 
   describe "#render_async_cache" do
     let(:cached_view) { double("CachedView",
-                               :html_safe => "<h1>I'm cache</h1>",
-                               :present? => true) }
+                               html_safe: "<h1>I'm cache</h1>",
+                               present?: true) }
     before do
       stub_const("Rails", double("Rails"))
     end
@@ -24,7 +24,7 @@ describe RenderAsync::ViewHelper do
 
       it "renders cached HTML" do
         expect(helper).to receive(:render).with(
-          :html => "<h1>I'm cache</h1>"
+          html: "<h1>I'm cache</h1>"
         )
 
         helper.render_async_cache("users")
@@ -32,7 +32,7 @@ describe RenderAsync::ViewHelper do
     end
 
     context "cache is not present" do
-      let(:empty_cache) { double("EmtpyCache", :present? => false) }
+      let(:empty_cache) { double("EmptyCache", present?: false) }
 
       before do
         allow(Rails).to receive_message_chain(:cache, :read).and_return(empty_cache)
@@ -42,16 +42,18 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
@@ -70,16 +72,18 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
@@ -92,16 +96,18 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => "users-container",
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: "users-container",
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
@@ -114,16 +120,18 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => 'users-placeholder',
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: 'users-placeholder',
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
@@ -136,20 +144,22 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "tr",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "tr",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
-        helper.render_async("users", :html_element_name => "tr")
+        helper.render_async("users", html_element_name: "tr")
       end
     end
 
@@ -158,20 +168,22 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => { :nonce => "jkg1935safd" },
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: { nonce: "jkg1935safd" },
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
-        helper.render_async("users", :nonce => "jkg1935safd")
+        helper.render_async("users", nonce: "jkg1935safd")
       end
     end
 
@@ -180,20 +192,22 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => "render_async_done",
-            :placeholder => nil,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: "render_async_done",
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
-        helper.render_async("users", :event_name => "render_async_done")
+        helper.render_async("users", event_name: "render_async_done")
       end
     end
 
@@ -208,16 +222,18 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => placeholder,
-            :method => 'GET',
-            :data => nil,
-            :headers => {}
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: placeholder,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
@@ -230,24 +246,26 @@ describe RenderAsync::ViewHelper do
         expect(helper).to receive(:render).with(
           "render_async/render_async",
           {
-            :html_element_name => "div",
-            :container_id => /render_async_/,
-            :container_class => nil,
-            :path => "users",
-            :html_options => {},
-            :event_name => nil,
-            :placeholder => nil,
-            :method => 'POST',
-            :data => { 'foor' => 'bar' }.to_json,
-            :headers => { 'Content-Type' => 'application/json' }
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'POST',
+            data: { 'foor' => 'bar' }.to_json,
+            headers: { 'Content-Type' => 'application/json' },
+            error_message: nil,
+            error_event_name: nil
           }
         )
 
         helper.render_async(
           "users",
-          :method => 'POST',
-          :data => { 'foor' => 'bar' }.to_json,
-          :headers => { 'Content-Type' => 'application/json' }
+          method: 'POST',
+          data: { 'foor' => 'bar' }.to_json,
+          headers: { 'Content-Type' => 'application/json' }
         )
       end
     end
