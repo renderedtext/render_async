@@ -24,7 +24,7 @@ if (window.jQuery) {
           }
           document.dispatchEvent(event);
         <% end %>
-      }).error(function(response) {
+      }).fail(function(response) {
         $("#<%= container_id %>").replaceWith('<%= error_message.try(:html_safe) %>');
 
         <% if error_event_name.present? %>
