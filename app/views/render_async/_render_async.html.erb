@@ -17,7 +17,8 @@
                             event_name: event_name,
                             headers: headers,
                             error_message: error_message,
-                            error_event_name: error_event_name } %>
+                            error_event_name: error_event_name,
+                            turbolinks: RenderAsync.configuration.turbolinks } %>
     <% else %>
       <%= render partial: 'render_async/request_vanilla',
                  formats: [:js],
@@ -28,7 +29,8 @@
                             event_name: event_name,
                             headers: headers,
                             error_message: error_message,
-                            error_event_name: error_event_name } %>
+                            error_event_name: error_event_name,
+                            turbolinks: RenderAsync.configuration.turbolinks } %>
     <% end %>
   <% end %>
 <% end %>
