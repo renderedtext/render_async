@@ -1,6 +1,6 @@
 ### 0.4.1 (next)
 
-* [#67](https://github.com/renderedtext/render_async/pull/67): Adding CHANGELOG.md - [@gil27](https://github.com/gil27).
+* [#69](https://github.com/renderedtext/render_async/pull/69): Adding CHANGELOG.md - [@gil27](https://github.com/gil27).
 * Your contribution here.
 
 ### 0.4.0 (2017/09/07)
