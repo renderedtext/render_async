@@ -14,10 +14,8 @@
       "profile": "http://nikoladjuza.me/",
       "contributions": [
         "question",
-        "bug",
         "code",
         "doc",
-        "example",
         "review"
       ]
     },
@@ -125,5 +123,6 @@
         "doc"
       ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
