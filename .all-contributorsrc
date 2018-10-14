@@ -140,6 +140,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "gil27",
+      "name": "Gil Gomes",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1313442?v=4",
+      "profile": "http://gilgomes.com.br",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "repoType": "github"
