@@ -312,11 +312,26 @@ On Turbolinks applications, you may experience caching issues when navigating
 away from, and then back to, a page with a `render_async` call on it. This will
 likely show up as an empty div.
 
-To resolve, tell turbolinks to reload your `render_async` call as follows:
+If you're using Turbolinks 5 or higher, you can resolve this by setting Turbolinks
+configurtion of `render_async` to true:
+
+```rb
+RenderAsync.configure do |config|
+  config.turbolinks = true # Enable this option if you are using Turbolinks 5+
+end
+```
+
+This way, you're not breaking Turbolinks flow of loading or reloading a page.
+It makes it more efficient that the next option that is suggested below.
+
+Another option:
+If you want, you can tell Turbolinks to reload your `render_async` call as follows:
 
 ```erb
 <%= render_async events_path, 'data-turbolinks-track': 'reload' %>
 ```
+
+This will reload the whole page with Turbolinks.
 
 Make sure to put `<%= content_for :render_async %>` in your base view file in
 the `<head>` and not the `<body>`.
