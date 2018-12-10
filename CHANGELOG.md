@@ -1,7 +1,8 @@
-### 2.0.1 (next)
+### 2.0.1 (2018/12/10)
 
 * [#69](https://github.com/renderedtext/render_async/pull/69): Adding CHANGELOG.md - [@gil27](https://github.com/gil27).
-* Your contribution here.
+* [#66](https://github.com/renderedtext/render_async/pull/66): Adding support for Turbolinks 5+ - [@eclemens](https://github.com/eclemens).
+* [#65](https://github.com/renderedtext/render_async/pull/65): Invalid jQuery Promise method name - [@eclemens](https://github.com/eclemens).
 
 ### 2.0.0 (2018/10/06)
 
