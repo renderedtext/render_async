@@ -1,5 +1,11 @@
 (function() {
-  document.addEventListener("DOMContentLoaded", function() {
+  <% if turbolinks %>
+  if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
+    return;
+  }
+  <% end %>
+  
+  var _listener = function() {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
     var SUCCESS = 200;
@@ -52,5 +58,14 @@
 
     var body = "<%= escape_javascript(data.to_s.html_safe) %>";
     request.send(body);
+  };
+
+  <% if turbolinks %>
+  document.addEventListener("turbolinks:load", function (e) {
+    e.target.removeEventListener(e.type, arguments.callee);
+    _listener.call(this);
   });
+  <% else %>
+  document.addEventListener("DOMContentLoaded", _listener);
+  <% end %>
 })();

@@ -1,6 +1,12 @@
 if (window.jQuery) {
   (function($) {
-    $(document).ready(function() {
+    <% if turbolinks %>
+    if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
+      return;
+    }
+    <% end %>
+
+    var _listener = function() {
       var headers = <%= headers.to_json.html_safe %>;
       var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
       if (csrfTokenElement)
@@ -38,7 +44,13 @@ if (window.jQuery) {
           document.dispatchEvent(event);
         <% end %>
       });
-    });
+    };
+
+    <% if turbolinks %>
+    $(document).one('turbolinks:load', _listener);
+    <% else %>
+    $(document).ready(_listener);
+    <% end %>
   }(jQuery));
 } else {
   console.warn("Looks like you've enabled jQuery for render_async, but jQuery is not defined");
