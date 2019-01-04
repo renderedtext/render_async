@@ -1,3 +1,7 @@
+### 2.0.2 (2019/1/4)
+
+* [#74](https://github.com/renderedtext/render_async/pull/74): Remove bundler as a dependency - [@nikolalsvk](https://github.com/nikolalsvk).
+
 ### 2.0.1 (2018/12/10)
 
 * [#69](https://github.com/renderedtext/render_async/pull/69): Adding CHANGELOG.md - [@gil27](https://github.com/gil27).
