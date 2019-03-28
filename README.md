@@ -5,7 +5,7 @@
 [![Test Coverage](https://codeclimate.com/github/renderedtext/render_async/badges/coverage.svg)](https://codeclimate.com/github/renderedtext/render_async/coverage)
 [![Help Contribute to Open Source](https://www.codetriage.com/renderedtext/render_async/badges/users.svg)](https://www.codetriage.com/renderedtext/render_async)
 
-![render_async](https://semaphoreci.com/blog/assets/images/2017-06-08/speed-up-rendering-rails-pages-with-render-async-6c40eb39.png)
+![render_async](http://s2blog.wpengine.com/wp-content/uploads/assets/images/2017-06-08/speed-up-rendering-rails-pages-with-render-async.png)
 
 # render_async
 
