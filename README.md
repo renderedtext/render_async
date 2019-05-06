@@ -79,6 +79,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
+  - [Retry on failure](#retry-on-failure)
   - [Polling](#polling)
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
@@ -233,6 +234,20 @@ document.addEventListener("users-loaded", function() {
 
 NOTE: Dispatching events is also supported for older browsers that don't
 support Event constructor.
+
+### Retry on failure
+
+`render_async` can retry your requests if they fail for some reason.
+
+If you want `render_async` to retry a request for number of times, you can do
+this:
+```erb
+<%= render_async users_path, retry_count: 5, error_message: "Couldn't fetch it" %>
+```
+
+Now render_async will retry `users_path` for 5 times. If it succedes in
+between, it will stop with dispatching requests. If it fails after 5 times,
+it will show an [error message](#handling-errors) which you need to specify.
 
 ### Polling
 
