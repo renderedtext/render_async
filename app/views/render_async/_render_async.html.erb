@@ -19,6 +19,7 @@
                             error_message: error_message,
                             error_event_name: error_event_name,
                             retry_count: retry_count,
+                            interval: interval,
                             turbolinks: RenderAsync.configuration.turbolinks } %>
     <% else %>
       <%= render partial: 'render_async/request_vanilla',
@@ -32,6 +33,7 @@
                             error_message: error_message,
                             error_event_name: error_event_name,
                             retry_count: retry_count,
+                            interval: interval,
                             turbolinks: RenderAsync.configuration.turbolinks } %>
     <% end %>
   <% end %>

@@ -79,6 +79,8 @@ Advanced usage includes information on different options, such as:
   - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
+  - [Retry on failure](#retry-on-failure)
+  - [Polling](#polling)
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
   - [Doing non-GET requests](#doing-non-get-requests)
@@ -232,6 +234,42 @@ document.addEventListener("users-loaded", function() {
 
 NOTE: Dispatching events is also supported for older browsers that don't
 support Event constructor.
+
+### Retry on failure
+
+`render_async` can retry your requests if they fail for some reason.
+
+If you want `render_async` to retry a request for number of times, you can do
+this:
+```erb
+<%= render_async users_path, retry_count: 5, error_message: "Couldn't fetch it" %>
+```
+
+Now render_async will retry `users_path` for 5 times. If it succedes in
+between, it will stop with dispatching requests. If it fails after 5 times,
+it will show an [error message](#handling-errors) which you need to specify.
+
+This can show useful when you know your requests often fail, and you don't want
+to refresh the whole page just to retry them.
+
+### Polling
+
+You can call `render_async` with interval argument. This will make render_async
+call specified path at specified interval.
+
+By doing this:
+```erb
+<%= render_async comments_path, interval: 5000 %>
+```
+You are telling `render_async` to fetch comments_path every 5 seconds.
+
+This can be handy if you want to enable polling for a specific URL.
+
+NOTE: By passing interval to `render_async`, initial container element
+will remain in HTML tree, it will not be replaced with request response.
+You can handle how that container element is rendered and its style by 
+[passing in an HTML element name](#passing-in-an-html-element-name) and 
+[HTML element class](#passing-in-a-container-class-name).
 
 ### Handling errors
 
