@@ -5,7 +5,7 @@
   }
   <% end %>
   
-  var _listener = function() {
+  var _listener = function(currentRetryCount) {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
     var SUCCESS = 200;
@@ -39,6 +39,13 @@
             document.dispatchEvent(event);
           <% end %>
         } else {
+          var skipErrorMessage = false;
+          <% if retry_count > 0 %>
+          skipErrorMessage = retry(currentRetryCount)
+          <% end %>
+
+          if (skipErrorMessage) return;
+
           var container = document.getElementById('<%= container_id %>');
           container.outerHTML = '<%= error_message.try(:html_safe) %>';
 
@@ -59,6 +66,21 @@
     var body = "<%= escape_javascript(data.to_s.html_safe) %>";
     request.send(body);
   };
+
+  <% if retry_count > 0 %>
+  var retry = function(currentRetryCount) {
+    if (typeof(currentRetryCount) === 'number') {
+      if (currentRetryCount >= <%= retry_count %>)
+        return false;
+
+      _listener(currentRetryCount + 1);
+      return true;
+    }
+
+    _listener(1);
+    return true;
+  }
+  <% end %>
 
   <% if turbolinks %>
   document.addEventListener("turbolinks:load", function (e) {
