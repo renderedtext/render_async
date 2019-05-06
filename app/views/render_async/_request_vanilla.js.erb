@@ -26,7 +26,11 @@
       if (request.readyState === 4) {
         if (request.status >= SUCCESS && request.status < ERROR) {
           var container = document.getElementById('<%= container_id %>');
+          <% if interval %>
+          container.innerHTML = request.response;
+          <% else %>
           container.outerHTML = request.response;
+          <% end %>
 
           <% if event_name.present? %>
             var event = undefined;
@@ -87,6 +91,11 @@
     e.target.removeEventListener(e.type, arguments.callee);
     _listener.call(this);
   });
+  <% elsif interval %>
+  var _intervalFunction = function() {
+    setInterval(_listener, <%= interval %>)
+  }
+  document.addEventListener("DOMContentLoaded", _intervalFunction);
   <% else %>
   document.addEventListener("DOMContentLoaded", _listener);
   <% end %>

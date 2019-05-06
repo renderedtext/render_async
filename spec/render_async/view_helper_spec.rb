@@ -54,7 +54,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -85,7 +86,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -110,7 +112,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -135,7 +138,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -160,7 +164,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -185,7 +190,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -210,7 +216,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -241,7 +248,8 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -266,7 +274,8 @@ describe RenderAsync::ViewHelper do
             headers: { 'Content-Type' => 'application/json' },
             error_message: nil,
             error_event_name: nil,
-            retry_count: 0
+            retry_count: 0,
+            interval: nil
           }
         )
 
@@ -296,13 +305,43 @@ describe RenderAsync::ViewHelper do
             headers: {},
             error_message: nil,
             error_event_name: nil,
-            retry_count: 5
+            retry_count: 5,
+            interval: nil
           }
         )
 
         helper.render_async(
           "users",
           retry_count: 5
+        )
+      end
+    end
+
+    context "interval is given" do
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil,
+            retry_count: 0,
+            interval: 5000
+          }
+        )
+
+        helper.render_async(
+          "users",
+          interval: 5000
         )
       end
     end

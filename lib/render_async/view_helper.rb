@@ -29,6 +29,7 @@ module RenderAsync
       error_message = options.delete(:error_message)
       error_event_name = options.delete(:error_event_name)
       retry_count = options.delete(:retry_count) || 0
+      interval = options.delete(:interval)
 
       render 'render_async/render_async', html_element_name: html_element_name,
                                           container_id: container_id,
@@ -42,7 +43,8 @@ module RenderAsync
                                           headers: headers,
                                           error_message: error_message,
                                           error_event_name: error_event_name,
-                                          retry_count: retry_count
+                                          retry_count: retry_count,
+                                          interval: interval
     end
 
     private
