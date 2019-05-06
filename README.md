@@ -79,6 +79,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
+  - [Polling](#polling)
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
   - [Doing non-GET requests](#doing-non-get-requests)
@@ -232,6 +233,25 @@ document.addEventListener("users-loaded", function() {
 
 NOTE: Dispatching events is also supported for older browsers that don't
 support Event constructor.
+
+### Polling
+
+You can call `render_async` with interval argument. This will make render_async
+call specified path at specified interval.
+
+By doing this:
+```erb
+<%= render_async comments_path, interval: 5000 %>
+```
+You are telling `render_async` to fetch comments_path every 5 seconds.
+
+This can be handy if you want to enable polling for a specific URL.
+
+NOTE: By passing interval to `render_async`, initial container element
+will remain in HTML tree, it will not be replaced with request response.
+You can handle how that container element is rendered and its style by 
+[passing in an HTML element name](#passing-in-an-html-element-name) and 
+[HTML element class](#passing-in-a-container-class-name).
 
 ### Handling errors
 
