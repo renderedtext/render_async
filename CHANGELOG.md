@@ -1,3 +1,8 @@
+### 2.1.0 (2019/5/6)
+
+* [#77](https://github.com/renderedtext/render_async/pull/77): Call render_async logic every N seconds - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#76](https://github.com/renderedtext/render_async/pull/76): Retry render_async on failure - [@nikolalsvk](https://github.com/nikolalsvk).
+
 ### 2.0.2 (2019/1/4)
 
 * [#74](https://github.com/renderedtext/render_async/pull/74): Remove bundler as a dependency - [@nikolalsvk](https://github.com/nikolalsvk).
