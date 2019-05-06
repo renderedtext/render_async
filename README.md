@@ -249,6 +249,9 @@ Now render_async will retry `users_path` for 5 times. If it succedes in
 between, it will stop with dispatching requests. If it fails after 5 times,
 it will show an [error message](#handling-errors) which you need to specify.
 
+This can show useful when you know your requests often fail, and you don't want
+to refresh the whole page just to retry them.
+
 ### Polling
 
 You can call `render_async` with interval argument. This will make render_async
