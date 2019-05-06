@@ -93,7 +93,8 @@
   });
   <% elsif interval %>
   var _intervalFunction = function() {
-    setInterval(_listener, <%= interval %>)
+    _listener();
+    setInterval(_listener, <%= interval %>);
   }
   document.addEventListener("DOMContentLoaded", _intervalFunction);
   <% else %>

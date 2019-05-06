@@ -77,9 +77,10 @@ if (window.jQuery) {
     $(document).one('turbolinks:load', _listener);
     <% elsif interval %>
     var _intervalFunction = function() {
-      setInterval(_listener, <%= interval %>)
+      _listener();
+      setInterval(_listener, <%= interval %>);
     }
-    $(document).ready(_intervalFunction)
+    $(document).ready(_intervalFunction);
     <% else %>
     $(document).ready(_listener);
     <% end %>
