@@ -6,7 +6,7 @@ if (window.jQuery) {
     }
     <% end %>
 
-    var _listener = function() {
+    var _listener = function(currentRetryCount) {
       var headers = <%= headers.to_json.html_safe %>;
       var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
       if (csrfTokenElement)
@@ -31,6 +31,13 @@ if (window.jQuery) {
           document.dispatchEvent(event);
         <% end %>
       }).fail(function(response) {
+        var skipErrorMessage = true;
+        <% if retry_count > 0 %>
+        skipErrorMessage = retry(currentRetryCount)
+        <% end %>
+
+        if (skipErrorMessage) return;
+
         $("#<%= container_id %>").replaceWith('<%= error_message.try(:html_safe) %>');
 
         <% if error_event_name.present? %>
@@ -45,6 +52,21 @@ if (window.jQuery) {
         <% end %>
       });
     };
+
+    <% if retry_count > 0 %>
+    var retry = function(currentRetryCount) {
+      if (typeof(currentRetryCount) === 'number') {
+        if (currentRetryCount >= <%= retry_count %>)
+          return false;
+
+        _listener(currentRetryCount + 1);
+        return true;
+      }
+
+      _listener(1);
+      return true;
+    }
+    <% end %>
 
     <% if turbolinks %>
     $(document).one('turbolinks:load', _listener);
