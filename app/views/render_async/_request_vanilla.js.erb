@@ -39,7 +39,7 @@
             document.dispatchEvent(event);
           <% end %>
         } else {
-          var skipErrorMessage = true;
+          var skipErrorMessage = false;
           <% if retry_count > 0 %>
           skipErrorMessage = retry(currentRetryCount)
           <% end %>

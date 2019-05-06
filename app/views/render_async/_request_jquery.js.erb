@@ -31,7 +31,7 @@ if (window.jQuery) {
           document.dispatchEvent(event);
         <% end %>
       }).fail(function(response) {
-        var skipErrorMessage = true;
+        var skipErrorMessage = false;
         <% if retry_count > 0 %>
         skipErrorMessage = retry(currentRetryCount)
         <% end %>
