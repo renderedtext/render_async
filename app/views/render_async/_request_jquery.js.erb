@@ -77,8 +77,30 @@ if (window.jQuery) {
     $(document).one('turbolinks:load', _listener);
     <% elsif interval %>
     var _intervalFunction = function() {
+      var _interval;
+      <% if start_poll_event_name %>
+        document.addEventListener("<%= start_poll_event_name %>", function() { 
+          if (!_interval) {
+            <% if start_poll_on_page_load %>
+            _listener();
+            <% end %>
+            _interval = setInterval(_listener, <%= interval %>);
+          }
+        })
+        <% if start_poll_on_page_load %>
+        _listener();
+        _interval = setInterval(_listener, <%= interval %>);
+        <% end %>
+      <% else %>
       _listener();
-      setInterval(_listener, <%= interval %>);
+      _interval = setInterval(_listener, <%= interval %>);
+      <% end %>
+      <% if stop_poll_event_name %>
+      document.addEventListener("<%= stop_poll_event_name %>", function() {
+        clearInterval(_interval);
+        _interval = undefined;
+      });
+      <% end %>
     }
     $(document).ready(_intervalFunction);
     <% else %>

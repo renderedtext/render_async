@@ -6,7 +6,7 @@
 </<%= html_element_name %>>
 
 <% content_for :render_async do %>
-  <%= javascript_tag html_options do %>
+  <%= javascript_tag script_html_options do %>
     <% if RenderAsync.configuration.jquery %>
       <%= render partial: 'render_async/request_jquery',
                  formats: [:js],
@@ -20,6 +20,9 @@
                             error_event_name: error_event_name,
                             retry_count: retry_count,
                             interval: interval,
+                            start_poll_on_page_load: start_poll_on_page_load,
+                            start_poll_event_name: start_poll_event_name,
+                            stop_poll_event_name: stop_poll_event_name,
                             turbolinks: RenderAsync.configuration.turbolinks } %>
     <% else %>
       <%= render partial: 'render_async/request_vanilla',
@@ -34,6 +37,9 @@
                             error_event_name: error_event_name,
                             retry_count: retry_count,
                             interval: interval,
+                            start_poll_on_page_load: start_poll_on_page_load,
+                            start_poll_event_name: start_poll_event_name,
+                            stop_poll_event_name: stop_poll_event_name,
                             turbolinks: RenderAsync.configuration.turbolinks } %>
     <% end %>
   <% end %>
