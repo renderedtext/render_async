@@ -46,7 +46,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -55,7 +55,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -78,7 +81,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -87,7 +90,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -104,7 +110,7 @@ describe RenderAsync::ViewHelper do
             container_id: "users-container",
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -113,7 +119,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -130,7 +139,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: 'users-placeholder',
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -139,7 +148,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -156,7 +168,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -165,7 +177,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -182,7 +197,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: { nonce: "jkg1935safd" },
+            script_html_options: { nonce: "jkg1935safd" },
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -191,11 +206,14 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
-        helper.render_async("users", nonce: "jkg1935safd")
+        helper.render_async("users", script_html_options: { nonce: "jkg1935safd" })
       end
     end
 
@@ -208,7 +226,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: "render_async_done",
             placeholder: nil,
             method: 'GET',
@@ -217,7 +235,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -240,7 +261,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: placeholder,
             method: 'GET',
@@ -249,7 +270,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -266,7 +290,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'POST',
@@ -275,7 +299,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -297,7 +324,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -306,7 +333,10 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 5,
-            interval: nil
+            interval: nil,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
@@ -326,7 +356,7 @@ describe RenderAsync::ViewHelper do
             container_id: /render_async_/,
             container_class: nil,
             path: "users",
-            html_options: {},
+            script_html_options: nil,
             event_name: nil,
             placeholder: nil,
             method: 'GET',
@@ -335,13 +365,48 @@ describe RenderAsync::ViewHelper do
             error_message: nil,
             error_event_name: nil,
             retry_count: 0,
-            interval: 5000
+            interval: 5000,
+            start_poll_on_page_load: nil,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
           }
         )
 
         helper.render_async(
           "users",
           interval: 5000
+        )
+      end
+    end
+
+    context "start_polling_on_page_load is given" do
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            script_html_options: nil,
+            event_name: nil,
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil,
+            retry_count: 0,
+            interval: nil,
+            start_poll_on_page_load: true,
+            start_poll_event_name: nil,
+            stop_poll_event_name: nil
+          }
+        )
+
+        helper.render_async(
+          "users",
+          start_poll_on_page_load: true
         )
       end
     end
