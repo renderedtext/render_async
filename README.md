@@ -82,7 +82,7 @@ Advanced usage includes information on different options, such as:
   - [Retry on failure](#retry-on-failure)
   - [Polling](#polling)
     - [Stop polling](#stop-polling)
-    - [Start polling][#start-polling]
+    - [Start polling](#start-polling)
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
   - [Doing non-GET requests](#doing-non-get-requests)
@@ -315,8 +315,8 @@ Which you can emit by doing the following:
 ```html
 <button id='start-poll'>Start poll</button>
 <script>
-  var stopPollElement = document.getElementById('start-poll')
-  stopPollElement.addEventListener('click', function() {
+  var startPollElement = document.getElementById('start-poll')
+  startPollElement.addEventListener('click', function() {
     var event = new Event('start-polling')
     document.dispatchEvent(event)
   })
