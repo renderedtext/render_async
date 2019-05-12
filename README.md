@@ -81,6 +81,8 @@ Advanced usage includes information on different options, such as:
   - [Passing in an event name](#passing-in-an-event-name)
   - [Retry on failure](#retry-on-failure)
   - [Polling](#polling)
+    - [Stop polling](#stop-polling)
+    - [Start polling][#start-polling]
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
   - [Doing non-GET requests](#doing-non-get-requests)
@@ -262,7 +264,8 @@ By doing this:
 ```erb
 <%= render_async comments_path, interval: 5000 %>
 ```
-You are telling `render_async` to fetch comments_path every 5 seconds.
+You are telling `render_async` to fetch comments_path every 5 seconds,
+starting imidiatelly after the page is ready.
 
 This can be handy if you want to enable polling for a specific URL.
 
@@ -271,6 +274,61 @@ will remain in HTML tree, it will not be replaced with request response.
 You can handle how that container element is rendered and its style by 
 [passing in an HTML element name](#passing-in-an-html-element-name) and 
 [HTML element class](#passing-in-a-container-class-name).
+
+#### Stop polling
+
+If you need to stop polling for some reason, you can do that by emitting an
+event with the `stop_poll_event_name` option you can pass to `render_async`.
+
+```erb
+<%= render_async comments_path, interval: 5000,
+                                stop_poll_event_name: 'stop-right-there' %>
+```
+
+Which you can emit by doing the following:
+```html
+<button id='stop-poll'>Stop poll</button>
+<script>
+  var stopPollElement = document.getElementById('stop-poll')
+  stopPollElement.addEventListener('click', function() {
+    var event = new Event('stop-right-there')
+    document.dispatchEvent(event)
+  })
+</script>
+```
+
+`render_async` is expecting the event to be dispatched from the document, not
+the button element in previous example.
+
+#### Start polling
+
+There is also an option to start polling after an event is emitted. You can
+pass `start_poll_event_name` to have `render_async` start polling after event
+is dispatched.
+
+```erb
+<%= render_async comments_path, interval: 5000,
+                                start_poll_event_name: 'start-polling' %>
+```
+
+Which you can emit by doing the following:
+```html
+<button id='start-poll'>Start poll</button>
+<script>
+  var stopPollElement = document.getElementById('start-poll')
+  stopPollElement.addEventListener('click', function() {
+    var event = new Event('start-polling')
+    document.dispatchEvent(event)
+  })
+</script>
+```
+
+If you want to start polling on page being ready, you can pass in
+`start_poll_on_page_load` as true. This is only to be used with
+`start_poll_event_name` option if you want to start polling imidiatelly. It
+might be useful if you want to implement "Start" and "Stop" buttons that let
+user dictate wether he wants polling to start or stop, but have it started as
+soon as he sees the page.
 
 ### Handling errors
 
