@@ -22,6 +22,7 @@ module RenderAsync
       container_id = options.delete(:container_id) || generate_container_id
       container_class = options.delete(:container_class)
       event_name = options.delete(:event_name)
+      toggle = options.delete(:toggle)
       placeholder = capture(&placeholder) if block_given?
       method = options.delete(:method) || 'GET'
       data = options.delete(:data)
@@ -37,6 +38,7 @@ module RenderAsync
                                           path: path,
                                           html_options: options,
                                           event_name: event_name,
+                                          toggle: toggle,
                                           placeholder: placeholder,
                                           method: method,
                                           data: data,

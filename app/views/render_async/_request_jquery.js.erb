@@ -81,6 +81,11 @@ if (window.jQuery) {
       setInterval(_listener, <%= interval %>);
     }
     $(document).ready(_intervalFunction);
+    <% elsif toggle %>
+    $(document).on('<%= toggle[:event] %>', '<%= toggle[:selector]%>', function(event) {
+      event.preventDefault();
+      _listener();
+    });
     <% else %>
     $(document).ready(_listener);
     <% end %>
