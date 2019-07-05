@@ -252,6 +252,21 @@ it will show an [error message](#handling-errors) which you need to specify.
 This can show useful when you know your requests often fail, and you don't want
 to refresh the whole page just to retry them.
 
+### Toggle event
+
+```erb
+<a href='#' id='detail-button'>detail</a>
+<%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } %>
+```
+
+With toggle element in placeholder
+
+```erb
+<%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } do %>
+  <a href='#' id='detail-button'>detail</a>
+<% end %>
+```
+
 ### Polling
 
 You can call `render_async` with interval argument. This will make render_async
@@ -267,8 +282,8 @@ This can be handy if you want to enable polling for a specific URL.
 
 NOTE: By passing interval to `render_async`, initial container element
 will remain in HTML tree, it will not be replaced with request response.
-You can handle how that container element is rendered and its style by 
-[passing in an HTML element name](#passing-in-an-html-element-name) and 
+You can handle how that container element is rendered and its style by
+[passing in an HTML element name](#passing-in-an-html-element-name) and
 [HTML element class](#passing-in-a-container-class-name).
 
 ### Handling errors
