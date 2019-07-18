@@ -253,6 +253,11 @@ This can show useful when you know your requests often fail, and you don't want
 to refresh the whole page just to retry them.
 
 ### Toggle event
+If you want to call `render_async` on click or another event, you can do this
+
+**Applied cases:**
+- Click to load all items
+- Click to show detail
 
 ```erb
 <a href='#' id='detail-button'>detail</a>
