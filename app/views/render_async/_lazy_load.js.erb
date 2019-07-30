@@ -1,0 +1,21 @@
+var lazyLoaded = function(element) {
+    element.setAttribute("data-loaded", true)
+}
+
+var isLazyLoaded = function (element) {
+    return "true" === element.getAttribute("data-loaded")
+};
+var _lazyListener = function () {
+    var observer = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+            if(0 < entry.intersectionRatio || entry.isIntersecting){
+                if(!isLazyLoaded(entry.target)){
+                    _listener();
+                    observer.unobserve(entry.target);
+                }
+            }
+        })
+    }, {rootMargin: '0px', threshold: 0});
+
+    observer.observe(document.getElementById("<%= container_id %>"))
+}

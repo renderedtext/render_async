@@ -26,6 +26,8 @@
       if (request.readyState === 4) {
         if (request.status >= SUCCESS && request.status < ERROR) {
           var container = document.getElementById('<%= container_id %>');
+          lazyLoaded(container);
+
           <% if interval %>
           container.innerHTML = request.response;
           <% else %>
@@ -86,10 +88,20 @@
   }
   <% end %>
 
+    <% if lazy_load %>
+    <%= render partial: 'render_async/lazy_load',
+               formats: [:js],
+               locals:  { container_id: container_id } %>
+    <% end %>
+
   <% if turbolinks %>
   document.addEventListener("turbolinks:load", function (e) {
     e.target.removeEventListener(e.type, arguments.callee);
-    _listener.call(this);
+      <% if lazy_load %>
+        _lazyListener();
+      <% else %>
+        _listener.call(this);
+      <% end %>
   });
   <% elsif interval %>
   var _intervalFunction = function() {
@@ -98,6 +110,10 @@
   }
   document.addEventListener("DOMContentLoaded", _intervalFunction);
   <% else %>
-  document.addEventListener("DOMContentLoaded", _listener);
+    <% if lazy_load %>
+      document.addEventListener("DOMContentLoaded", _lazyListener);
+    <% else %>
+      document.addEventListener("DOMContentLoaded", _listener);
+    <% end %>
   <% end %>
 })();

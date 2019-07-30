@@ -5,7 +5,6 @@ if (window.jQuery) {
       return;
     }
     <% end %>
-
     var _listener = function(currentRetryCount) {
       var headers = <%= headers.to_json.html_safe %>;
       var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
@@ -18,7 +17,9 @@ if (window.jQuery) {
         data: "<%= escape_javascript(data.to_s.html_safe) %>",
         headers: headers
       }).done(function(response) {
-        <% if interval %>
+          lazyLoaded(document.getElementById("<%= container_id %>"));
+
+          <% if interval %>
           $("#<%= container_id %>").empty();
           $("#<%= container_id %>").append(response);
         <% else %>
@@ -73,16 +74,30 @@ if (window.jQuery) {
     }
     <% end %>
 
+      <% if lazy_load %>
+      <%= render partial: 'render_async/lazy_load',
+                 formats: [:js],
+                 locals:  { container_id: container_id } %>
+      <% end %>
+
     <% if turbolinks %>
-    $(document).one('turbolinks:load', _listener);
+      <% if lazy_load %>
+        $(document).one('turbolinks:load',  _lazyListener);
+      <% else %>
+        $(document).one('turbolinks:load', _listener);
+      <% end %>
     <% elsif interval %>
-    var _intervalFunction = function() {
-      _listener();
-      setInterval(_listener, <%= interval %>);
-    }
+      var _intervalFunction = function() {
+        _listener();
+        setInterval(_listener, <%= interval %>);
+      }
     $(document).ready(_intervalFunction);
     <% else %>
-    $(document).ready(_listener);
+      <% if lazy_load %>
+        $(document).ready(_lazyListener);
+      <% else %>
+        $(document).ready(_listener);
+      <% end %>
     <% end %>
   }(jQuery));
 } else {
