@@ -80,6 +80,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
   - [Retry on failure](#retry-on-failure)
+  - [Toggle event](#toggle-event)
   - [Polling](#polling)
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
@@ -253,23 +254,31 @@ This can show useful when you know your requests often fail, and you don't want
 to refresh the whole page just to retry them.
 
 ### Toggle event
-If you want to call `render_async` on click or another event, you can do this
 
-**Applied cases:**
-- Click to load all items
-- Click to show detail
+If you want to call `render_async` on click or another event you can specify.
+If you don't specifiy an event name, the default would be 'click' event. You
+can do this by doing the following:
 
 ```erb
 <a href='#' id='detail-button'>detail</a>
 <%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } %>
 ```
 
-With toggle element in placeholder
+This will trigger render_async to load the `comments_path` when you click the `#details-button` element.
+
+You can also pass in a placeholder before the render_async is triggered:
 
 ```erb
 <%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } do %>
   <a href='#' id='detail-button'>detail</a>
 <% end %>
+```
+
+Also, you can mix interval and toggle features like this:
+
+```erb
+<a href='#' id='detail-button'>detail</a>
+<%= render_async comments_path, toggle: { selector: '#detail-button', event: :click }, interval: 2000 %>
 ```
 
 ### Polling
