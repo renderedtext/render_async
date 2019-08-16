@@ -18,35 +18,44 @@ module RenderAsync
     end
 
     def render_async(path, options = {}, &placeholder)
-      html_element_name = options.delete(:html_element_name) || 'div'
-      container_id = options.delete(:container_id) || generate_container_id
-      container_class = options.delete(:container_class)
       event_name = options.delete(:event_name)
-      toggle = options.delete(:toggle)
       placeholder = capture(&placeholder) if block_given?
-      method = options.delete(:method) || 'GET'
-      data = options.delete(:data)
-      headers = options.delete(:headers) || {}
-      error_message = options.delete(:error_message)
-      error_event_name = options.delete(:error_event_name)
       retry_count = options.delete(:retry_count) || 0
-      interval = options.delete(:interval)
+      html_options = options.delete(:html_options) || {}
 
-      render 'render_async/render_async', html_element_name: html_element_name,
-                                          container_id: container_id,
-                                          container_class: container_class,
+      render 'render_async/render_async', **container_element_options(options),
                                           path: path,
-                                          html_options: options,
+                                          html_options: html_options,
                                           event_name: event_name,
-                                          toggle: toggle,
                                           placeholder: placeholder,
-                                          method: method,
-                                          data: data,
-                                          headers: headers,
-                                          error_message: error_message,
-                                          error_event_name: error_event_name,
+                                          **request_options(options),
+                                          **error_handling_options(options),
                                           retry_count: retry_count,
-                                          interval: interval
+                                          **polling_options(options)
+    end
+
+    private
+
+    def container_element_options(options)
+      { html_element_name: options[:html_element_name] || 'div',
+        container_id: options[:container_id] || generate_container_id,
+        container_class: options[:container_class] }
+    end
+
+    def request_options(options)
+      { method: options[:method] || 'GET',
+        data: options[:data],
+        headers: options[:headers] || {} }
+    end
+
+    def error_handling_options(options)
+      { error_message: options[:error_message],
+        error_event_name: options[:error_event_name] }
+    end
+
+    def polling_options(options)
+      { interval: options[:interval],
+        toggle: options[:toggle] }
     end
 
     private

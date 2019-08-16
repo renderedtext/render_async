@@ -6,7 +6,7 @@ if (window.jQuery) {
     }
     <% end %>
 
-    var _listener = function(currentRetryCount) {
+    var _makeRequest = function(currentRetryCount) {
       var headers = <%= headers.to_json.html_safe %>;
       var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
       if (csrfTokenElement)
@@ -64,30 +64,41 @@ if (window.jQuery) {
         if (currentRetryCount >= <%= retry_count %>)
           return false;
 
-        _listener(currentRetryCount + 1);
+        _makeRequest(currentRetryCount + 1);
         return true;
       }
 
-      _listener(1);
+      _makeRequest(1);
       return true;
     }
     <% end %>
 
-    <% if turbolinks %>
-    $(document).one('turbolinks:load', _listener);
-    <% elsif interval %>
-    var _intervalFunction = function() {
-      _listener();
-      setInterval(_listener, <%= interval %>);
+    var _renderAsyncFunction = _makeRequest;
+
+    <% if interval %>
+    var _interval;
+    var _renderAsyncFunction = function() {
+      _makeRequest();
+      _interval = setInterval(_makeRequest, <%= interval %>);
     }
-    $(document).ready(_intervalFunction);
-    <% elsif toggle %>
-    $(document).on('<%= toggle[:event] %>', '<%= toggle[:selector]%>', function(event) {
+    <% end %>
+
+    <% if toggle %>
+    $(document).on('<%= toggle[:event] || 'click' %>', '<%= toggle[:selector] %>', function(event) {
       event.preventDefault();
-      _listener();
+      if (_interval) {
+        clearInterval(_interval);
+        _interval = undefined;
+      } else {
+        _renderAsyncFunction();
+      }
     });
-    <% else %>
-    $(document).ready(_listener);
+    <% end %>
+
+    <% if turbolinks %>
+    $(document).one('turbolinks:load', _renderAsyncFunction);
+    <% elsif !toggle %>
+    $(document).ready(_renderAsyncFunction);
     <% end %>
   }(jQuery));
 } else {

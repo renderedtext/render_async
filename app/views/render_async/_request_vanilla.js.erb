@@ -5,7 +5,7 @@
   }
   <% end %>
 
-  var _listener = function(currentRetryCount) {
+  var _makeRequest = function(currentRetryCount) {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
     var SUCCESS = 200;
@@ -77,33 +77,47 @@
       if (currentRetryCount >= <%= retry_count %>)
         return false;
 
-      _listener(currentRetryCount + 1);
+      _makeRequest(currentRetryCount + 1);
       return true;
     }
 
-    _listener(1);
+    _makeRequest(1);
     return true;
   }
+  <% end %>
+
+  var _renderAsyncFunction = _makeRequest;
+
+  <% if interval %>
+  var _interval;
+  var _renderAsyncFunction = function() {
+    _makeRequest();
+    _interval = setInterval(_makeRequest, <%= interval %>);
+  }
+  <% end %>
+
+  <% if toggle %>
+  var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
+
+  [...selectors].forEach(function(selector) {
+    selector.addEventListener('<%= toggle[:event] || 'click' %>', function(event) {
+      event.preventDefault();
+      if (_interval) {
+        clearInterval(_interval);
+        _interval = undefined;
+      } else {
+        _renderAsyncFunction();
+      }
+    })
+  });
   <% end %>
 
   <% if turbolinks %>
   document.addEventListener("turbolinks:load", function (e) {
     e.target.removeEventListener(e.type, arguments.callee);
-    _listener.call(this);
+    _renderAsyncFunction();
   });
-  <% elsif interval %>
-  var _intervalFunction = function() {
-    _listener();
-    setInterval(_listener, <%= interval %>);
-  }
-  document.addEventListener("DOMContentLoaded", _intervalFunction);
-  <% elsif toggle %>
-  var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
-  selectors.forEach(selector => selector.addEventListener('<%= toggle[:event] %>', function(event) {
-    event.preventDefault();
-    _listener();
-  }));
-  <% else %>
-  document.addEventListener("DOMContentLoaded", _listener);
+  <% elsif !toggle %>
+  document.addEventListener("DOMContentLoaded", _renderAsyncFunction);
   <% end %>
 })();

@@ -201,7 +201,7 @@ describe RenderAsync::ViewHelper do
           }
         )
 
-        helper.render_async("users", nonce: "jkg1935safd")
+        helper.render_async("users", html_options: { nonce: "jkg1935safd" })
       end
     end
 
