@@ -4,7 +4,7 @@
     return;
   }
   <% end %>
-  
+
   var _listener = function(currentRetryCount) {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
@@ -97,6 +97,12 @@
     setInterval(_listener, <%= interval %>);
   }
   document.addEventListener("DOMContentLoaded", _intervalFunction);
+  <% elsif toggle %>
+  var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
+  selectors.forEach(selector => selector.addEventListener('<%= toggle[:event] %>', function(event) {
+    event.preventDefault();
+    _listener();
+  }));
   <% else %>
   document.addEventListener("DOMContentLoaded", _listener);
   <% end %>

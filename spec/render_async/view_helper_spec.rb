@@ -48,6 +48,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -80,6 +81,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -106,6 +108,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -132,6 +135,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -158,6 +162,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -184,6 +189,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: { nonce: "jkg1935safd" },
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -210,6 +216,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: "render_async_done",
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -222,6 +229,33 @@ describe RenderAsync::ViewHelper do
         )
 
         helper.render_async("users", event_name: "render_async_done")
+      end
+    end
+
+    context "toggle is given inside options hash" do
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            toggle: { selector: 'el-id', event: :click },
+            placeholder: nil,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil,
+            retry_count: 0,
+            interval: nil
+          }
+        )
+
+        helper.render_async("users", toggle: { selector: 'el-id', event: :click })
       end
     end
 
@@ -242,6 +276,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: placeholder,
             method: 'GET',
             data: nil,
@@ -268,6 +303,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'POST',
             data: { 'foor' => 'bar' }.to_json,
@@ -299,6 +335,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
@@ -328,6 +365,7 @@ describe RenderAsync::ViewHelper do
             path: "users",
             html_options: {},
             event_name: nil,
+            toggle: nil,
             placeholder: nil,
             method: 'GET',
             data: nil,
