@@ -21,7 +21,7 @@ module RenderAsync
       event_name = options.delete(:event_name)
       placeholder = capture(&placeholder) if block_given?
       retry_count = options.delete(:retry_count) || 0
-      html_options = options.delete(:html_options)
+      html_options = options.delete(:html_options) || {}
 
       render 'render_async/render_async', **container_element_options(options),
                                           path: path,

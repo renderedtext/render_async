@@ -128,13 +128,13 @@ Rendered code in the view:
 
 ### Passing in HTML options
 
-`render_async` can accept `html_options` argument.
+`render_async` can accept `html_options` as a hash.
 `html_options` is an optional hash that gets passed to a Rails'
 `javascript_tag`, to drop HTML tags into the `script` element.
 
 Example of utilizing `html_options` with a `nonce`:
 ```erb
-<%= render_async users_path, nonce: 'lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=' %>
+<%= render_async users_path, html_options: { nonce: 'lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=' } %>
 ```
 
 Rendered code in the view:
