@@ -255,29 +255,35 @@ to refresh the whole page just to retry them.
 
 ### Toggle event
 
-If you want to call `render_async` on click or another event you can specify.
-If you don't specifiy an event name, the default would be 'click' event. You
-can do this by doing the following:
+You can trigger `render_async` loading by clicking or doing another event to a
+certain HTML element. You can do this by passing in a selector and an event
+name which will trigger `render_async`. If you don't specify an event name, the
+default event that will trigger `render_async` will be 'click' event. You can
+do this by doing the following:
 
 ```erb
-<a href='#' id='detail-button'>detail</a>
+<a href='#' id='detail-button'>Detail</a>
 <%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } %>
 ```
 
-This will trigger render_async to load the `comments_path` when you click the `#details-button` element.
+This will trigger `render_async` to load the `comments_path` when you click the `#details-button` element.
 
-You can also pass in a placeholder before the render_async is triggered:
+You can also pass in a placeholder before the `render_async` is triggered. That
+way, the element that started `render_async` logic will be removed after the
+request has been completed. You can achieve this behaviour with something like this:
 
 ```erb
 <%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } do %>
-  <a href='#' id='detail-button'>detail</a>
+  <a href='#' id='detail-button'>Detail</a>
 <% end %>
 ```
 
-Also, you can mix interval and toggle features like this:
+Also, you can mix interval and toggle features. This way, you can turn polling
+on, and off by clicking the "Detail" button. In order to do this, you need to
+pass `toggle` and `interval` arguments to `render_async` call like this:
 
 ```erb
-<a href='#' id='detail-button'>detail</a>
+<a href='#' id='detail-button'>Detail</a>
 <%= render_async comments_path, toggle: { selector: '#detail-button', event: :click }, interval: 2000 %>
 ```
 
