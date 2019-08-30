@@ -159,6 +159,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "preetsethi",
+      "name": "Preet Sethi",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/8645918?v=4",
+      "profile": "https://www.linkedin.com/in/preetsethila/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "repoType": "github"
