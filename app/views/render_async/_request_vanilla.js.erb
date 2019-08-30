@@ -112,7 +112,7 @@
   });
   <% end %>
 
-  <% if turbolinks %>
+  <% if turbolinks && !toggle %>
   document.addEventListener("turbolinks:load", function (e) {
     e.target.removeEventListener(e.type, arguments.callee);
     _renderAsyncFunction();

@@ -95,7 +95,7 @@ if (window.jQuery) {
     });
     <% end %>
 
-    <% if turbolinks %>
+    <% if turbolinks && !toggle %>
     $(document).one('turbolinks:load', _renderAsyncFunction);
     <% elsif !toggle %>
     $(document).ready(_renderAsyncFunction);
