@@ -1,4 +1,8 @@
 ### 2.1.1 (2019/8/17)
+* [#89](https://github.com/renderedtext/render_async/pull/89): Bump version to 2.1.2 - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#82](https://github.com/renderedtext/render_async/pull/88): When toggle true, do not fire `_renderAsyncFunc` on `turbolinks:load` - [@ThanhKhoaIT](https://github.com/ThanhKhoaIT).
+
+### 2.1.1 (2019/8/17)
 * [#85](https://github.com/renderedtext/render_async/pull/85): Rename main JS function and support toggle feature with other features - [@nikolalsvk](https://github.com/nikolalsvk).
 * [#82](https://github.com/renderedtext/render_async/pull/82): Add toggle selector and event to render - [@ThanhKhoaIT](https://github.com/ThanhKhoaIT).
 * DEPRECATION WARNING - html_options is now a hash that you pass to render_async instead of an argument. If you passed for example a nonce: '21312aas...', you will need to pass
