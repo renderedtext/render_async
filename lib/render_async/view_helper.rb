@@ -18,44 +18,60 @@ module RenderAsync
     end
 
     def render_async(path, options = {}, &placeholder)
-      event_name = options.delete(:event_name)
       placeholder = capture(&placeholder) if block_given?
-      retry_count = options.delete(:retry_count) || 0
-      html_options = options.delete(:html_options) || {}
 
-      render 'render_async/render_async', **container_element_options(options),
-                                          path: path,
+      event_name = options[:event_name]
+      html_options = options[:html_options] || {}
+      lazy_load = options[:lazy_load] || false
+
+      render 'render_async/render_async', path: path,
                                           html_options: html_options,
                                           event_name: event_name,
                                           placeholder: placeholder,
+                                          lazy_load: lazy_load,
+                                          **retry_options(options),
+                                          **container_element_options(options),
                                           **request_options(options),
                                           **error_handling_options(options),
-                                          retry_count: retry_count,
                                           **polling_options(options)
     end
 
     private
+    def retry_options(options)
+      {
+        retry_count: options[:retry_count],
+        delay_on_error: options[:retry_delay_on_error],
+        retry_event_name: options[:retry_event]
+      }
+    end
 
     def container_element_options(options)
-      { html_element_name: options[:html_element_name] || 'div',
+      {
+        html_element_name: options[:html_element_name] || 'div'.freeze,
         container_id: options[:container_id] || generate_container_id,
-        container_class: options[:container_class] }
+        container_class: options[:container_class]
+      }
     end
 
     def request_options(options)
-      { method: options[:method] || 'GET',
-        data: options[:data],
-        headers: options[:headers] || {} }
+      {
+        request_method: options[:method] || 'GET'.freeze,
+        request_data: options[:data],
+        headers: options[:headers] || {}
+      }
     end
 
     def error_handling_options(options)
-      { error_message: options[:error_message],
-        error_event_name: options[:error_event_name] }
+      {
+        error_message: options[:error_message],
+        error_event_name: options[:error_event_name]
+      }
     end
 
     def polling_options(options)
-      { interval: options[:interval],
-        toggle: options[:toggle] }
+      {
+        interval: options[:interval]
+      }
     end
 
     private

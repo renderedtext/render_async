@@ -1,42 +1,25 @@
-<<%= html_element_name %>
-  id="<%= container_id %>"
-  class="<%= container_class %>"
->
-  <%= placeholder %>
-</<%= html_element_name %>>
+<%
+  options =  {
+      path: path,
+      method: request_method,
+      data: request_data,
+      headers: headers,
+      interval: interval,
+      retry_event: retry_event_name,
+      success_event: event_name,
+      error_event: error_event_name,
+      retry_count: retry_count,
+      error_message: error_message,
+      lazy_load: lazy_load
+  }
 
-<% content_for :render_async do %>
-  <%= javascript_tag html_options do %>
-    <% if RenderAsync.configuration.jquery %>
-      <%= render partial: 'render_async/request_jquery',
-                 formats: [:js],
-                 locals:  { container_id: container_id,
-                            path: path,
-                            method: method,
-                            data: data,
-                            event_name: event_name,
-                            toggle: toggle,
-                            headers: headers,
-                            error_message: error_message,
-                            error_event_name: error_event_name,
-                            retry_count: retry_count,
-                            interval: interval,
-                            turbolinks: RenderAsync.configuration.turbolinks } %>
-    <% else %>
-      <%= render partial: 'render_async/request_vanilla',
-                 formats: [:js],
-                 locals:  { container_id: container_id,
-                            path: path,
-                            method: method,
-                            data: data,
-                            event_name: event_name,
-                            toggle: toggle,
-                            headers: headers,
-                            error_message: error_message,
-                            error_event_name: error_event_name,
-                            retry_count: retry_count,
-                            interval: interval,
-                            turbolinks: RenderAsync.configuration.turbolinks } %>
-    <% end %>
-  <% end %>
+  _html_options = html_options
+  _html_options[:class] = "render-async #{ _html_options[:class]} "
+  _html_options[:id] = container_id
+
+  _html_options[:data] = options
+%>
+
+<%= content_tag html_element_name, _html_options do %>
+  <%= placeholder %>
 <% end %>
