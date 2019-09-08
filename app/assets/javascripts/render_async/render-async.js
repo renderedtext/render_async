@@ -88,7 +88,7 @@ function loadAsyncContent(containerId) {
     }
 
     var _listener = function (currentRetryCount) {
-        var headers = {};
+        var headers = { "X-Requested-With": "XMLHttpRequest"};
         var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
         if (csrfTokenElement)
             headers['X-CSRF-Token'] = csrfTokenElement.content
