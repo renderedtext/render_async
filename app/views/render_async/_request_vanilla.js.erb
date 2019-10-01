@@ -102,7 +102,7 @@
   [...selectors].forEach(function(selector) {
     selector.addEventListener('<%= toggle[:event] || 'click' %>', function(event) {
       event.preventDefault();
-      if (_interval) {
+      if (typeof _interval === 'number') {
         clearInterval(_interval);
         _interval = undefined;
       } else {
