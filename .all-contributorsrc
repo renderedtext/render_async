@@ -11,7 +11,7 @@
       "login": "nikolalsvk",
       "name": "Nikola Đuza",
       "avatar_url": "https://avatars2.githubusercontent.com/u/3028124?v=4",
-      "profile": "http://nikoladjuza.me/",
+      "profile": "https://nikolalsvk.github.io",
       "contributions": [
         "question",
         "code",
@@ -165,6 +165,15 @@
       "name": "Preet Sethi",
       "avatar_url": "https://avatars2.githubusercontent.com/u/8645918?v=4",
       "profile": "https://www.linkedin.com/in/preetsethila/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "fffx",
+      "name": "fangxing",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11586335?v=4",
+      "profile": "https://github.com/fffx",
       "contributions": [
         "code"
       ]
