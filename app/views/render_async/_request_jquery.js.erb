@@ -43,7 +43,7 @@ if (window.jQuery) {
 
         if (skipErrorMessage) return;
 
-        $("#<%= container_id %>").replaceWith('<%= error_message.try(:html_safe) %>');
+        $("#<%= container_id %>").replaceWith("<%= error_message.try(:html_safe) %>");
 
         <% if error_event_name.present? %>
           var event = undefined;
