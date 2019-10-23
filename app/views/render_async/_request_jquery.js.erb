@@ -84,9 +84,9 @@ if (window.jQuery) {
     <% end %>
 
     <% if toggle %>
-    $(document).on('<%= toggle[:event] || 'click' %>', '<%= toggle[:selector] %>', function(event) {
+    $(document).<%= toggle[:once] ? 'one' : 'on' %>('<%= toggle[:event] || 'click' %>', '<%= toggle[:selector] %>', function(event) {
       event.preventDefault();
-      if (typeof _interval === 'number') {
+      if (typeof(_interval) === 'number') {
         clearInterval(_interval);
         _interval = undefined;
       } else {
