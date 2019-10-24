@@ -267,8 +267,8 @@ do this by doing the following:
 ```
 
 This will trigger `render_async` to load the `comments_path` when you click the `#details-button` element.
-If wanna the event get removed once it's triggered, you can pass `once: true` in the toggle options,
-by default the `once` option is false
+If you wannt to remove event once it's triggered, you can pass `once: true` in the toggle options. 
+The `once` option is false by default.
 
 You can also pass in a placeholder before the `render_async` is triggered. That
 way, the element that started `render_async` logic will be removed after the
