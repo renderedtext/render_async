@@ -98,17 +98,21 @@
 
   <% if toggle %>
   var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
+  var handler = function(event) {
+    event.preventDefault();
+    if (typeof(_interval) === 'number') {
+      clearInterval(_interval);
+      _interval = undefined;
+    } else {
+      _renderAsyncFunction();
+    }
+    <% if toggle[:once] %>
+    this.removeEventListener(event.type, handler);
+    <% end %>
+  };
 
   [...selectors].forEach(function(selector) {
-    selector.addEventListener('<%= toggle[:event] || 'click' %>', function(event) {
-      event.preventDefault();
-      if (typeof _interval === 'number') {
-        clearInterval(_interval);
-        _interval = undefined;
-      } else {
-        _renderAsyncFunction();
-      }
-    })
+    selector.addEventListener('<%= toggle[:event] || 'click' %>', handler)
   });
   <% end %>
 
