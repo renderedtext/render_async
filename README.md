@@ -133,21 +133,23 @@ Rendered code in the view:
 `html_options` is an optional hash that gets passed to a Rails'
 `javascript_tag`, to drop HTML tags into the `script` element.
 
-Example of utilizing `html_options` with a `nonce`:
+Example of utilizing `html_options` with a [nonce](https://edgeguides.rubyonrails.org/security.html#content-security-policy):
 ```erb
-<%= render_async users_path, html_options: { nonce: 'lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=' } %>
+<%= render_async users_path, html_options: { nonce: true } %>
 ```
 
 Rendered code in the view:
 ```html
-<div id="render_async_18b8a6cd161499117471">
-</div>
-
-<script nonce="lWaaV6eYicpt+oyOfcShYINsz0b70iR+Q1mohZqNaag=">
+<script nonce="2x012CYGxKgM8qAApxRHxA==">
 //<![CDATA[
   ...
 //]]>
 </script>
+
+...
+
+<div id="render_async_18b8a6cd161499117471" class="">
+</div>
 ```
 
 ### Passing in an HTML element name
