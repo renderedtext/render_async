@@ -59,7 +59,7 @@
           if (skipErrorMessage) return;
 
           var container = document.getElementById('<%= container_id %>');
-          container.outerHTML = "<%= error_message.try(:html_safe) %>";
+          container.outerHTML = '<%= error_message.try(:html_safe) %>';
 
           var errorEvent = createEvent('render_async_error');
           errorEvent.container = container;
