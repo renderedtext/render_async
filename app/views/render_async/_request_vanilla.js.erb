@@ -6,6 +6,7 @@
   <% end %>
 
   function createEvent(name) {
+    var event = null;
     if (typeof(Event) === 'function') {
       event = new Event(name);
     } else {
