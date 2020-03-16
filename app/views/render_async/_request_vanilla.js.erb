@@ -5,6 +5,16 @@
   }
   <% end %>
 
+  function createEvent(name) {
+    if (typeof(Event) === 'function') {
+      event = new Event(name);
+    } else {
+      event = document.createEvent('Event');
+      event.initEvent(name, true, true);
+    }
+    return event
+  }
+    
   var _makeRequest = function(currentRetryCount) {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
@@ -31,15 +41,13 @@
           <% else %>
           container.outerHTML = request.response;
           <% end %>
-
+          
+          var loadEvent = createEvent("render_async_load");
+          loadEvent.container = container;
+          document.dispatchEvent(loadEvent);
+          
           <% if event_name.present? %>
-            var event = undefined;
-            if (typeof(Event) === 'function') {
-              event = new Event("<%= event_name %>");
-            } else {
-              event = document.createEvent('Event');
-              event.initEvent('<%= event_name %>', true, true);
-            }
+            var event = createEvent("<%= event_name %>");
             document.dispatchEvent(event);
           <% end %>
         } else {
@@ -54,13 +62,7 @@
           container.outerHTML = "<%= error_message.try(:html_safe) %>";
 
           <% if error_event_name.present? %>
-            var event = undefined;
-            if (typeof(Event) === 'function') {
-              event = new Event("<%= error_event_name %>");
-            } else {
-              event = document.createEvent('Event');
-              event.initEvent('<%= error_event_name %>', true, true);
-            }
+            var event = createEvent("<%= error_event_name %>");
             document.dispatchEvent(event);
           <% end %>
         }
