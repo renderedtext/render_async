@@ -60,7 +60,7 @@
           if (skipErrorMessage) return;
 
           var container = document.getElementById('<%= container_id %>');
-          container.outerHTML = "<%= error_message.try(:html_safe) %>";
+          container.outerHTML = '<%= error_message.try(:html_safe) %>';
 
           <% if error_event_name.present? %>
             var event = createEvent("<%= error_event_name %>");
