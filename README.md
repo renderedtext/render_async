@@ -80,6 +80,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
+  - [Using events](#using-events)
   - [Retry on failure](#retry-on-failure)
   - [Toggle event](#toggle-event)
   - [Polling](#polling)
@@ -238,6 +239,36 @@ document.addEventListener("users-loaded", function() {
 
 NOTE: Dispatching events is also supported for older browsers that don't
 support Event constructor.
+
+### Using events
+
+`render_async` will fire the event `render_async_load` when an async partial has loaded and rendered on page.
+
+In case there is an error, the event `render_async_error` will fire instead.
+
+This event will fire for all `render_async` partials on the page. For every event, the associated container (DOM node) will be passed along. 
+
+This can be useful to apply javascript to content loaded after the page is ready.
+
+Example of using events:
+
+```js
+// Vanilla javascript
+document.addEventListener('render_async_load', function(event) {
+  console.log('Async partial loaded in this container:', event.container);
+});
+document.addEventListener('render_async_error', function(event) {
+  console.log('Async partial could not load in this container:', event.container);
+});
+
+// with jQuery
+$(document).on('render_async_load', function(event, container) {
+  console.log('Async partial loaded in this container:', container);
+});
+$(document).on('render_async_error', function(event, container) {
+  console.log('Async partial could not load in this container:', container);
+});
+```
 
 ### Retry on failure
 
