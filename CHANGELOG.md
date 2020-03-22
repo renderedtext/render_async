@@ -1,8 +1,26 @@
-### 2.1.1 (2019/8/17)
+### 2.1.5 (2020/3/22)
+
+* [#105](https://github.com/renderedtext/render_async/pull/105): Load toggle listeners after page loads - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#104](https://github.com/renderedtext/render_async/pull/104): Attach container to dispatched events - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#103](https://github.com/renderedtext/render_async/pull/103): Add generic "load" and "error" events - [@lipsumar](https://github.com/lipsumar).
+* [#98](https://github.com/renderedtext/render_async/pull/98): Bump nonce pattern in the README to follow Rails CSP standard - [@colinxfleming](https://github.com/colinxfleming).
+
+### 2.1.4 (2019/11/11)
+
+* [#96](https://github.com/renderedtext/render_async/pull/96): Add once option to remove event once it's triggered #94 - [@fffx](https://github.com/fffx).
+
+### 2.1.3 (2019/9/24)
+
+* [#95](https://github.com/renderedtext/render_async/pull/95): Use double quotes for displaying error message - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#93](https://github.com/renderedtext/render_async/pull/93): Fix: "Uncaught ReferenceError: \_interval" #92 - [@fffx](https://github.com/fffx).
+
+### 2.1.2 (2019/8/17)
+
 * [#89](https://github.com/renderedtext/render_async/pull/89): Bump version to 2.1.2 - [@nikolalsvk](https://github.com/nikolalsvk).
 * [#82](https://github.com/renderedtext/render_async/pull/88): When toggle true, do not fire `_renderAsyncFunc` on `turbolinks:load` - [@ThanhKhoaIT](https://github.com/ThanhKhoaIT).
 
 ### 2.1.1 (2019/8/17)
+
 * [#85](https://github.com/renderedtext/render_async/pull/85): Rename main JS function and support toggle feature with other features - [@nikolalsvk](https://github.com/nikolalsvk).
 * [#82](https://github.com/renderedtext/render_async/pull/82): Add toggle selector and event to render - [@ThanhKhoaIT](https://github.com/ThanhKhoaIT).
 * DEPRECATION WARNING - html_options is now a hash that you pass to render_async instead of an argument. If you passed for example a nonce: '21312aas...', you will need to pass
