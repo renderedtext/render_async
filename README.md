@@ -268,11 +268,11 @@ document.addEventListener('render_async_error', function(event) {
 });
 
 // with jQuery
-$(document).on('render_async_load', function(event, container) {
-  console.log('Async partial loaded in this container:', container);
+$(document).on('render_async_load', function(event) {
+  console.log('Async partial loaded in this container:', event.container);
 });
-$(document).on('render_async_error', function(event, container) {
-  console.log('Async partial could not load in this container:', container);
+$(document).on('render_async_error', function(event) {
+  console.log('Async partial could not load in this container:', event.container);
 });
 ```
 
