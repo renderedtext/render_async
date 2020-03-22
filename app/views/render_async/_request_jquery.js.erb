@@ -18,12 +18,15 @@ if (window.jQuery) {
         data: "<%= escape_javascript(data.to_s.html_safe) %>",
         headers: headers
       }).done(function(response) {
+        var $container = $("#<%= container_id %>");
         <% if interval %>
-          $("#<%= container_id %>").empty();
-          $("#<%= container_id %>").append(response);
+          $container.empty();
+          $container.append(response);
         <% else %>
-          $("#<%= container_id %>").replaceWith(response);
+          $container.replaceWith(response);
         <% end %>
+
+        $(document).trigger('render_async_load', [$container]);
 
         <% if event_name.present? %>
           var event = undefined;
@@ -43,7 +46,10 @@ if (window.jQuery) {
 
         if (skipErrorMessage) return;
 
-        $("#<%= container_id %>").replaceWith("<%= error_message.try(:html_safe) %>");
+        var $container = $("#<%= container_id %>");
+        $container.replaceWith("<%= error_message.try(:html_safe) %>");
+
+        $(document).trigger('render_async_error', [$container]);
 
         <% if error_event_name.present? %>
           var event = undefined;
