@@ -101,7 +101,7 @@
   <% end %>
 
   <% if toggle %>
-  var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
+  var selectors = document.querySelectorAll('<%= toggle[:selector] %>'), i;
   var handler = function(event) {
     event.preventDefault();
     if (typeof(_interval) === 'number') {
@@ -115,9 +115,9 @@
     <% end %>
   };
 
-  [...selectors].forEach(function(selector) {
-    selector.addEventListener('<%= toggle[:event] || 'click' %>', handler)
-  });
+  for (i = 0; i < selectors.length; ++i) {
+    selectors[i].addEventListener('<%= toggle[:event] || 'click' %>', handler)
+  }
   <% end %>
 
   <% if turbolinks && !toggle %>
