@@ -177,6 +177,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "lipsumar",
+      "name": "Emmanuel Pire",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1191418?v=4",
+      "profile": "http://blog.lipsumarium.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "repoType": "github"
