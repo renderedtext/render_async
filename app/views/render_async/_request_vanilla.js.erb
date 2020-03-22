@@ -4,7 +4,7 @@
     return;
   }
   <% end %>
-  function createEvent(name) {
+  function createEvent(name, container) {
     var event = undefined;
     if (typeof(Event) === 'function') {
       event = new Event(name);
@@ -12,6 +12,7 @@
       event = document.createEvent('Event');
       event.initEvent(name, true, true);
     }
+    event.container = container
     return event;
   }
 
