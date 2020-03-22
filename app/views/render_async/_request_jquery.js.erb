@@ -5,6 +5,17 @@ if (window.jQuery) {
       return;
     }
     <% end %>
+    function createEvent(name, container) {
+      var event = undefined;
+      if (typeof(Event) === 'function') {
+        event = new Event(name);
+      } else {
+        event = document.createEvent('Event');
+        event.initEvent(name, true, true);
+      }
+      event.container = container
+      return event;
+    }
 
     var _makeRequest = function(currentRetryCount) {
       var headers = <%= headers.to_json.html_safe %>;
@@ -18,24 +29,19 @@ if (window.jQuery) {
         data: "<%= escape_javascript(data.to_s.html_safe) %>",
         headers: headers
       }).done(function(response) {
-        var $container = $("#<%= container_id %>");
+        var container = $("#<%= container_id %>");
         <% if interval %>
-          $container.empty();
-          $container.append(response);
+          container.empty();
+          container.append(response);
         <% else %>
-          $container.replaceWith(response);
+          container.replaceWith(response);
         <% end %>
 
-        $(document).trigger('render_async_load', [$container]);
+        var loadEvent = createEvent('render_async_load', container);
+        document.dispatchEvent(loadEvent);
 
         <% if event_name.present? %>
-          var event = undefined;
-          if (typeof(Event) === 'function') {
-            event = new Event("<%= event_name %>");
-          } else {
-            event = document.createEvent('Event');
-            event.initEvent('<%= event_name %>', true, true);
-          }
+          var event = createEvent("<%= event_name %>", container)
           document.dispatchEvent(event);
         <% end %>
       }).fail(function(response) {
@@ -46,19 +52,15 @@ if (window.jQuery) {
 
         if (skipErrorMessage) return;
 
-        var $container = $("#<%= container_id %>");
-        $container.replaceWith("<%= error_message.try(:html_safe) %>");
+        var container = $("#<%= container_id %>");
+        container.replaceWith("<%= error_message.try(:html_safe) %>");
 
-        $(document).trigger('render_async_error', [$container]);
+        var errorEvent = createEvent('render_async_error', container);
+        errorEvent.container = container;
+        document.dispatchEvent(errorEvent);
 
         <% if error_event_name.present? %>
-          var event = undefined;
-          if (typeof(Event) === 'function') {
-            event = new Event("<%= error_event_name %>");
-          } else {
-            event = document.createEvent('Event');
-            event.initEvent('<%= error_event_name %>', true, true);
-          }
+          var event = createEvent("<%= error_event_name %>", container)
           document.dispatchEvent(event);
         <% end %>
       });
