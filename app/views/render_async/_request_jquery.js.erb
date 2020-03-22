@@ -17,7 +17,15 @@ if (window.jQuery) {
       return event;
     }
 
-    var _makeRequest = function(currentRetryCount) {
+    function _runAfterDocumentLoaded(callback) {
+      <% if turbolinks %>
+      $(document).one('turbolinks:load', callback);
+      <% else %>
+      $(document).ready(callback);
+      <% end %>
+    }
+
+    function _makeRequest(currentRetryCount) {
       var headers = <%= headers.to_json.html_safe %>;
       var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
       if (csrfTokenElement)
@@ -67,7 +75,7 @@ if (window.jQuery) {
     };
 
     <% if retry_count > 0 %>
-    var retry = function(currentRetryCount) {
+    function retry(currentRetryCount) {
       if (typeof(currentRetryCount) === 'number') {
         if (currentRetryCount >= <%= retry_count %>)
           return false;
@@ -92,21 +100,21 @@ if (window.jQuery) {
     <% end %>
 
     <% if toggle %>
-    $(document).<%= toggle[:once] ? 'one' : 'on' %>('<%= toggle[:event] || 'click' %>', '<%= toggle[:selector] %>', function(event) {
-      event.preventDefault();
-      if (typeof(_interval) === 'number') {
-        clearInterval(_interval);
-        _interval = undefined;
-      } else {
-        _renderAsyncFunction();
-      }
-    });
-    <% end %>
+    function _setUpToggle() {
+      $(document).<%= toggle[:once] ? 'one' : 'on' %>('<%= toggle[:event] || 'click' %>', '<%= toggle[:selector] %>', function(event) {
+        event.preventDefault();
+        if (typeof(_interval) === 'number') {
+          clearInterval(_interval);
+          _interval = undefined;
+        } else {
+          _renderAsyncFunction();
+        }
+      });
+    }
 
-    <% if turbolinks && !toggle %>
-    $(document).one('turbolinks:load', _renderAsyncFunction);
+    _runAfterDocumentLoaded(_setUpToggle)
     <% elsif !toggle %>
-    $(document).ready(_renderAsyncFunction);
+    _runAfterDocumentLoaded(_renderAsyncFunction)
     <% end %>
   }(jQuery));
 } else {
