@@ -16,7 +16,18 @@
     return event;
   }
 
-  var _makeRequest = function(currentRetryCount) {
+  function _runAfterDocumentLoaded(callback) {
+    <% if turbolinks %>
+    document.addEventListener("turbolinks:load", function(e) {
+      e.target.removeEventListener(e.type, arguments.callee);
+      callback();
+    });
+    <% else %>
+    document.addEventListener("DOMContentLoaded", callback);
+    <% end %>
+  }
+
+  function _makeRequest(currentRetryCount) {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
     var SUCCESS = 200;
@@ -61,6 +72,7 @@
           var container = document.getElementById('<%= container_id %>');
           container.outerHTML = '<%= error_message.try(:html_safe) %>';
 
+          console.log(container)
           var errorEvent = createEvent('render_async_error', container);
           document.dispatchEvent(errorEvent);
 
@@ -77,7 +89,7 @@
   };
 
   <% if retry_count > 0 %>
-  var retry = function(currentRetryCount) {
+  function retry(currentRetryCount) {
     if (typeof(currentRetryCount) === 'number') {
       if (currentRetryCount >= <%= retry_count %>)
         return false;
@@ -102,31 +114,28 @@
   <% end %>
 
   <% if toggle %>
-  var selectors = document.querySelectorAll('<%= toggle[:selector] %>'), i;
-  var handler = function(event) {
-    event.preventDefault();
-    if (typeof(_interval) === 'number') {
-      clearInterval(_interval);
-      _interval = undefined;
-    } else {
-      _renderAsyncFunction();
+  function _setUpToggle() {
+    var selectors = document.querySelectorAll('<%= toggle[:selector] %>'), i;
+    var handler = function(event) {
+      event.preventDefault();
+      if (typeof(_interval) === 'number') {
+        clearInterval(_interval);
+        _interval = undefined;
+      } else {
+        _renderAsyncFunction();
+      }
+      <% if toggle[:once] %>
+      this.removeEventListener(event.type, handler);
+      <% end %>
+    };
+
+    for (i = 0; i < selectors.length; ++i) {
+      selectors[i].addEventListener('<%= toggle[:event] || 'click' %>', handler)
     }
-    <% if toggle[:once] %>
-    this.removeEventListener(event.type, handler);
-    <% end %>
-  };
-
-  for (i = 0; i < selectors.length; ++i) {
-    selectors[i].addEventListener('<%= toggle[:event] || 'click' %>', handler)
   }
-  <% end %>
 
-  <% if turbolinks && !toggle %>
-  document.addEventListener("turbolinks:load", function (e) {
-    e.target.removeEventListener(e.type, arguments.callee);
-    _renderAsyncFunction();
-  });
+  _runAfterDocumentLoaded(_setUpToggle);
   <% elsif !toggle %>
-  document.addEventListener("DOMContentLoaded", _renderAsyncFunction);
+  _runAfterDocumentLoaded(_renderAsyncFunction);
   <% end %>
 })();
