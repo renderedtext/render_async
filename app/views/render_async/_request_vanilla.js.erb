@@ -5,7 +5,7 @@
   }
   <% end %>
   function createEvent(name) {
-    var event = null;
+    var event = undefined;
     if (typeof(Event) === 'function') {
       event = new Event(name);
     } else {
@@ -42,12 +42,11 @@
           container.outerHTML = request.response;
           <% end %>
 
-          var loadEvent = createEvent('render_async_load');
-          loadEvent.container = container;
+          var loadEvent = createEvent('render_async_load', container);
           document.dispatchEvent(loadEvent);
 
           <% if event_name.present? %>
-            var event = createEvent('<%= event_name %>');
+            var event = createEvent('<%= event_name %>', container);
             document.dispatchEvent(event);
           <% end %>
         } else {
@@ -61,12 +60,11 @@
           var container = document.getElementById('<%= container_id %>');
           container.outerHTML = '<%= error_message.try(:html_safe) %>';
 
-          var errorEvent = createEvent('render_async_error');
-          errorEvent.container = container;
+          var errorEvent = createEvent('render_async_error', container);
           document.dispatchEvent(errorEvent);
 
           <% if error_event_name.present? %>
-            var event = createEvent('<%= error_event_name %>');
+            var event = createEvent('<%= error_event_name %>', container);
             document.dispatchEvent(event);
           <% end %>
         }
@@ -103,7 +101,7 @@
   <% end %>
 
   <% if toggle %>
-  var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
+  var selectors = document.querySelectorAll('<%= toggle[:selector] %>'), i;
   var handler = function(event) {
     event.preventDefault();
     if (typeof(_interval) === 'number') {
@@ -117,9 +115,9 @@
     <% end %>
   };
 
-  [...selectors].forEach(function(selector) {
-    selector.addEventListener('<%= toggle[:event] || 'click' %>', handler)
-  });
+  for (i = 0; i < selectors.length; ++i) {
+    selectors[i].addEventListener('<%= toggle[:event] || 'click' %>', handler)
+  }
   <% end %>
 
   <% if turbolinks && !toggle %>

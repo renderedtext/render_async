@@ -80,7 +80,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in an HTML element name](#passing-in-an-html-element-name)
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
-  - [Using events](#using-events)
+  - [Using default events](#using-default-events)
   - [Retry on failure](#retry-on-failure)
   - [Toggle event](#toggle-event)
   - [Polling](#polling)
@@ -211,6 +211,9 @@ event after it's done with fetching and rendering request content to HTML.
 This can be useful to have if you want to add some JavaScript functionality
 after your partial is loaded through `render_async`.
 
+You can also access the associated container (DOM node) in the event object
+that gets emitted.
+
 Example of passing it to `render_async`:
 ```erb
 <%= render_async users_path, event_name: "users-loaded" %>
@@ -230,25 +233,28 @@ Rendered code in view:
 </script>
 ```
 
-Then, in your JS, you could do something like this:
+Then, in your JavaScript code, you could do something like this:
 ```javascript
-document.addEventListener("users-loaded", function() {
-  console.log("Users have loaded!");
+document.addEventListener("users-loaded", function(event) {
+  console.log("Users have loaded!", event.container); // Access the container which loaded the users
 });
 ```
 
 NOTE: Dispatching events is also supported for older browsers that don't
 support Event constructor.
 
-### Using events
+### Using default events
 
-`render_async` will fire the event `render_async_load` when an async partial has loaded and rendered on page.
+`render_async` will fire the event `render_async_load` when an async partial
+has loaded and rendered on page.
 
 In case there is an error, the event `render_async_error` will fire instead.
 
-This event will fire for all `render_async` partials on the page. For every event, the associated container (DOM node) will be passed along. 
+This event will fire for all `render_async` partials on the page. For every
+event, the associated container (DOM node) will be passed along.
 
-This can be useful to apply javascript to content loaded after the page is ready.
+This can be useful to apply JavaScript to content loaded after the page is
+ready.
 
 Example of using events:
 
@@ -280,7 +286,7 @@ this:
 <%= render_async users_path, retry_count: 5, error_message: "Couldn't fetch it" %>
 ```
 
-Now render_async will retry `users_path` for 5 times. If it succedes in
+Now render_async will retry `users_path` for 5 times. If it succeeds in
 between, it will stop with dispatching requests. If it fails after 5 times,
 it will show an [error message](#handling-errors) which you need to specify.
 
@@ -301,7 +307,7 @@ do this by doing the following:
 ```
 
 This will trigger `render_async` to load the `comments_path` when you click the `#details-button` element.
-If you wannt to remove event once it's triggered, you can pass `once: true` in the toggle options. 
+If you want to remove event once it's triggered, you can pass `once: true` in the toggle options.
 The `once` option is false by default.
 
 You can also pass in a placeholder before the `render_async` is triggered. That
@@ -422,7 +428,7 @@ away from, and then back to, a page with a `render_async` call on it. This will
 likely show up as an empty div.
 
 If you're using Turbolinks 5 or higher, you can resolve this by setting Turbolinks
-configurtion of `render_async` to true:
+configuration of `render_async` to true:
 
 ```rb
 RenderAsync.configure do |config|
