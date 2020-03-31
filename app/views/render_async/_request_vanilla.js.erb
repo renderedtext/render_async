@@ -117,7 +117,6 @@
   function _setUpToggle() {
     var selectors = document.querySelectorAll('<%= toggle[:selector] %>'), i;
     var handler = function(event) {
-      event.preventDefault();
       if (typeof(_interval) === 'number') {
         clearInterval(_interval);
         _interval = undefined;
@@ -134,7 +133,7 @@
     }
   }
 
-  _runAfterDocumentLoaded(_setUpToggle);
+  _setUpToggle();
   <% elsif !toggle %>
   _runAfterDocumentLoaded(_renderAsyncFunction);
   <% end %>
