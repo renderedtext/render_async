@@ -18,11 +18,16 @@ if (window.jQuery) {
     }
 
     function _runAfterDocumentLoaded(callback) {
-      <% if turbolinks %>
-      $(document).one('turbolinks:load', callback);
-      <% else %>
-      $(document).ready(callback);
-      <% end %>
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        // Handle a case where nested partials get loaded after the document loads
+        callback();
+      } else {
+        <% if turbolinks %>
+        $(document).one('turbolinks:load', callback);
+        <% else %>
+        $(document).ready(callback);
+        <% end %>
+      }
     }
 
     function _makeRequest(currentRetryCount) {
