@@ -1,3 +1,10 @@
+### 2.1.6 (2020/5/9)
+
+* [#114](https://github.com/renderedtext/render_async/pull/114): Call render_async logic if document state is ready or interactive - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#113](https://github.com/renderedtext/render_async/pull/113): Remove interval after Turbolinks visit event - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#112](https://github.com/renderedtext/render_async/pull/112): Add X-Requested-With header in Vanilla JS - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#110](https://github.com/renderedtext/render_async/pull/110): Remove preventDefault, and load toggle in stream - [@vanboom](https://github.com/vanboom).
+
 ### 2.1.5 (2020/3/22)
 
 * [#105](https://github.com/renderedtext/render_async/pull/105): Load toggle listeners after page loads - [@nikolalsvk](https://github.com/nikolalsvk).
