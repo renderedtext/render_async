@@ -44,6 +44,8 @@
       request.setRequestHeader(key, headers[key]);
     });
 
+    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
     request.onreadystatechange = function() {
       if (request.readyState === 4) {
         if (request.status >= SUCCESS && request.status < ERROR) {
