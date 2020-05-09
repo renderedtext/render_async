@@ -74,7 +74,6 @@
           var container = document.getElementById('<%= container_id %>');
           container.outerHTML = '<%= error_message.try(:html_safe) %>';
 
-          console.log(container)
           var errorEvent = createEvent('render_async_error', container);
           document.dispatchEvent(errorEvent);
 
@@ -107,17 +106,27 @@
 
   var _renderAsyncFunction = _makeRequest;
 
-  <% if interval %>
   var _interval;
+  <% if interval %>
   var _renderAsyncFunction = function() {
     _makeRequest();
     _interval = setInterval(_makeRequest, <%= interval %>);
   }
+
+  <% if turbolinks %>
+  document.addEventListener("turbolinks:visit", function(e) {
+    if (typeof(_interval) === 'number') {
+      console.log('clearing the interval')
+      clearInterval(_interval);
+      _interval = undefined;
+    }
+  });
+  <% end %>
   <% end %>
 
   <% if toggle %>
   function _setUpToggle() {
-    var selectors = document.querySelectorAll('<%= toggle[:selector] %>'), i;
+    var selectors = document.querySelectorAll('<%= toggle[:selector] %>');
     var handler = function(event) {
       if (typeof(_interval) === 'number') {
         clearInterval(_interval);
@@ -130,12 +139,12 @@
       <% end %>
     };
 
-    for (i = 0; i < selectors.length; ++i) {
+    for (var i = 0; i < selectors.length; ++i) {
       selectors[i].addEventListener('<%= toggle[:event] || 'click' %>', handler)
     }
   }
 
-  _setUpToggle();
+  _runAfterDocumentLoaded(_setUpToggle);
   <% elsif !toggle %>
   _runAfterDocumentLoaded(_renderAsyncFunction);
   <% end %>

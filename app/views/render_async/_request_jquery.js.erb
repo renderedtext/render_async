@@ -91,12 +91,22 @@ if (window.jQuery) {
 
     var _renderAsyncFunction = _makeRequest;
 
-    <% if interval %>
     var _interval;
+    <% if interval %>
     var _renderAsyncFunction = function() {
       _makeRequest();
       _interval = setInterval(_makeRequest, <%= interval %>);
     }
+
+    <% if turbolinks %>
+    $(document).one('turbolinks:visit', function() {
+      if (typeof(_interval) === 'number') {
+        console.log('clearing the interval in jQuery part')
+        clearInterval(_interval)
+        _interval = undefined;
+      }
+    });
+    <% end %>
     <% end %>
 
     <% if toggle %>
@@ -111,9 +121,7 @@ if (window.jQuery) {
       });
     }
 
-    //_runAfterDocumentLoaded(_setUpToggle)
-    // RUN IT NOW DP
-    _setUpToggle();
+    _runAfterDocumentLoaded(_setUpToggle);
     <% elsif !toggle %>
     _runAfterDocumentLoaded(_renderAsyncFunction)
     <% end %>
