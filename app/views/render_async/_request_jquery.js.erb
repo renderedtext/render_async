@@ -102,7 +102,6 @@ if (window.jQuery) {
     <% if toggle %>
     function _setUpToggle() {
       $(document).<%= toggle[:once] ? 'one' : 'on' %>('<%= toggle[:event] || 'click' %>', '<%= toggle[:selector] %>', function(event) {
-        event.preventDefault();
         if (typeof(_interval) === 'number') {
           clearInterval(_interval);
           _interval = undefined;
@@ -112,7 +111,9 @@ if (window.jQuery) {
       });
     }
 
-    _runAfterDocumentLoaded(_setUpToggle)
+    //_runAfterDocumentLoaded(_setUpToggle)
+    // RUN IT NOW DP
+    _setUpToggle();
     <% elsif !toggle %>
     _runAfterDocumentLoaded(_renderAsyncFunction)
     <% end %>
