@@ -116,7 +116,6 @@
   <% if turbolinks %>
   document.addEventListener("turbolinks:visit", function(e) {
     if (typeof(_interval) === 'number') {
-      console.log('clearing the interval')
       clearInterval(_interval);
       _interval = undefined;
     }

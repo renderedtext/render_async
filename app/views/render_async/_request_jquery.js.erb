@@ -106,7 +106,6 @@ if (window.jQuery) {
     <% if turbolinks %>
     $(document).one('turbolinks:visit', function() {
       if (typeof(_interval) === 'number') {
-        console.log('clearing the interval in jQuery part')
         clearInterval(_interval)
         _interval = undefined;
       }
