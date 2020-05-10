@@ -302,11 +302,11 @@ default event that will trigger `render_async` will be 'click' event. You can
 do this by doing the following:
 
 ```erb
-<a href='#' id='detail-button'>Detail</a>
-<%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } %>
+<a href='#' id='comments-button'>Load comments</a>
+<%= render_async comments_path, toggle: { selector: '#comments-button', event: :click } %>
 ```
 
-This will trigger `render_async` to load the `comments_path` when you click the `#details-button` element.
+This will trigger `render_async` to load the `comments_path` when you click the `#comments-button` element.
 If you want to remove event once it's triggered, you can pass `once: true` in the toggle options.
 The `once` option is false by default.
 
@@ -315,18 +315,18 @@ way, the element that started `render_async` logic will be removed after the
 request has been completed. You can achieve this behaviour with something like this:
 
 ```erb
-<%= render_async comments_path, toggle: { selector: '#detail-button', event: :click } do %>
-  <a href='#' id='detail-button'>Detail</a>
+<%= render_async comments_path, toggle: { selector: '#comments-button', event: :click } do %>
+  <a href='#' id='comments-button'>Load comments</a>
 <% end %>
 ```
 
 Also, you can mix interval and toggle features. This way, you can turn polling
-on, and off by clicking the "Detail" button. In order to do this, you need to
+on, and off by clicking the "Load comments" button. In order to do this, you need to
 pass `toggle` and `interval` arguments to `render_async` call like this:
 
 ```erb
-<a href='#' id='detail-button'>Detail</a>
-<%= render_async comments_path, toggle: { selector: '#detail-button', event: :click }, interval: 2000 %>
+<a href='#' id='comments-button'>Load comments</a>
+<%= render_async comments_path, toggle: { selector: '#comments-button', event: :click }, interval: 2000 %>
 ```
 
 ### Polling
