@@ -31,7 +31,8 @@ module RenderAsync
                                           **request_options(options),
                                           **error_handling_options(options),
                                           retry_count: retry_count,
-                                          **polling_options(options)
+                                          **polling_options(options),
+                                          **content_for_options(options)
     end
 
     private
@@ -56,6 +57,12 @@ module RenderAsync
     def polling_options(options)
       { interval: options[:interval],
         toggle: options[:toggle] }
+    end
+
+    def content_for_options(options)
+      {
+        content_for_name: options[:content_for_name] || :render_async
+      }
     end
 
     private
