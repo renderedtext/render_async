@@ -125,7 +125,8 @@ if (window.jQuery) {
       });
     }
 
-    _runAfterDocumentLoaded(_setUpToggle);
+    // DVB _runAfterDocumentLoaded(_setUpToggle);
+    _setUpToggle();
     <% elsif !toggle %>
     _runAfterDocumentLoaded(_renderAsyncFunction)
     <% end %>
