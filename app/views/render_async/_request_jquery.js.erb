@@ -98,19 +98,32 @@ if (window.jQuery) {
 
     var _interval;
     <% if interval %>
-    var _renderAsyncFunction = function() {
-      _makeRequest();
-      _interval = setInterval(_makeRequest, <%= interval %>);
-    }
-
-    <% if turbolinks %>
-    $(document).one('turbolinks:visit', function() {
-      if (typeof(_interval) === 'number') {
-        clearInterval(_interval)
-        _interval = undefined;
+      var _renderAsyncFunction = function() {
+        _makeRequest();
+        _interval = setInterval(_makeRequest, <%= interval %>);
       }
-    });
-    <% end %>
+
+      // Register a stop polling event on the container
+      var container = $("#<%= container_id %>");
+      $(container).on('async-stop', function(event){
+        if (typeof(_interval) === 'number'){
+          clearInterval(_interval)
+          _interval = undefined;
+        }
+      });
+      // Register a start polling event on the container
+      $(container).on('async-start', function(event){
+        _renderAsyncFunction();
+      });
+
+      <% if turbolinks %>
+      $(document).one('turbolinks:visit', function() {
+        if (typeof(_interval) === 'number') {
+          clearInterval(_interval)
+          _interval = undefined;
+        }
+      });
+      <% end %>
     <% end %>
 
     <% if toggle %>
@@ -125,8 +138,7 @@ if (window.jQuery) {
       });
     }
 
-    // DVB _runAfterDocumentLoaded(_setUpToggle);
-    _setUpToggle();
+    _runAfterDocumentLoaded(_setUpToggle);
     <% elsif !toggle %>
     _runAfterDocumentLoaded(_renderAsyncFunction)
     <% end %>

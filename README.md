@@ -320,7 +320,6 @@ request has been completed. You can achieve this behaviour with something like t
   <a href='#' id='comments-button'>Load comments</a>
 <% end %>
 ```
-
 Also, you can mix interval and toggle features. This way, you can turn polling
 on, and off by clicking the "Load comments" button. In order to do this, you need to
 pass `toggle` and `interval` arguments to `render_async` call like this:
@@ -342,6 +341,9 @@ By doing this:
 You are telling `render_async` to fetch comments_path every 5 seconds.
 
 This can be handy if you want to enable polling for a specific URL.
+
+Polling may be stopped by sending the `async-stop` event to the container element. 
+Polling may be started by sending the `async-start` event to the container element.
 
 NOTE: By passing interval to `render_async`, initial container element
 will remain in HTML tree, it will not be replaced with request response.
