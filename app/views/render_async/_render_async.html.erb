@@ -5,7 +5,7 @@
   <%= placeholder %>
 </<%= html_element_name %>>
 
-<% content_for :render_async do %>
+<% content_for local_assigns.has_key?(:content_for_name) ? content_for_name : :render_async do %>
   <%= javascript_tag html_options do %>
     <% if RenderAsync.configuration.jquery %>
       <%= render partial: 'render_async/request_jquery',
