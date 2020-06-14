@@ -90,7 +90,7 @@ Advanced usage includes information on different options, such as:
   - [Using with Turbolinks](#using-with-turbolinks)
   - [Using with respond_to and JS format](#using-with-respond_to-and-js-format)
   - [Nested Async Renders](#nested-async-renders)
-  - [Customizing the content_for Name](#customizing-the-content-for-name)
+  - [Customizing the content_for name](#customizing-the-content_for-name)
   - [Configuration](#configuration)
 
 ### Passing in a container ID
@@ -507,10 +507,11 @@ For example:
 <%= content_for :render_async %>
 ```
 
-### Customizing the content_for Name
+### Customizing the content_for name
 
-The `content_for` name may be customized by passing the `content_for_name` option to `render_async`.
-This option is especially useful when doing nested async renders to better control the location of the injected Javascript.
+The `content_for` name may be customized by passing the `content_for_name`
+option to `render_async`. This option is especially useful when doing [nested async
+renders](#nested-async-renders) to better control the location of the injected JavaScript.
 
 For example:
 ```erb

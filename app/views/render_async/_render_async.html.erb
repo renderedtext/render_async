@@ -5,38 +5,29 @@
   <%= placeholder %>
 </<%= html_element_name %>>
 
-<% content_for local_assigns.has_key?(:content_for_name) ? content_for_name : :render_async do %>
+<% content_for content_for_name do %>
   <%= javascript_tag html_options do %>
+    <% locals = { container_id: container_id,
+                  path: path,
+                  method: method,
+                  data: data,
+                  event_name: event_name,
+                  toggle: toggle,
+                  headers: headers,
+                  error_message: error_message,
+                  error_event_name: error_event_name,
+                  retry_count: retry_count,
+                  interval: interval,
+                  turbolinks: RenderAsync.configuration.turbolinks } %>
+
     <% if RenderAsync.configuration.jquery %>
       <%= render partial: 'render_async/request_jquery',
                  formats: [:js],
-                 locals:  { container_id: container_id,
-                            path: path,
-                            method: method,
-                            data: data,
-                            event_name: event_name,
-                            toggle: toggle,
-                            headers: headers,
-                            error_message: error_message,
-                            error_event_name: error_event_name,
-                            retry_count: retry_count,
-                            interval: interval,
-                            turbolinks: RenderAsync.configuration.turbolinks } %>
+                 locals:  locals  %>
     <% else %>
       <%= render partial: 'render_async/request_vanilla',
                  formats: [:js],
-                 locals:  { container_id: container_id,
-                            path: path,
-                            method: method,
-                            data: data,
-                            event_name: event_name,
-                            toggle: toggle,
-                            headers: headers,
-                            error_message: error_message,
-                            error_event_name: error_event_name,
-                            retry_count: retry_count,
-                            interval: interval,
-                            turbolinks: RenderAsync.configuration.turbolinks } %>
+                 locals:  locals %>
     <% end %>
   <% end %>
 <% end %>
