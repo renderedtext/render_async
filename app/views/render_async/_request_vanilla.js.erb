@@ -108,19 +108,32 @@
 
   var _interval;
   <% if interval %>
-  var _renderAsyncFunction = function() {
-    _makeRequest();
-    _interval = setInterval(_makeRequest, <%= interval %>);
-  }
-
-  <% if turbolinks %>
-  document.addEventListener("turbolinks:visit", function(e) {
-    if (typeof(_interval) === 'number') {
-      clearInterval(_interval);
-      _interval = undefined;
+    var _renderAsyncFunction = function() {
+      _makeRequest();
+      _interval = setInterval(_makeRequest, <%= interval %>);
     }
-  });
-  <% end %>
+
+    // Register a polling stop event on the container
+    var container = document.getElementById('<%= container_id %>');
+    container.addEventListener("async-stop", function(event){
+      if (typeof(_interval) === 'number'){
+        clearInterval(_interval)
+        _interval = undefined;
+      }
+    });
+    // Register a start polling event on the container
+    container.addEventListener("async-start", function(event){
+      _renderAsyncFunction();
+    });
+
+    <% if turbolinks %>
+    document.addEventListener("turbolinks:visit", function(e) {
+      if (typeof(_interval) === 'number') {
+        clearInterval(_interval);
+        _interval = undefined;
+      }
+    });
+    <% end %>
   <% end %>
 
   <% if toggle %>
