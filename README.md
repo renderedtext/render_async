@@ -83,7 +83,9 @@ Advanced usage includes information on different options, such as:
   - [Using default events](#using-default-events)
   - [Retry on failure](#retry-on-failure)
   - [Toggle event](#toggle-event)
+    - [Control polling with a toggle](#control-polling-with-a-toggle)
   - [Polling](#polling)
+  - [Controlled polling](#controlled-polling)
   - [Handling errors](#handling-errors)
   - [Caching](#caching)
   - [Doing non-GET requests](#doing-non-get-requests)
@@ -320,6 +322,9 @@ request has been completed. You can achieve this behaviour with something like t
   <a href='#' id='comments-button'>Load comments</a>
 <% end %>
 ```
+
+#### Control polling with a toggle
+
 Also, you can mix interval and toggle features. This way, you can turn polling
 on, and off by clicking the "Load comments" button. In order to do this, you need to
 pass `toggle` and `interval` arguments to `render_async` call like this:
@@ -342,14 +347,64 @@ You are telling `render_async` to fetch comments_path every 5 seconds.
 
 This can be handy if you want to enable polling for a specific URL.
 
-Polling may be stopped by sending the `async-stop` event to the container element. 
+Polling may be stopped by sending the `async-stop` event to the container element.
 Polling may be started by sending the `async-start` event to the container element.
 
-NOTE: By passing interval to `render_async`, initial container element
-will remain in HTML tree, it will not be replaced with request response.
-You can handle how that container element is rendered and its style by
-[passing in an HTML element name](#passing-in-an-html-element-name) and
-[HTML element class](#passing-in-a-container-class-name).
+> NOTE: By passing interval to `render_async`, initial container element
+> will remain in HTML tree, it will not be replaced with request response.
+> You can handle how that container element is rendered and its style by
+> [passing in an HTML element name](#passing-in-an-html-element-name) and
+> [HTML element class](#passing-in-a-container-class-name).
+
+### Controlled polling
+
+You can controller `render_async` [polling](#polling) in 2 manners.
+First one is pretty simple, and it involves using the [toggle](#toggle-event)
+feature. To do this, you can follow instructions in the
+[control polling with a toggle section](#control-polling-with-a-toggle).
+
+Second option is more advanced and it involves emitting events to the `render_async`'s
+container element. From your code, you can emit following events:
+  - 'async-stop' - this will stop polling
+  - 'async-start' - this will start polling.
+
+> Please note that events need to be dispatched to a render_async container.
+
+An example of how you can do this looks like this:
+
+```erb
+<%= render_async wave_render_async_path,
+                 container_id: 'controllable-interval', # set container_id so we can get it later easily
+                 interval: 3000 %>
+
+<button id='stop-polling'>Stop polling</button>
+<button id='start-polling'>Start polling</button>
+
+<script>
+  var container = document.getElementById('controllable-interval')
+  var stopPolling = document.getElementById('stop-polling')
+  var startPolling = document.getElementById('start-polling')
+
+  var triggerEventOnContainer = function(eventName) {
+    var event = new Event(eventName);
+
+    container.dispatchEvent(event)
+  }
+
+  stopPolling.addEventListener('click', function() {
+    container.innerHTML = '<p>Polling stopped</p>'
+    triggerEventOnContainer('async-stop')
+  })
+  startPolling.addEventListener('click', function() {
+    triggerEventOnContainer('async-start')
+  })
+</script>
+```
+
+We are rendering two buttons - "Stop polling" and "Start polling". Then, we
+attach event listener to catch any clicking on the buttons. When the buttons
+are clicked, we either stop the polling, or start the polling, depending which
+button a user clicks.
 
 ### Handling errors
 
