@@ -1,32 +1,68 @@
-[![Build Status](https://semaphoreci.com/api/v1/renderedtext/render_async/branches/master/shields_badge.svg)](https://semaphoreci.com/renderedtext/render_async)
-[![All Contributors](https://img.shields.io/badge/all_contributors-21-orange.svg?style=flat-square)](#contributors)
-[![Gem Version](https://badge.fury.io/rb/render_async.svg)](https://badge.fury.io/rb/render_async)
-[![Donate](https://img.shields.io/badge/$-support-green.svg)](https://www.paypal.me/nikolalsvk/10)
-[![Code Climate](https://codeclimate.com/github/renderedtext/render_async/badges/gpa.svg)](https://codeclimate.com/github/renderedtext/render_async)
-[![Test Coverage](https://codeclimate.com/github/renderedtext/render_async/badges/coverage.svg)](https://codeclimate.com/github/renderedtext/render_async/coverage)
-[![Help Contribute to Open Source](https://www.codetriage.com/renderedtext/render_async/badges/users.svg)](https://www.codetriage.com/renderedtext/render_async)
+<p align="center">
+  <img src='http://s2blog.wpengine.com/wp-content/uploads/assets/images/2017-06-08/speed-up-rendering-rails-pages-with-render-async.png' alt='render_async' />
 
-![render_async](http://s2blog.wpengine.com/wp-content/uploads/assets/images/2017-06-08/speed-up-rendering-rails-pages-with-render-async.png)
+  <h1 align="center">👋 Welcome to render_async</h1>
 
-# render_async
+  <h3 align="center">Let's make your Rails pages fast again :racehorse:</h3>
 
-Speed up rendering Rails pages with this gem.
+  <br />
 
-`render_async` renders partials to your views **asynchronously**. This is done
-through adding JavaScript code that does AJAX request to your controller which
-then renders your partial into a Rails view.
+  <p align="center">
+    <a href="https://www.paypal.me/nikolalsvk/10" target="_blank">
+     <img src="https://img.shields.io/badge/$-support-green.svg" alt="Donate" />
+    </a>
+    <a href="https://rubygems.org/gems/render_async" target="_blank">
+      <img src="https://img.shields.io/gem/dt/render_async" alt="Downloads" />
+    </a>
+    <a href="#contributors" target="_blank">
+     <img src="https://img.shields.io/github/all-contributors/renderedtext/render_async" alt="All contributors" />
+    </a>
+    <a href="https://badge.fury.io/rb/render_async" target="_blank">
+     <img src="https://badge.fury.io/rb/render_async.svg" alt="Gem Version" />
+    </a>
+    <br />
+    <a href="https://discord.gg/SPfbeRm" target="_blank">
+      <img src="https://img.shields.io/discord/738783603214909521" alt="Discord Server" />
+    </a>
+    <a href="https://semaphoreci.com/renderedtext/render_async" target="_blank">
+     <img src="https://semaphoreci.com/api/v1/renderedtext/render_async/branches/master/shields_badge.svg" alt="Build Status" />
+    </a>
+    <a href="https://codeclimate.com/github/renderedtext/render_async" target="_blank">
+     <img src="https://img.shields.io/codeclimate/maintainability/renderedtext/render_async" alt="Code Climate Maintainablity" />
+    </a>
+    <a href="https://codeclimate.com/github/renderedtext/render_async/coverage" target="_blank">
+     <img src="https://img.shields.io/codeclimate/coverage/renderedtext/render_async" alt="Test Coverage" />
+    </a>
+    <a href="https://github.com/renderedtext/render_async/blob/master/LICENSE" target="_blank">
+      <img src="https://img.shields.io/github/license/renderedtext/render_async" alt="License" />
+    </a>
+    <a href="https://www.codetriage.com/renderedtext/render_async" target="_blank">
+     <img src="https://www.codetriage.com/renderedtext/render_async/badges/users.svg" alt="Help Contribute to Open Source" />
+    </a>
+  </p>
+</p>
 
-Workflow:
+### `render_async` is here to make your pages show faster to users.
 
-1. user visits a Rails page
-2. AJAX request on the controller action
+Pages become faster seamlessly by rendering partials to your views.
+
+Partials render **asynchronously** and let users see your page **faster**
+than using regular rendering.
+
+It works with Rails and its tools out of the box.
+
+:sparkles: A quick overview of how `render_async` does its magic:
+
+1. user visits a page
+2. `render_async` makes an AJAX request on the controller action
 3. controller renders a partial
-4. partials renders in the place where you put `render_async` helper
+4. partial renders in the place where you put `render_async` view helper
 
-JavaScript is injected into `<%= content_for :render_async %>` so you choose
+JavaScript is injected straight into `<%= content_for :render_async %>` so you choose
 where to put it.
 
-## Installation
+## :package: Installation
+
 Add this line to your application's Gemfile:
 
 ```ruby
@@ -37,7 +73,7 @@ And then execute:
 
     $ bundle install
 
-## Usage
+## :hammer: Usage
 
 1. Include `render_async` view helper somewhere in your views (e.g. `app/views/comments/show.html.erb`):
     ```erb
@@ -70,7 +106,7 @@ And then execute:
     <%= content_for :render_async %>
     ```
 
-## Advanced usage
+## :hammer_and_wrench: Advanced usage
 
 Advanced usage includes information on different options, such as:
 
@@ -243,8 +279,7 @@ document.addEventListener("users-loaded", function(event) {
 });
 ```
 
-NOTE: Dispatching events is also supported for older browsers that don't
-support Event constructor.
+> :bulb: Dispatching events is also supported for older browsers that don't support Event constructor.
 
 ### Using default events
 
@@ -347,10 +382,7 @@ You are telling `render_async` to fetch comments_path every 5 seconds.
 
 This can be handy if you want to enable polling for a specific URL.
 
-Polling may be stopped by sending the `async-stop` event to the container element.
-Polling may be started by sending the `async-start` event to the container element.
-
-> NOTE: By passing interval to `render_async`, initial container element
+> :warning: By passing interval to `render_async`, initial container element
 > will remain in HTML tree, it will not be replaced with request response.
 > You can handle how that container element is rendered and its style by
 > [passing in an HTML element name](#passing-in-an-html-element-name) and
@@ -368,7 +400,7 @@ container element. From your code, you can emit following events:
   - 'async-stop' - this will stop polling
   - 'async-start' - this will start polling.
 
-> Please note that events need to be dispatched to a render_async container.
+> :bulb: Please note that events need to be dispatched to a render_async container.
 
 An example of how you can do this looks like this:
 
@@ -454,10 +486,10 @@ Then, in the partial (e.g. `app/views/comments/_comment_stats.html.erb`):
 <% end %>
 ```
 
-* The first time the page renders, it will make the AJAX call.
-* Any other times (until the cache expires), it will render from cache
+- The first time the page renders, it will make the AJAX call.
+- Any other times (until the cache expires), it will render from cache
   instantly, without making the AJAX call.
-* You can expire cache simply by passing `:expires_in` in your view where
+- You can expire cache simply by passing `:expires_in` in your view where
   you cache the partial
 
 ### Doing non-GET requests
@@ -506,7 +538,7 @@ If you want, you can tell Turbolinks to reload your `render_async` call as follo
 
 This will reload the whole page with Turbolinks.
 
-Make sure to put `<%= content_for :render_async %>` in your base view file in
+> :bulb: Make sure to put `<%= content_for :render_async %>` in your base view file in
 the `<head>` and not the `<body>`.
 
 ### Using with respond_to and JS format
@@ -600,17 +632,20 @@ Also, you can do it like this:
 RenderAsync.configuration.jquery = true
 ```
 
-## Development
+## :hammer_and_pick: Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
 `rake spec` to run the tests. You can also run `bin/console` for an interactive
-prompt that will allow you to experiment.
+prompt that will allow you to experiment. To run integration tests, use
+`bin/integration-tests`.
 
-## Contributing
+## :pray: Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/renderedtext/render_async.
+Thank you for considering or deciding to contribute, this is much appreciated!
+Any kind of bug reports and pull requests are encouraged and welcome on GitHub at
+https://github.com/renderedtext/render_async.
 
-## License
+## :memo: License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
