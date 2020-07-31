@@ -108,32 +108,32 @@
 
   var _interval;
   <% if interval %>
-    var _renderAsyncFunction = function() {
-      _makeRequest();
-      _interval = setInterval(_makeRequest, <%= interval %>);
+  var _renderAsyncFunction = function() {
+    // If interval is already set, return
+    if (typeof(_interval) === 'number') return
+
+    _makeRequest();
+    _interval = setInterval(_makeRequest, <%= interval %>);
+  }
+
+  var _clearRenderAsyncInterval = function() {
+    if (typeof(_interval) === 'number'){
+      clearInterval(_interval)
+      _interval = undefined;
     }
+  }
 
-    // Register a polling stop event on the container
-    var container = document.getElementById('<%= container_id %>');
-    container.addEventListener("async-stop", function(event){
-      if (typeof(_interval) === 'number'){
-        clearInterval(_interval)
-        _interval = undefined;
-      }
-    });
-    // Register a start polling event on the container
-    container.addEventListener("async-start", function(event){
-      _renderAsyncFunction();
-    });
+  var container = document.getElementById('<%= container_id %>');
 
-    <% if turbolinks %>
-    document.addEventListener("turbolinks:visit", function(e) {
-      if (typeof(_interval) === 'number') {
-        clearInterval(_interval);
-        _interval = undefined;
-      }
-    });
-    <% end %>
+  // Register a polling stop event on the container
+  container.addEventListener("async-stop", _clearRenderAsyncInterval)
+
+  // Register a start polling event on the container
+  container.addEventListener("async-start", _renderAsyncFunction)
+
+  <% if turbolinks %>
+  document.addEventListener("turbolinks:visit", _clearRenderAsyncInterval)
+  <% end %>
   <% end %>
 
   <% if toggle %>
