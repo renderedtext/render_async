@@ -20,7 +20,6 @@ module RenderAsync
     def render_async(path, options = {}, &placeholder)
       event_name = options.delete(:event_name)
       placeholder = capture(&placeholder) if block_given?
-      retry_count = options.delete(:retry_count) || 0
       html_options = options.delete(:html_options) || {}
 
       render 'render_async/render_async', **container_element_options(options),
@@ -30,7 +29,7 @@ module RenderAsync
                                           placeholder: placeholder,
                                           **request_options(options),
                                           **error_handling_options(options),
-                                          retry_count: retry_count,
+                                          **retry_options(options),
                                           **polling_options(options),
                                           **content_for_options(options)
     end
@@ -52,6 +51,13 @@ module RenderAsync
     def error_handling_options(options)
       { error_message: options[:error_message],
         error_event_name: options[:error_event_name] }
+    end
+
+    def retry_options(options)
+      {
+        retry_count: options.delete(:retry_count) || 0,
+        retry_delay: options.delete(:retry_delay)
+      }
     end
 
     def polling_options(options)

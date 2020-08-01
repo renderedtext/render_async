@@ -51,7 +51,7 @@ than using regular rendering.
 
 It works with Rails and its tools out of the box.
 
-:sparkles: A quick overview of how `render_async` does its magic:
+:sparkles:  A quick overview of how `render_async` does its magic:
 
 1. user visits a page
 2. `render_async` makes an AJAX request on the controller action
@@ -60,6 +60,8 @@ It works with Rails and its tools out of the box.
 
 JavaScript is injected straight into `<%= content_for :render_async %>` so you choose
 where to put it.
+
+:mega:  P.S. Join our [Discord channel](https://discord.gg/SPfbeRm) for help and discussion, and let's make `render_async` even better!
 
 ## :package: Installation
 
@@ -118,6 +120,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in an event name](#passing-in-an-event-name)
   - [Using default events](#using-default-events)
   - [Retry on failure](#retry-on-failure)
+    - [Retry after some time](#retry-after-some-time)
   - [Toggle event](#toggle-event)
     - [Control polling with a toggle](#control-polling-with-a-toggle)
   - [Polling](#polling)
@@ -331,6 +334,39 @@ it will show an [error message](#handling-errors) which you need to specify.
 This can show useful when you know your requests often fail, and you don't want
 to refresh the whole page just to retry them.
 
+#### Retry after some time
+
+If you want to retry requests but with some delay in between the calls, you can
+pass a `retry_delay` option together with `retry_count` like so:
+
+```erb
+<%= render_async users_path,
+                 retry_count: 5,
+                 retry_delay: 2000 %>
+```
+
+This will make `render_async` wait for 2 seconds before retrying after each
+failure. In the end, if the request is still failing after 5th time, it will
+dispatch a [default error event](#using-default-events).
+
+> :candy:  If you are catching an event after an error, you can get `retryCount` from
+the event. `retryCount` will have number of retries it took before the event was dispatched.
+
+Here is an example on how to get `retryCount`:
+
+```erb
+<%= render_async users_path,
+                 retry_count: 5,
+                 retry_delay: 2000,
+                 error_event_name: 'it-failed-badly' %>
+
+<script>
+  document.addEventListener('it-failed-badly', function(event) {
+    console.log("Request failed after " + event.retryCount + " tries!")
+  });
+</script>
+```
+
 ### Toggle event
 
 You can trigger `render_async` loading by clicking or doing another event to a
@@ -382,7 +418,7 @@ You are telling `render_async` to fetch comments_path every 5 seconds.
 
 This can be handy if you want to enable polling for a specific URL.
 
-> :warning: By passing interval to `render_async`, initial container element
+> :warning:  By passing interval to `render_async`, initial container element
 > will remain in HTML tree, it will not be replaced with request response.
 > You can handle how that container element is rendered and its style by
 > [passing in an HTML element name](#passing-in-an-html-element-name) and
@@ -400,7 +436,7 @@ container element. From your code, you can emit following events:
   - 'async-stop' - this will stop polling
   - 'async-start' - this will start polling.
 
-> :bulb: Please note that events need to be dispatched to a render_async container.
+> :bulb:  Please note that events need to be dispatched to a render_async container.
 
 An example of how you can do this looks like this:
 
@@ -538,7 +574,7 @@ If you want, you can tell Turbolinks to reload your `render_async` call as follo
 
 This will reload the whole page with Turbolinks.
 
-> :bulb: Make sure to put `<%= content_for :render_async %>` in your base view file in
+> :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
 the `<head>` and not the `<body>`.
 
 ### Using with respond_to and JS format
@@ -639,11 +675,19 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run
 prompt that will allow you to experiment. To run integration tests, use
 `bin/integration-tests`.
 
+Got any questions or comments about development (or anything else)?
+Join [render_async's Discord channel](https://discord.gg/SPfbeRm)
+and let's make `render_async` even better!
+
 ## :pray: Contributing
 
 Thank you for considering or deciding to contribute, this is much appreciated!
 Any kind of bug reports and pull requests are encouraged and welcome on GitHub at
 https://github.com/renderedtext/render_async.
+
+Got any issues or difficulties?
+Join [render_async's Discord channel](https://discord.gg/SPfbeRm)
+and let's make `render_async` even better!
 
 ## :memo: License
 
