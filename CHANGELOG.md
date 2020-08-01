@@ -1,3 +1,12 @@
+### 2.1.7 (2020/8/1)
+
+* [#125](https://github.com/renderedtext/render_async/pull/125): Implement retry after some time feature - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#124](https://github.com/renderedtext/render_async/pull/124): Add more info on how to control polling - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#123](https://github.com/renderedtext/render_async/pull/123): Simplify calling of start and stop event when interval is defined - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#119](https://github.com/renderedtext/render_async/pull/119): Add polling control start/stop events - [@vanboom](https://github.com/vanboom).
+* [#120](https://github.com/renderedtext/render_async/pull/120): Fine tune custom content_for feature - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#117](https://github.com/renderedtext/render_async/pull/117): Allow a custom content_for name - [@vanboom](https://github.com/vanboom).
+
 ### 2.1.6 (2020/5/9)
 
 * [#114](https://github.com/renderedtext/render_async/pull/114): Call render_async logic if document state is ready or interactive - [@nikolalsvk](https://github.com/nikolalsvk).
