@@ -68,28 +68,37 @@ if (window.jQuery) {
         var container = $("#<%= container_id %>");
         container.replaceWith("<%= error_message.try(:html_safe) %>");
 
-        var errorEvent = createEvent('render_async_error', container);
-        errorEvent.container = container;
-        document.dispatchEvent(errorEvent);
+        var errorEvent = createEvent(
+          "<%= error_event_name || 'render_async_error' %>",
+          container
+        )
+        errorEvent.retryCount = currentRetryCount
 
-        <% if error_event_name.present? %>
-          var event = createEvent("<%= error_event_name %>", container)
-          document.dispatchEvent(event);
-        <% end %>
+        document.dispatchEvent(errorEvent);
       });
     };
 
     <% if retry_count > 0 %>
+    var _retryMakeRequest = _makeRequest
+
+    <% if retry_delay %>
+    _retryMakeRequest = function(currentRetryCount) {
+      setTimeout(function() {
+        _makeRequest(currentRetryCount)
+      }, <%= retry_delay %>)
+    }
+    <% end %>
+
     function retry(currentRetryCount) {
       if (typeof(currentRetryCount) === 'number') {
         if (currentRetryCount >= <%= retry_count %>)
           return false;
 
-        _makeRequest(currentRetryCount + 1);
+        _retryMakeRequest(currentRetryCount + 1);
         return true;
       }
 
-      _makeRequest(1);
+      _retryMakeRequest(1);
       return true;
     }
     <% end %>
