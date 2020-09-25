@@ -658,7 +658,7 @@ You can configure it by doing the following anywhere before you call
 ```rb
 RenderAsync.configure do |config|
   config.jquery = true # This will render jQuery code, and skip Vanilla JS code
-  config.turbolinks = false # Enable this option if you are using Turbolinks 5+
+  config.turbolinks = true # Enable this option if you are using Turbolinks 5+
 end
 ```
 
