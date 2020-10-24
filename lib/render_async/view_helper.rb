@@ -19,11 +19,10 @@ module RenderAsync
     def render_async(path, options = {}, &placeholder)
       event_name = options.delete(:event_name)
       placeholder = capture(&placeholder) if block_given?
-      html_options = options.delete(:html_options) || {}
 
       render 'render_async/render_async', **container_element_options(options),
                                           path: path,
-                                          html_options: html_options,
+                                          html_options: html_options(options),
                                           event_name: event_name,
                                           placeholder: placeholder,
                                           **request_options(options),
@@ -40,6 +39,14 @@ module RenderAsync
         container_id: options[:container_id] || generate_container_id,
         container_class: options[:container_class],
         replace_container: replace_container(options) }
+    end
+
+    def html_options(options)
+      set_options = options.delete(:html_options) || {}
+
+      set_options[:nonce] = config.nonces if set_options[:nonce].nil?
+
+      set_options
     end
 
     def request_options(options)
@@ -71,8 +78,6 @@ module RenderAsync
       }
     end
 
-    private
-
     def generate_container_id
       "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
     end
@@ -80,7 +85,11 @@ module RenderAsync
     def replace_container(options)
       return options[:replace_container] unless options[:replace_container].nil?
 
-      RenderAsync.configuration.replace_container
+      config.replace_container
+    end
+
+    def config
+      RenderAsync.configuration
     end
   end
 end
