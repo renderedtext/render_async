@@ -1,3 +1,11 @@
+### 2.1.8 (2020/10/24)
+
+* [#134](https://github.com/renderedtext/render_async/pull/134): Add config option for setting nonce - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#132](https://github.com/renderedtext/render_async/pull/132): Refresh render_async with an event - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#131](https://github.com/renderedtext/render_async/pull/131): Start to poll on page load with toggle - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#130](https://github.com/renderedtext/render_async/pull/130): Set up control events after document loaded - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#127](https://github.com/renderedtext/render_async/pull/127): Update README.md, to reflect correct turbolinks configuration value - [@villu164](https://github.com/villu164).
+
 ### 2.1.7 (2020/8/1)
 
 * [#125](https://github.com/renderedtext/render_async/pull/125): Implement retry after some time feature - [@nikolalsvk](https://github.com/nikolalsvk).
