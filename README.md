@@ -131,9 +131,9 @@ Advanced usage includes information on different options, such as:
   - [Doing non-GET requests](#doing-non-get-requests)
   - [Using with Turbolinks](#using-with-turbolinks)
   - [Using with respond_to and JS format](#using-with-respond_to-and-js-format)
-  - [Nested Async Renders](#nested-async-renders)
+  - [Nested async renders](#nested-async-renders)
   - [Customizing the content_for name](#customizing-the-content_for-name)
-  - [Configuration](#configuration)
+  - [Configuration options](#configuration-options)
 
 ### Passing in a container ID
 
@@ -179,6 +179,7 @@ Rendered code in the view:
 `javascript_tag`, to drop HTML tags into the `script` element.
 
 Example of utilizing `html_options` with a [nonce](https://edgeguides.rubyonrails.org/security.html#content-security-policy):
+
 ```erb
 <%= render_async users_path, html_options: { nonce: true } %>
 ```
@@ -196,6 +197,8 @@ Rendered code in the view:
 <div id="render_async_18b8a6cd161499117471" class="">
 </div>
 ```
+
+> :bulb:  You can enable `nonce` to be set everywhere by using [configuration option](#configuration-option) render_async provides.
 
 ### Passing in an HTML element name
 
@@ -654,7 +657,7 @@ render call:
 render partial: "comment_stats", content_type: 'text/html'
 ```
 
-### Nested Async Renders
+### Nested async renders
 
 It is possible to nest async templates within other async templates. When doing
 so, another `content_for` is required to ensure the JavaScript needed to load
@@ -694,7 +697,7 @@ For example:
 <%= content_for :render_async_comment_stats %>
 ```
 
-### Configuration
+### Configuration options
 
 `render_async` renders Vanilla JS (regular JavaScript, non-jQuery code)
 **by default** in order to fetch the request from the server.
@@ -704,11 +707,13 @@ so.
 
 You can configure it by doing the following anywhere before you call
 `render_async`:
+
 ```rb
 RenderAsync.configure do |config|
   config.jquery = true # This will render jQuery code, and skip Vanilla JS code. Default value is false.
   config.turbolinks = true # Enable this option if you are using Turbolinks 5+. Default value is false.
   config.replace_container = false # Set to false if you want to keep the placeholder div element from render_async. Default value is true.
+  config.nonces = true # Set to true if you want render_async's javascript_tag to always receive nonce: true
 end
 ```
 
@@ -717,6 +722,13 @@ Also, you can do it like this:
 # This will render jQuery code, and skip Vanilla JS code
 RenderAsync.configuration.jquery = true
 ```
+
+Aside from configuring whether the gem relies on jQuery or VanillaJS, you can
+configure other options:
+
+- `turbolinks` option - If you are using Turbolinks 5+, you should enable this option since it supports Turbolinks way of loading data. The default value for this options if false.
+- `replace_container` option - If you want render_async to replace its container with the request response, turn this on. You can turn this on globally for all render_async calls, but if you use this option in a specific render_async call, it will override the global configuration.
+- `nonces` - If you need to pass in `nonce: true` to the `javascript_tag` in your application, it might make sense for you to turn this on globally for all render_async calls. To read more about nonces, check out [Rails' official guide on security](https://edgeguides.rubyonrails.org/security.html).
 
 ## :hammer_and_pick: Development
 
