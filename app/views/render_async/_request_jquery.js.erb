@@ -149,6 +149,10 @@ if (window.jQuery) {
           _renderAsyncFunction();
         }
       });
+
+      <% if toggle[:start] %>
+      _renderAsyncFunction()
+      <% end %>
     }
 
     _runAfterDocumentLoaded(_setUpToggle);
