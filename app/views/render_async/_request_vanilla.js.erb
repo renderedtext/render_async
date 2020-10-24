@@ -50,10 +50,10 @@
       if (request.readyState === 4) {
         if (request.status >= SUCCESS && request.status < ERROR) {
           var container = document.getElementById('<%= container_id %>');
-          <% if interval %>
-          container.innerHTML = request.response;
-          <% else %>
+          <% if !interval && replace_container %>
           container.outerHTML = request.response;
+          <% else %>
+          container.innerHTML = request.response;
           <% end %>
 
           var loadEvent = createEvent('render_async_load', container);
@@ -147,6 +147,16 @@
   <% if turbolinks %>
   document.addEventListener("turbolinks:visit", _clearRenderAsyncInterval)
   <% end %>
+  <% end %>
+
+  <% if !replace_container %>
+  function _setUpRefreshEvent() {
+    var container = document.getElementById('<%= container_id %>');
+
+    container.addEventListener('refresh', _renderAsyncFunction)
+  }
+
+  _runAfterDocumentLoaded(_setUpRefreshEvent)
   <% end %>
 
   <% if toggle %>

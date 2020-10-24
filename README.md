@@ -119,6 +119,7 @@ Advanced usage includes information on different options, such as:
   - [Passing in a placeholder](#passing-in-a-placeholder)
   - [Passing in an event name](#passing-in-an-event-name)
   - [Using default events](#using-default-events)
+  - [Refreshing the partial](#refreshing-the-partial)
   - [Retry on failure](#retry-on-failure)
     - [Retry after some time](#retry-after-some-time)
   - [Toggle event](#toggle-event)
@@ -316,6 +317,36 @@ $(document).on('render_async_error', function(event) {
   console.log('Async partial could not load in this container:', event.container);
 });
 ```
+
+### Refreshing the partial
+
+`render_async` lets you refresh (reload) the partial by letting you dispatch
+the 'refresh' event on the `render_async`'s container. An example:
+
+```erb
+<%= render_async comments_path,
+                 container_id: 'refresh-me',
+                 replace_container: false %>
+
+<button id="refresh-button">Refresh comments</button>
+
+<script>
+  var button = document.getElementById('refresh-button')
+  var container = document.getElementById('refresh-me');
+
+  button.addEventListener('click', function() {
+    var event = new Event('refresh');
+
+    // Dispatch 'refresh' on the render_async container
+    container.dispatchEvent(event)
+  })
+</script>
+```
+
+If you follow the example above, when you click "Refresh comments" button,
+`render_async` will trigger again and reload the `comments_path`.
+
+> :bulb:  Note that you need to pass `replace_container: false` so you can later dispatch an event on that container.
 
 ### Retry on failure
 
@@ -675,8 +706,9 @@ You can configure it by doing the following anywhere before you call
 `render_async`:
 ```rb
 RenderAsync.configure do |config|
-  config.jquery = true # This will render jQuery code, and skip Vanilla JS code
-  config.turbolinks = true # Enable this option if you are using Turbolinks 5+
+  config.jquery = true # This will render jQuery code, and skip Vanilla JS code. Default value is false.
+  config.turbolinks = true # Enable this option if you are using Turbolinks 5+. Default value is false.
+  config.replace_container = false # Set to false if you want to keep the placeholder div element from render_async. Default value is true.
 end
 ```
 

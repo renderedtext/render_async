@@ -43,11 +43,11 @@ if (window.jQuery) {
         headers: headers
       }).done(function(response) {
         var container = $("#<%= container_id %>");
-        <% if interval %>
+        <% if !interval && replace_container %>
+          container.replaceWith(response);
+        <% else %>
           container.empty();
           container.append(response);
-        <% else %>
-          container.replaceWith(response);
         <% end %>
 
         var loadEvent = createEvent('render_async_load', container);
@@ -137,6 +137,16 @@ if (window.jQuery) {
     <% if turbolinks %>
     $(document).one('turbolinks:visit', _clearRenderAsyncInterval);
     <% end %>
+    <% end %>
+
+    <% if !replace_container %>
+    function _setUpRefreshEvent() {
+      var container = $("#<%= container_id %>");
+
+      $(container).on('refresh', _renderAsyncFunction)
+    }
+
+    _runAfterDocumentLoaded(_setUpRefreshEvent)
     <% end %>
 
     <% if toggle %>

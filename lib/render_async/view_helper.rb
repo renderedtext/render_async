@@ -2,7 +2,6 @@ require 'securerandom'
 
 module RenderAsync
   module ViewHelper
-
     def render_async_cache_key(path)
       "render_async_#{path}"
     end
@@ -39,7 +38,8 @@ module RenderAsync
     def container_element_options(options)
       { html_element_name: options[:html_element_name] || 'div',
         container_id: options[:container_id] || generate_container_id,
-        container_class: options[:container_class] }
+        container_class: options[:container_class],
+        replace_container: replace_container(options) }
     end
 
     def request_options(options)
@@ -75,6 +75,12 @@ module RenderAsync
 
     def generate_container_id
       "render_async_#{SecureRandom.hex(5)}#{Time.now.to_i}"
+    end
+
+    def replace_container(options)
+      return options[:replace_container] unless options[:replace_container].nil?
+
+      RenderAsync.configuration.replace_container
     end
   end
 end

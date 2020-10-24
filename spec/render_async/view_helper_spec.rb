@@ -50,6 +50,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -85,6 +86,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -114,6 +116,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -143,6 +146,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -172,6 +176,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -201,6 +206,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -230,6 +236,7 @@ describe RenderAsync::ViewHelper do
             event_name: "render_async_done",
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -259,6 +266,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: { selector: 'el-id', event: :click },
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -294,6 +302,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: placeholder,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -323,6 +332,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'POST',
             data: { 'foor' => 'bar' }.to_json,
             headers: { 'Content-Type' => 'application/json' },
@@ -357,6 +367,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -389,6 +400,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -421,6 +433,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -453,6 +466,7 @@ describe RenderAsync::ViewHelper do
             event_name: nil,
             toggle: nil,
             placeholder: nil,
+            replace_container: true,
             method: 'GET',
             data: nil,
             headers: {},
@@ -468,6 +482,39 @@ describe RenderAsync::ViewHelper do
         helper.render_async(
           "users",
           content_for_name: :render_async_other_name
+        )
+      end
+    end
+
+    context "replace_container is false" do
+      it "renders render_async partial with proper parameters" do
+        expect(helper).to receive(:render).with(
+          "render_async/render_async",
+          {
+            html_element_name: "div",
+            container_id: /render_async_/,
+            container_class: nil,
+            path: "users",
+            html_options: {},
+            event_name: nil,
+            toggle: nil,
+            placeholder: nil,
+            replace_container: false,
+            method: 'GET',
+            data: nil,
+            headers: {},
+            error_message: nil,
+            error_event_name: nil,
+            retry_count: 0,
+            retry_delay: nil,
+            interval: nil,
+            content_for_name: :render_async
+          }
+        )
+
+        helper.render_async(
+          "users",
+          replace_container: false
         )
       end
     end
