@@ -382,7 +382,7 @@ do this by doing the following:
 
 This will trigger `render_async` to load the `comments_path` when you click the `#comments-button` element.
 If you want to remove event once it's triggered, you can pass `once: true` in the toggle options.
-The `once` option is false by default.
+The `once` option is false (`nil`) by default.
 
 You can also pass in a placeholder before the `render_async` is triggered. That
 way, the element that started `render_async` logic will be removed after the
@@ -404,6 +404,24 @@ pass `toggle` and `interval` arguments to `render_async` call like this:
 <a href='#' id='comments-button'>Load comments</a>
 <%= render_async comments_path, toggle: { selector: '#comments-button', event: :click }, interval: 2000 %>
 ```
+
+If you want `render_async` to render the request on load, you can pass `start:
+true`. Passing the `start` option inside the `toggle` hash will trigger
+`render_async` on page load. You can then toggle off polling by interacting
+with the element you specified. An example:
+
+```erb
+<a href='#' id='comments-button'>Toggle comments loading</a>
+<%= render_async comments_path,
+                 toggle: { selector: '#comments-button',
+                           event: :click,
+                           start: true },
+                 interval: 2000 %>
+```
+
+In the example above, the comments will load as soon as the page is rendered.
+Then, you can stop polling for comments by clicking the "Toggle comments
+loading" button.
 
 ### Polling
 
