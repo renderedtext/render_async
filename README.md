@@ -735,7 +735,7 @@ configure other options:
 After checking out the repo, run `bin/setup` to install dependencies. Then, run
 `rake spec` to run the tests. You can also run `bin/console` for an interactive
 prompt that will allow you to experiment. To run integration tests, use
-`bin/integration-tests`.
+`bin/integration-tests`. For more information, check out [CONTRIBUTING](.github/CONTRIBUTING.md) file, please.
 
 Got any questions or comments about development (or anything else)?
 Join [render_async's Discord channel](https://discord.gg/SPfbeRm)
@@ -743,9 +743,7 @@ and let's make `render_async` even better!
 
 ## :pray: Contributing
 
-Thank you for considering or deciding to contribute, this is much appreciated!
-Any kind of bug reports and pull requests are encouraged and welcome on GitHub at
-https://github.com/renderedtext/render_async.
+Check out [CONTRIBUTING](.github/CONTRIBUTING.md) file, please.
 
 Got any issues or difficulties?
 Join [render_async's Discord channel](https://discord.gg/SPfbeRm)

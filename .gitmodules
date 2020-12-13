@@ -2,3 +2,7 @@
 	path = spec/fixtures/rails-5-base-app
 	url = git@github.com:nikolalsvk/rails-5-base-app.git
 	branch = render-async
+[submodule "spec/fixtures/rails-6-base-app"]
+	path = spec/fixtures/rails-6-base-app
+	url = git@github.com:nikolalsvk/rails-6-base-app.git
+	branch = render-async
