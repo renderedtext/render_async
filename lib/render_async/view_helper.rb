@@ -44,7 +44,7 @@ module RenderAsync
     def html_options(options)
       set_options = options.delete(:html_options) || {}
 
-      set_options[:nonce] = config.nonces if set_options[:nonce].nil?
+      set_options[:nonce] = configuration.nonces if set_options[:nonce].nil?
 
       set_options
     end
@@ -85,10 +85,10 @@ module RenderAsync
     def replace_container(options)
       return options[:replace_container] unless options[:replace_container].nil?
 
-      config.replace_container
+      configuration.replace_container
     end
 
-    def config
+    def configuration
       RenderAsync.configuration
     end
   end
