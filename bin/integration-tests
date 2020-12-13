@@ -11,3 +11,10 @@ cd spec/fixtures/rails-5-base-app
 ls
 bundle install
 bundle exec cucumber
+
+cd ../../../spec/fixtures/rails-6-base-app
+ls
+bundle install
+yarn install
+RAILS_ENV=test bundle exec rails webpacker:compile
+bundle exec cucumber
