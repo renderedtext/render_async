@@ -4,7 +4,11 @@ if (window.jQuery) {
     if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
       return;
     }
+    function URLsAreSame(turbolinksURL) {
+      return "<%= request.original_url %>" === turbolinksURL
+    }
     <% end %>
+
     function createEvent(name, container) {
       var event = undefined;
       if (typeof(Event) === 'function') {
@@ -17,17 +21,61 @@ if (window.jQuery) {
       return event;
     }
 
+    function updateDOMOnSuccess(response, callback) {
+      if (callback) { callback() }
+      var container = $("#<%= container_id %>");
+      <% if !interval && replace_container %>
+        container.replaceWith(response);
+      <% else %>
+        container.empty();
+        container.append(response);
+      <% end %>
+
+      var loadEvent = createEvent('render_async_load', container);
+      document.dispatchEvent(loadEvent);
+
+      <% if event_name.present? %>
+        var event = createEvent("<%= event_name %>", container)
+        document.dispatchEvent(event);
+      <% end %>
+    }
+
+    function updateDOMOnFail(response, currentRetryCount, callback) {
+      if (callback) { callback() }
+      var skipErrorMessage = false;
+      <% if retry_count > 0 %>
+      skipErrorMessage = retry(currentRetryCount)
+      <% end %>
+
+      if (skipErrorMessage) return;
+
+      var container = $("#<%= container_id %>");
+      container.replaceWith("<%= error_message.try(:html_safe) %>");
+
+      var errorEvent = createEvent(
+        "<%= error_event_name || 'render_async_error' %>",
+        container
+      )
+      errorEvent.retryCount = currentRetryCount
+
+      document.dispatchEvent(errorEvent);
+    }
+
     function _runAfterDocumentLoaded(callback) {
       if (document.readyState === 'complete' || document.readyState === 'interactive') {
         // Handle a case where nested partials get loaded after the document loads
         callback();
-      } else {
-        <% if turbolinks %>
-        $(document).one('turbolinks:load', callback);
-        <% else %>
-        $(document).ready(callback);
-        <% end %>
       }
+
+      <% if turbolinks %>
+      $(document).on('turbolinks:load', function(e) {
+        if (!URLsAreSame(e.originalEvent.data.url)) return
+
+        callback()
+      });
+      <% else %>
+      $(document).ready(callback);
+      <% end %>
     }
 
     function _makeRequest(currentRetryCount) {
@@ -42,39 +90,27 @@ if (window.jQuery) {
         data: "<%= escape_javascript(data.to_s.html_safe) %>",
         headers: headers
       }).done(function(response) {
-        var container = $("#<%= container_id %>");
-        <% if !interval && replace_container %>
-          container.replaceWith(response);
-        <% else %>
-          container.empty();
-          container.append(response);
-        <% end %>
+        updateDOMOnSuccess(response, function() {
+          var updateDOMOnTurbolinksLoad = function(event) {
+            if (!URLsAreSame(event.data.url)) return
 
-        var loadEvent = createEvent('render_async_load', container);
-        document.dispatchEvent(loadEvent);
+            updateDOMOnSuccess(response)
+            document.removeEventListener("turbolinks:load", updateDOMOnTurbolinksLoad)
+          }
 
-        <% if event_name.present? %>
-          var event = createEvent("<%= event_name %>", container)
-          document.dispatchEvent(event);
-        <% end %>
+          document.addEventListener("turbolinks:load", updateDOMOnTurbolinksLoad)
+        })
       }).fail(function(response) {
-        var skipErrorMessage = false;
-        <% if retry_count > 0 %>
-        skipErrorMessage = retry(currentRetryCount)
-        <% end %>
+        updateDOMOnFail(response, currentRetryCount, function() {
+          var updateDOMOnTurbolinksLoad = function(event) {
+            if (!URLsAreSame(event.data.url)) return
 
-        if (skipErrorMessage) return;
+            updateDOMOnFail(response, currentRetryCount)
+            document.removeEventListener("turbolinks:load", updateDOMOnTurbolinksLoad)
+          }
 
-        var container = $("#<%= container_id %>");
-        container.replaceWith("<%= error_message.try(:html_safe) %>");
-
-        var errorEvent = createEvent(
-          "<%= error_event_name || 'render_async_error' %>",
-          container
-        )
-        errorEvent.retryCount = currentRetryCount
-
-        document.dispatchEvent(errorEvent);
+          document.addEventListener("turbolinks:load", updateDOMOnTurbolinksLoad)
+        })
       });
     };
 

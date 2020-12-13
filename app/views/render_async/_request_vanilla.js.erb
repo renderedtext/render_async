@@ -3,7 +3,11 @@
   if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
     return;
   }
+  function URLsAreSame(turbolinksURL) {
+    return "<%= request.original_url %>" === turbolinksURL
+  }
   <% end %>
+
   function createEvent(name, container) {
     var event = undefined;
     if (typeof(Event) === 'function') {
@@ -17,9 +21,15 @@
   }
 
   function _runAfterDocumentLoaded(callback) {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      // Handle a case where nested partials get loaded after the document loads
+      callback();
+    }
+
     <% if turbolinks %>
     document.addEventListener("turbolinks:load", function(e) {
-      e.target.removeEventListener(e.type, arguments.callee);
+      if (!URLsAreSame(e.data.url)) return
+
       callback();
     });
     <% else %>
@@ -27,11 +37,49 @@
     <% end %>
   }
 
+  function updateDOM(request, currentRetryCount) {
+    var SUCCESS = 200;
+    var ERROR = 400;
+
+    if (request.status >= SUCCESS && request.status < ERROR) {
+      var container = document.getElementById('<%= container_id %>');
+      <% if !interval && replace_container %>
+      container.outerHTML = request.response;
+      <% else %>
+      container.innerHTML = request.response;
+      <% end %>
+
+      var loadEvent = createEvent('render_async_load', container);
+      document.dispatchEvent(loadEvent);
+
+      <% if event_name.present? %>
+        var event = createEvent('<%= event_name %>', container);
+        document.dispatchEvent(event);
+      <% end %>
+    } else {
+      var skipErrorMessage = false;
+      <% if retry_count > 0 %>
+      skipErrorMessage = retry(currentRetryCount)
+      <% end %>
+
+      if (skipErrorMessage) return;
+
+      var container = document.getElementById('<%= container_id %>');
+      container.outerHTML = '<%= error_message.try(:html_safe) %>';
+
+      var errorEvent = createEvent(
+        "<%= error_event_name || 'render_async_error' %>",
+        container
+      );
+      errorEvent.retryCount = currentRetryCount
+
+      document.dispatchEvent(errorEvent);
+    }
+  }
+
   function _makeRequest(currentRetryCount) {
     var request = new XMLHttpRequest();
     var asyncRequest = true;
-    var SUCCESS = 200;
-    var ERROR = 400;
 
     request.open('<%= method %>', '<%= path.html_safe %>', asyncRequest);
 
@@ -48,40 +96,16 @@
 
     request.onreadystatechange = function() {
       if (request.readyState === 4) {
-        if (request.status >= SUCCESS && request.status < ERROR) {
-          var container = document.getElementById('<%= container_id %>');
-          <% if !interval && replace_container %>
-          container.outerHTML = request.response;
-          <% else %>
-          container.innerHTML = request.response;
-          <% end %>
+        updateDOM(request, currentRetryCount)
 
-          var loadEvent = createEvent('render_async_load', container);
-          document.dispatchEvent(loadEvent);
+        var updateDOMOnTurbolinksLoad = function(event) {
+          if (!URLsAreSame(event.data.url)) return
 
-          <% if event_name.present? %>
-            var event = createEvent('<%= event_name %>', container);
-            document.dispatchEvent(event);
-          <% end %>
-        } else {
-          var skipErrorMessage = false;
-          <% if retry_count > 0 %>
-          skipErrorMessage = retry(currentRetryCount)
-          <% end %>
-
-          if (skipErrorMessage) return;
-
-          var container = document.getElementById('<%= container_id %>');
-          container.outerHTML = '<%= error_message.try(:html_safe) %>';
-
-          var errorEvent = createEvent(
-            "<%= error_event_name || 'render_async_error' %>",
-            container
-          );
-          errorEvent.retryCount = currentRetryCount
-
-          document.dispatchEvent(errorEvent);
+          updateDOM(request, currentRetryCount)
+          document.removeEventListener("turbolinks:load", updateDOMOnTurbolinksLoad)
         }
+
+        document.addEventListener("turbolinks:load", updateDOMOnTurbolinksLoad)
       }
     };
 
