@@ -198,7 +198,7 @@ Rendered code in the view:
 </div>
 ```
 
-> :bulb:  You can enable `nonce` to be set everywhere by using [configuration option](#configuration-option) render_async provides.
+> :bulb:  You can enable `nonce` to be set everywhere by using [configuration option](#configuration-options) render_async provides.
 
 ### Passing in an HTML element name
 
