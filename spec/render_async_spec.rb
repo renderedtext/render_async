@@ -9,6 +9,10 @@ describe RenderAsync do
     it 'initializes turbolinks setting to false' do
       expect(RenderAsync.configuration.turbolinks).to eq false
     end
+
+    it 'initializes turbo setting to false' do
+      expect(RenderAsync.configuration.turbo).to eq false
+    end
   end
 
   describe '.reset' do

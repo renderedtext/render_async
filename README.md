@@ -130,6 +130,7 @@ Advanced usage includes information on different options, such as:
   - [Caching](#caching)
   - [Doing non-GET requests](#doing-non-get-requests)
   - [Using with Turbolinks](#using-with-turbolinks)
+  - [Using with Turbo](#using-with-turbo)
   - [Using with respond_to and JS format](#using-with-respond_to-and-js-format)
   - [Nested async renders](#nested-async-renders)
   - [Customizing the content_for name](#customizing-the-content_for-name)
@@ -629,6 +630,36 @@ This will reload the whole page with Turbolinks.
 > :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
 the `<head>` and not the `<body>`.
 
+### Using with Turbo
+
+On Turbo applications, you may experience caching issues when navigating
+away from, and then back to, a page with a `render_async` call on it. This will
+likely show up as an empty div.
+
+If you're using Turbo, you can resolve this by setting Turbo
+configuration of `render_async` to true:
+
+```rb
+RenderAsync.configure do |config|
+  config.turbo = true # Enable this option if you are using Turbo
+end
+```
+
+This way, you're not breaking Turbos flow of loading or reloading a page.
+It makes it more efficient that the next option that is suggested below.
+
+Another option:
+If you want, you can tell Turbo to reload your `render_async` call as follows:
+
+```erb
+<%= render_async events_path, 'data-turbo-track': 'reload' %>
+```
+
+This will reload the whole page with Turbo.
+
+> :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
+the `<head>` and not the `<body>`.
+
 ### Using with respond_to and JS format
 
 If you need to restrict the action to only respond to AJAX requests, you'll
@@ -712,6 +743,7 @@ You can configure it by doing the following anywhere before you call
 RenderAsync.configure do |config|
   config.jquery = true # This will render jQuery code, and skip Vanilla JS code. The default value is false.
   config.turbolinks = true # Enable this option if you are using Turbolinks 5+. The default value is false.
+  config.turbo = true # Enable this option if you are using Turbo. The default value is false.
   config.replace_container = false # Set to false if you want to keep the placeholder div element from render_async. The default value is true.
   config.nonces = true # Set to true if you want render_async's javascript_tag to always receive nonce: true. The default value is false.
 end
@@ -727,6 +759,7 @@ Aside from configuring whether the gem relies on jQuery or VanillaJS, you can
 configure other options:
 
 - `turbolinks` option - If you are using Turbolinks 5+, you should enable this option since it supports Turbolinks way of loading data. The default value for this options if false.
+- `turbo` option - If you are using Turbo, you should enable this option since it supports Turbo way of loading data. The default value for this options if false.
 - `replace_container` option - If you want render_async to replace its container with the request response, turn this on. You can turn this on globally for all render_async calls, but if you use this option in a specific render_async call, it will override the global configuration. The default value is true.
 - `nonces` - If you need to pass in `nonce: true` to the `javascript_tag` in your application, it might make sense for you to turn this on globally for all render_async calls. To read more about nonces, check out [Rails' official guide on security](https://edgeguides.rubyonrails.org/security.html). The default value is false.
 

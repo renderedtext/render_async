@@ -4,6 +4,11 @@
     return;
   }
   <% end %>
+  <% if turbo %>
+  if (document.documentElement.hasAttribute("data-turbo-preview")) {
+    return;
+  }
+  <% end %>
   function createEvent(name, container) {
     var event = undefined;
     if (typeof(Event) === 'function') {
@@ -19,6 +24,11 @@
   function _runAfterDocumentLoaded(callback) {
     <% if turbolinks %>
     document.addEventListener("turbolinks:load", function(e) {
+      e.target.removeEventListener(e.type, arguments.callee);
+      callback();
+    });
+    <% elsif turbo %>
+    document.addEventListener("turbo:load", function(e) {
       e.target.removeEventListener(e.type, arguments.callee);
       callback();
     });
@@ -146,6 +156,9 @@
 
   <% if turbolinks %>
   document.addEventListener("turbolinks:visit", _clearRenderAsyncInterval)
+  <% end %>
+  <% if turbo %>
+  document.addEventListener("turbo:visit", _clearRenderAsyncInterval)
   <% end %>
   <% end %>
 
