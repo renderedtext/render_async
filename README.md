@@ -616,7 +616,7 @@ end
 ```
 
 This way, you're not breaking Turbolinks flow of loading or reloading a page.
-It makes it more efficient that the next option that is suggested below.
+It is more efficient than the next option below.
 
 Another option:
 If you want, you can tell Turbolinks to reload your `render_async` call as follows:
@@ -627,8 +627,8 @@ If you want, you can tell Turbolinks to reload your `render_async` call as follo
 
 This will reload the whole page with Turbolinks.
 
-> :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
-the `<head>` and not the `<body>`.
+> :bulb:  If Turbolinks is misbehaving in some way, make sure to put `<%= content_for :render_async %>` in your base view file in
+the `<body>` and not the `<head>`.
 
 ### Using with Turbo
 
@@ -646,7 +646,7 @@ end
 ```
 
 This way, you're not breaking Turbos flow of loading or reloading a page.
-It makes it more efficient that the next option that is suggested below.
+It is more efficient than the next option below.
 
 Another option:
 If you want, you can tell Turbo to reload your `render_async` call as follows:
@@ -657,8 +657,8 @@ If you want, you can tell Turbo to reload your `render_async` call as follows:
 
 This will reload the whole page with Turbo.
 
-> :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
-the `<head>` and not the `<body>`.
+> :bulb:  If Turbo is misbehaving in some way, make sure to put `<%= content_for :render_async %>` in your base view file in
+the `<body>` and not the `<head>`.
 
 ### Using with respond_to and JS format
 
