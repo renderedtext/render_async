@@ -82,7 +82,7 @@ And then execute:
     <%= render_async comment_stats_path %>
     ```
 
-2. Then create a route that will `config/routes.rb`:
+2. Then create a route for it `config/routes.rb`:
     ```ruby
     get :comment_stats, controller: :comments
     ```
@@ -292,7 +292,7 @@ document.addEventListener("users-loaded", function(event) {
 ### Using default events
 
 `render_async` will fire the event `render_async_load` when an async partial
-has loaded and rendered on page.
+has loaded and rendered on the page.
 
 In case there is an error, the event `render_async_error` will fire instead.
 
@@ -385,7 +385,7 @@ failure. In the end, if the request is still failing after 5th time, it will
 dispatch a [default error event](#using-default-events).
 
 > :candy:  If you are catching an event after an error, you can get `retryCount` from
-the event. `retryCount` will have number of retries it took before the event was dispatched.
+the event. `retryCount` will have the number of retries it took before the event was dispatched.
 
 Here is an example on how to get `retryCount`:
 
@@ -416,7 +416,7 @@ do this by doing the following:
 ```
 
 This will trigger `render_async` to load the `comments_path` when you click the `#comments-button` element.
-If you want to remove event once it's triggered, you can pass `once: true` in the toggle options.
+If you want to remove an event once it's triggered, you can pass `once: true` in the toggle options.
 The `once` option is false (`nil`) by default.
 
 You can also pass in a placeholder before the `render_async` is triggered. That
@@ -461,7 +461,7 @@ loading" button.
 ### Polling
 
 You can call `render_async` with interval argument. This will make render_async
-call specified path at specified interval.
+call specified path at the specified interval.
 
 By doing this:
 ```erb
@@ -471,8 +471,8 @@ You are telling `render_async` to fetch comments_path every 5 seconds.
 
 This can be handy if you want to enable polling for a specific URL.
 
-> :warning:  By passing interval to `render_async`, initial container element
-> will remain in HTML tree, it will not be replaced with request response.
+> :warning:  By passing interval to `render_async`, the initial container element
+> will remain in the HTML tree and it will not be replaced with request response.
 > You can handle how that container element is rendered and its style by
 > [passing in an HTML element name](#passing-in-an-html-element-name) and
 > [HTML element class](#passing-in-a-container-class-name).
@@ -484,8 +484,8 @@ First one is pretty simple, and it involves using the [toggle](#toggle-event)
 feature. To do this, you can follow instructions in the
 [control polling with a toggle section](#control-polling-with-a-toggle).
 
-Second option is more advanced and it involves emitting events to the `render_async`'s
-container element. From your code, you can emit following events:
+The second option is more advanced and it involves emitting events to the `render_async`'s
+container element. From your code, you can emit the following events:
   - 'async-stop' - this will stop polling
   - 'async-start' - this will start polling.
 
@@ -523,13 +523,13 @@ An example of how you can do this looks like this:
 ```
 
 We are rendering two buttons - "Stop polling" and "Start polling". Then, we
-attach event listener to catch any clicking on the buttons. When the buttons
-are clicked, we either stop the polling, or start the polling, depending which
+attach an event listener to catch any clicking on the buttons. When the buttons
+are clicked, we either stop the polling or start the polling, depending on which
 button a user clicks.
 
 ### Handling errors
 
-`render_async` let's you handle errors by allowing you to pass in `error_message`
+`render_async` lets you handle errors by allowing you to pass in `error_message`
 and `error_event_name`.
 
 - `error_message`
@@ -616,7 +616,7 @@ end
 ```
 
 This way, you're not breaking Turbolinks flow of loading or reloading a page.
-It makes it more efficient that the next option that is suggested below.
+It is more efficient than the next option below.
 
 Another option:
 If you want, you can tell Turbolinks to reload your `render_async` call as follows:
@@ -627,8 +627,8 @@ If you want, you can tell Turbolinks to reload your `render_async` call as follo
 
 This will reload the whole page with Turbolinks.
 
-> :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
-the `<head>` and not the `<body>`.
+> :bulb:  If Turbolinks is misbehaving in some way, make sure to put `<%= content_for :render_async %>` in your base view file in
+the `<body>` and not the `<head>`.
 
 ### Using with Turbo
 
@@ -646,7 +646,7 @@ end
 ```
 
 This way, you're not breaking Turbos flow of loading or reloading a page.
-It makes it more efficient that the next option that is suggested below.
+It is more efficient than the next option below.
 
 Another option:
 If you want, you can tell Turbo to reload your `render_async` call as follows:
@@ -657,8 +657,8 @@ If you want, you can tell Turbo to reload your `render_async` call as follows:
 
 This will reload the whole page with Turbo.
 
-> :bulb:  Make sure to put `<%= content_for :render_async %>` in your base view file in
-the `<head>` and not the `<body>`.
+> :bulb:  If Turbo is misbehaving in some way, make sure to put `<%= content_for :render_async %>` in your base view file in
+the `<body>` and not the `<head>`.
 
 ### Using with respond_to and JS format
 
@@ -677,7 +677,7 @@ def comment_stats
 end
 ```
 
-When you do this, Rails will sometime set the response's `Content-Type` header
+When you do this, Rails will sometimes set the response's `Content-Type` header
 to `text/javascript`. This causes the partial not to be rendered in the HTML.
 This usually happens when there's browser caching.
 
@@ -745,7 +745,7 @@ RenderAsync.configure do |config|
   config.turbolinks = true # Enable this option if you are using Turbolinks 5+. The default value is false.
   config.turbo = true # Enable this option if you are using Turbo. The default value is false.
   config.replace_container = false # Set to false if you want to keep the placeholder div element from render_async. The default value is true.
-  config.nonces = true # Set to true if you want render_async's javascript_tag to always receive nonce: true. The default value is false.
+  config.nonces = true # Set to true if you want render_async's javascript_tag always to receive nonce: true. The default value is false.
 end
 ```
 
@@ -758,8 +758,8 @@ RenderAsync.configuration.jquery = true
 Aside from configuring whether the gem relies on jQuery or VanillaJS, you can
 configure other options:
 
-- `turbolinks` option - If you are using Turbolinks 5+, you should enable this option since it supports Turbolinks way of loading data. The default value for this options if false.
-- `turbo` option - If you are using Turbo, you should enable this option since it supports Turbo way of loading data. The default value for this options if false.
+- `turbolinks` option - If you are using Turbolinks 5+, you should enable this option since it supports Turbolinks way of loading data. The default value for this option is false.
+- `turbo` option - If you are using Turbo, you should enable this option since it supports Turbo way of loading data. The default value for this option is false.
 - `replace_container` option - If you want render_async to replace its container with the request response, turn this on. You can turn this on globally for all render_async calls, but if you use this option in a specific render_async call, it will override the global configuration. The default value is true.
 - `nonces` - If you need to pass in `nonce: true` to the `javascript_tag` in your application, it might make sense for you to turn this on globally for all render_async calls. To read more about nonces, check out [Rails' official guide on security](https://edgeguides.rubyonrails.org/security.html). The default value is false.
 
