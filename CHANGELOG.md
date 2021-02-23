@@ -1,3 +1,11 @@
+### 2.1.9 (2021/02/23)
+
+* [#142](https://github.com/renderedtext/render_async/pull/142): Update Turbolinks docs - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#141](https://github.com/renderedtext/render_async/pull/141): Add Support for Turbo - [@MBuckley0](https://github.com/Mbuckley0).
+* [#139](https://github.com/renderedtext/render_async/pull/139): Fix readme configuration-options anchor - [@richardvenneman](https://github.com/richardvenneman).
+* [#138](https://github.com/renderedtext/render_async/pull/138): Add Rails 6 base app as a fixture - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#137](https://github.com/renderedtext/render_async/pull/137): Rename config - [@nikolalsvk](https://github.com/nikolalsvk).
+
 ### 2.1.8 (2020/10/24)
 
 * [#134](https://github.com/renderedtext/render_async/pull/134): Add config option for setting nonce - [@nikolalsvk](https://github.com/nikolalsvk).
