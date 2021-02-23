@@ -214,6 +214,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Mbuckley0",
+      "name": "Mitchell Buckley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11203679?v=4",
+      "profile": "https://github.com/Mbuckley0",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "repoType": "github"
