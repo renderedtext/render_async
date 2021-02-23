@@ -5,6 +5,11 @@ if (window.jQuery) {
       return;
     }
     <% end %>
+    <% if turbo %>
+    if (document.documentElement.hasAttribute("data-turbo-preview")) {
+      return;
+    }
+    <% end %>
     function createEvent(name, container) {
       var event = undefined;
       if (typeof(Event) === 'function') {
@@ -24,6 +29,8 @@ if (window.jQuery) {
       } else {
         <% if turbolinks %>
         $(document).one('turbolinks:load', callback);
+        <% elsif turbo %>
+        $(document).one('turbo:load', callback);
         <% else %>
         $(document).ready(callback);
         <% end %>
@@ -136,6 +143,9 @@ if (window.jQuery) {
 
     <% if turbolinks %>
     $(document).one('turbolinks:visit', _clearRenderAsyncInterval);
+    <% end %>
+    <% if turbo %>
+    $(document).one('turbo:visit', _clearRenderAsyncInterval);
     <% end %>
     <% end %>
 

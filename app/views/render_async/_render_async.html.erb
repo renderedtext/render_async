@@ -20,7 +20,8 @@
                   retry_count: retry_count,
                   retry_delay: retry_delay,
                   interval: interval,
-                  turbolinks: RenderAsync.configuration.turbolinks } %>
+                  turbolinks: RenderAsync.configuration.turbolinks,
+                  turbo: RenderAsync.configuration.turbo} %>
 
     <% if RenderAsync.configuration.jquery %>
       <%= render partial: 'render_async/request_jquery',
