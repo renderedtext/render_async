@@ -50,6 +50,8 @@ if (window.jQuery) {
         headers: headers
       }).done(function(response) {
         var container = $("#<%= container_id %>");
+        if (!container.length) return;
+
         <% if !interval && replace_container %>
           container.replaceWith(response);
         <% else %>
@@ -73,6 +75,8 @@ if (window.jQuery) {
         if (skipErrorMessage) return;
 
         var container = $("#<%= container_id %>");
+        if (!container.length) return;
+
         container.replaceWith("<%= error_message.try(:html_safe) %>");
 
         var errorEvent = createEvent(
