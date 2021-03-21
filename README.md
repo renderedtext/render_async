@@ -622,7 +622,7 @@ Another option:
 If you want, you can tell Turbolinks to reload your `render_async` call as follows:
 
 ```erb
-<%= render_async events_path, 'data-turbolinks-track': 'reload' %>
+<%= render_async events_path, html_options: { 'data-turbolinks-track': 'reload' } %>
 ```
 
 This will reload the whole page with Turbolinks.
@@ -652,7 +652,7 @@ Another option:
 If you want, you can tell Turbo to reload your `render_async` call as follows:
 
 ```erb
-<%= render_async events_path, 'data-turbo-track': 'reload' %>
+<%= render_async events_path, html_options: { 'data-turbo-track': 'reload' } %>
 ```
 
 This will reload the whole page with Turbo.
