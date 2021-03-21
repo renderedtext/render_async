@@ -1,3 +1,9 @@
+### 2.1.10 (2021/03/21)
+
+* [#146](https://github.com/renderedtext/render_async/pull/146): Add comment when we check if container is present - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#145](https://github.com/renderedtext/render_async/pull/145): Wrap html_options for turbolinks - [@yhirano55](https://github.com/yhirano55).
+* [#144](https://github.com/renderedtext/render_async/pull/144): Avoid TypeError if container has already disappear - [@yhirano55](https://github.com/yhirano55).
+
 ### 2.1.9 (2021/02/23)
 
 * [#142](https://github.com/renderedtext/render_async/pull/142): Update Turbolinks docs - [@nikolalsvk](https://github.com/nikolalsvk).
