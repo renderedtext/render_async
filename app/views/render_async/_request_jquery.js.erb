@@ -50,6 +50,8 @@ if (window.jQuery) {
         headers: headers
       }).done(function(response) {
         var container = $("#<%= container_id %>");
+
+        // If user navigated away before the request completed
         if (!container.length) return;
 
         <% if !interval && replace_container %>

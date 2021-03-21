@@ -60,6 +60,8 @@
       if (request.readyState === 4) {
         if (request.status >= SUCCESS && request.status < ERROR) {
           var container = document.getElementById('<%= container_id %>');
+
+          // If user navigated away before the request completed
           if (!container) return;
 
           <% if !interval && replace_container %>
