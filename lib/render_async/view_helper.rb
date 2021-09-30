@@ -63,6 +63,7 @@ module RenderAsync
     def retry_options(options)
       {
         retry_count: options.delete(:retry_count) || 0,
+        retry_count_header: options.delete(:retry_count_header),
         retry_delay: options.delete(:retry_delay)
       }
     end
