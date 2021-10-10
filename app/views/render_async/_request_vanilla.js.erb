@@ -46,9 +46,15 @@
     request.open('<%= method %>', '<%= path.html_safe %>', asyncRequest);
 
     var headers = <%= headers.to_json.html_safe %>;
-    var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+    var csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
     if (csrfTokenElement)
-      headers['X-CSRF-Token'] = csrfTokenElement.content
+      headers['X-CSRF-Token'] = csrfTokenElement.content;
+
+    <% if retry_count_header %>
+    if (typeof(currentRetryCount) === 'number') {
+      headers['<%= retry_count_header.html_safe %>'] = currentRetryCount;
+    }
+    <% end %>
 
     Object.keys(headers).map(function(key) {
       request.setRequestHeader(key, headers[key]);
@@ -108,11 +114,13 @@
   <% if retry_count > 0 %>
 
   <% if retry_delay %>
-  _retryMakeRequest = function(currentRetryCount) {
+  var _retryMakeRequest = function(currentRetryCount) {
     setTimeout(function() {
       _makeRequest(currentRetryCount)
     }, <%= retry_delay %>)
   }
+  <% else %>
+  var _retryMakeRequest = _makeRequest
   <% end %>
 
   function retry(currentRetryCount) {

@@ -39,9 +39,15 @@ if (window.jQuery) {
 
     function _makeRequest(currentRetryCount) {
       var headers = <%= headers.to_json.html_safe %>;
-      var csrfTokenElement = document.querySelector('meta[name="csrf-token"]')
+      var csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
       if (csrfTokenElement)
-        headers['X-CSRF-Token'] = csrfTokenElement.content
+        headers['X-CSRF-Token'] = csrfTokenElement.content;
+
+      <% if retry_count_header %>
+      if (typeof(currentRetryCount) === 'number') {
+        headers['<%= retry_count_header.html_safe %>'] = currentRetryCount;
+      }
+      <% end %>
 
       $.ajax({
         url: '<%= path.html_safe %>',
@@ -100,6 +106,8 @@ if (window.jQuery) {
         _makeRequest(currentRetryCount)
       }, <%= retry_delay %>)
     }
+    <% else %>
+    _retryMakeRequest = _makeRequest
     <% end %>
 
     function retry(currentRetryCount) {

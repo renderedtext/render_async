@@ -402,6 +402,20 @@ Here is an example on how to get `retryCount`:
 </script>
 ```
 
+If you need to pass retry count to the backend, you can set `retry_count_header`: and then
+
+```erb
+<%= render_async users_path,
+                 retry_count: 5,
+                 retry_count_header: 'Retry-Count-Current' %>
+```
+
+And then in controller read the value from request headers.
+
+```
+request.headers['Retry-Count-Current']&.to_i
+```
+
 ### Toggle event
 
 You can trigger `render_async` loading by clicking or doing another event to a
