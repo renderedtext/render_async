@@ -402,7 +402,7 @@ Here is an example on how to get `retryCount`:
 </script>
 ```
 
-If you need to pass retry count to the backend, you can set `retry_count_header`: and then
+If you need to pass retry count to the backend, you can pass `retry_count_header` in `render_async`'s options:
 
 ```erb
 <%= render_async users_path,
@@ -410,7 +410,7 @@ If you need to pass retry count to the backend, you can set `retry_count_header`
                  retry_count_header: 'Retry-Count-Current' %>
 ```
 
-And then in controller read the value from request headers.
+And then in controller you can read the value from request headers.
 
 ```
 request.headers['Retry-Count-Current']&.to_i
