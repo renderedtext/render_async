@@ -1,3 +1,8 @@
+### 2.1.11 (2021/10/11)
+
+* [#148](https://github.com/renderedtext/render_async/pull/148): Polish retry count header feature - [@nikolalsvk](https://github.com/nikolalsvk).
+* [#147](https://github.com/renderedtext/render_async/pull/147): Add support for retry count header - [@reneklacan](https://github.com/reneklacan).
+
 ### 2.1.10 (2021/03/21)
 
 * [#146](https://github.com/renderedtext/render_async/pull/146): Add comment when we check if container is present - [@nikolalsvk](https://github.com/nikolalsvk).
